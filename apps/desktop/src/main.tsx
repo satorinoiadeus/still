@@ -321,7 +321,7 @@ function App() {
     // Large workspaces no longer re-filter and re-sort on every unrelated render.
     const tasks = useMemo<Task[]>(
         () => w
-            ? applyTaskControls(w, w.tasks.filter((t) => matches(w, t, view, todayKey, query)), controls, todayKey)
+            ? applyTaskControls(w, w.tasks.filter((t) => matches(w, t, view, todayKey, query)), view === "upcoming" && controls.sort === "manual" ? { ...controls, sort: "scheduled" } : controls, todayKey)
             : [],
         [w, view, todayKey, query, controls],
     );
