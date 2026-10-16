@@ -26,6 +26,7 @@ import {
     type Store,
 } from "./storage";
 import QuickAdd from "./QuickAdd";
+import { prepareTaskForSave, prepareProjectForSave, moveTaskDestination, duplicateTask } from "./workspace-ops";
 import {
     FILTERS, SORTS, DEFAULT_CONTROLS, applyTaskControls, canDragTasks,
     loadTaskControls, persistTaskControls, reorderNamedSections, reorderAreas,
@@ -60,6 +61,7 @@ type DropSpot = {
     taskId: string | null;
     placement: "before" | "after";
     section: string | null;
+    destination?: { kind: "inbox" | "project" | "area"; id?: string };
 };
 function labelDate(s: string | null) {
     if (!s) return "";
@@ -462,29 +464,45 @@ function App() {
     }
     async function saveQuickTask(t: Task) {
         if (!w || busy || !t.title.trim()) return false;
-        return commit({ ...w, tasks: [...w.tasks, t] }, "Task added");
+        try {
+            const safe = prepareTaskForSave(t, w);
+            return commit({ ...w, tasks: [...w.tasks, safe] }, "Task added");
+        } catch (error) {
+            setError(error instanceof Error ? error.message : String(error));
+            return false;
+        }
     }
     async function updateTask(t: Task) {
         if (!w) return;
-        const next = {
-            ...w,
-            tasks: w.tasks.some((x) => x.id === t.id)
-                ? w.tasks.map((x) => (x.id === t.id ? t : x))
-                : [...w.tasks, t],
-        };
-        if (await commit(next, "Task saved")) setModal(null);
+        try {
+            const safe = prepareTaskForSave(t, w);
+            const next = {
+                ...w,
+                tasks: w.tasks.some((x) => x.id === safe.id)
+                    ? w.tasks.map((x) => (x.id === safe.id ? safe : x))
+                    : [...w.tasks, safe],
+            };
+            if (await commit(next, "Task saved")) setModal(null);
+        } catch (error) {
+            setError(error instanceof Error ? error.message : String(error));
+        }
     }
     async function updateProject(p: Project) {
         if (!w) return;
-        const next = {
-            ...w,
-            projects: w.projects.some((x) => x.id === p.id)
-                ? w.projects.map((x) => (x.id === p.id ? p : x))
-                : [...w.projects, p],
-        };
-        if (await commit(next, "Project saved")) {
-            setModal(null);
-            if (!w.projects.some((x) => x.id === p.id)) go(`project:${p.id}`);
+        try {
+            const safe = prepareProjectForSave(p, w);
+            const next = {
+                ...w,
+                projects: w.projects.some((x) => x.id === safe.id)
+                    ? w.projects.map((x) => (x.id === safe.id ? safe : x))
+                    : [...w.projects, safe],
+            };
+            if (await commit(next, "Project saved")) {
+                setModal(null);
+                if (!w.projects.some((x) => x.id === safe.id)) go(`project:${safe.id}`);
+            }
+        } catch (error) {
+            setError(error instanceof Error ? error.message : String(error));
         }
     }
     function moveAreaByKey(id: string, direction: number) {
@@ -676,7 +694,7 @@ function App() {
             }
             ev.preventDefault();
             if (ghost) ghost.style.transform = `translate3d(${ev.clientX - startX}px, ${ev.clientY - startY}px, 0) rotate(-.8deg)`;
-            const at = document.elementFromPoint(ev.clientX, ev.clientY)?.closest<HTMLElement>("[data-task-id], [data-drop-section]");
+            const at = document.elementFromPoint(ev.clientX, ev.clientY)?.closest<HTMLElement>("[data-task-id], [data-drop-section], [data-drop-project], [data-drop-area], [data-drop-inbox]");
             let next: DropSpot | null = null;
             if (at?.hasAttribute("data-task-id")) {
                 const targetId = at.dataset.taskId ?? null;
@@ -692,9 +710,17 @@ function App() {
                 }
             } else if (at?.hasAttribute("data-drop-section") && view.startsWith("project:")) {
                 next = { taskId: null, placement: "after", section: at.dataset.dropSection ?? "" };
+            } else if (at?.hasAttribute("data-drop-project")) {
+                next = { taskId: null, placement: "after", section: null, destination: { kind: "project", id: at.dataset.dropProject } };
+            } else if (at?.hasAttribute("data-drop-area")) {
+                next = { taskId: null, placement: "after", section: null, destination: { kind: "area", id: at.dataset.dropArea } };
+            } else if (at?.hasAttribute("data-drop-inbox")) {
+                next = { taskId: null, placement: "after", section: null, destination: { kind: "inbox" } };
             }
             destination = next;
-            setDropSpot((old) => old?.taskId === next?.taskId && old?.placement === next?.placement && old?.section === next?.section ? old : next);
+            setDropSpot((old) => old?.taskId === next?.taskId && old?.placement === next?.placement &&
+                old?.section === next?.section && old?.destination?.kind === next?.destination?.kind &&
+                old?.destination?.id === next?.destination?.id ? old : next);
             if (ev.clientY < 72) window.scrollBy({ top: -12, behavior: "auto" });
             else if (ev.clientY > window.innerHeight - 72) window.scrollBy({ top: 12, behavior: "auto" });
         };
@@ -702,9 +728,15 @@ function App() {
             if (ev.pointerId !== e.pointerId) return;
             const drop = destination;
             cleanup();
-            if (!active || !drop || !w) return;
+            if (!active || !drop || !current.current) return;
+            if (drop.destination) {
+                const next = moveTaskDestination(current.current, id, drop.destination);
+                if (next !== current.current) void commit(next, "Task moved");
+                return;
+            }
             const shown = view.startsWith("project:") ? projectTaskOrder : tasks;
-            void commit(moveTask(w, shown, id, drop.taskId, drop.placement, drop.section), "Order updated");
+            const next = moveTask(current.current, shown, id, drop.taskId, drop.placement, drop.section);
+            if (next !== current.current) void commit(next, "Order updated");
         };
         const onCancel = (ev: PointerEvent) => { if (ev.pointerId === e.pointerId) cleanup(); };
         window.addEventListener("pointermove", onMove, { passive: false });
@@ -765,7 +797,8 @@ function App() {
                         <button
                             key={v}
                             onClick={() => go(v)}
-                            className={view === v ? "selected" : ""}
+                            className={(view === v ? "selected " : "") + (v === "inbox" && dropSpot?.destination?.kind === "inbox" ? "destination-drop-target" : "")}
+                            data-drop-inbox={v === "inbox" ? "" : undefined}
                             aria-current={view === v ? "page" : undefined}
                         >
                             <span className={"nav-icon " + v}><NavIcon name={icon} /></span>
@@ -785,7 +818,7 @@ function App() {
                         w.areas.map((a) => ({ ...a, name: a.title })),
                     ).map((a) => (
                         <div key={a.id} data-area-id={a.id} className={areaDragTarget === a.id ? "area-drag-target" : ""}>
-                            <div className="area-line">
+                            <div className={"area-line " + (dropSpot?.destination?.kind === "area" && dropSpot.destination.id === a.id ? "destination-drop-target" : "")} data-drop-area={a.id}>
                                 <button type="button" className="area-drag-handle" aria-label={`Drag area ${a.title}`} title="Drag area · Arrow keys to reorder"
                                     onPointerDown={(e) => startAreaDrag(e, a.id)}
                                     onKeyDown={(e) => { if (e.key === "ArrowUp" || e.key === "ArrowDown") { e.preventDefault(); moveAreaByKey(a.id, e.key === "ArrowUp" ? -1 : 1); } }}>⠿</button>
@@ -814,8 +847,10 @@ function App() {
                                 .filter((p) => p.areaId === a.id)
                                 .map((p) => (
                                     <button
+                                        data-drop-project={p.id}
                                         className={
                                             "project-link " +
+                                            (dropSpot?.destination?.kind === "project" && dropSpot.destination.id === p.id ? "destination-drop-target " : "") +
                                             (view === `project:${p.id}`
                                                 ? "selected"
                                                 : "")
@@ -832,8 +867,10 @@ function App() {
                         .filter((p) => !p.areaId)
                         .map((p) => (
                             <button
+                                data-drop-project={p.id}
                                 className={
                                     "project-link " +
+                                    (dropSpot?.destination?.kind === "project" && dropSpot.destination.id === p.id ? "destination-drop-target " : "") +
                                     (view === `project:${p.id}`
                                         ? "selected"
                                         : "")
@@ -1028,7 +1065,7 @@ function App() {
                                     )
                                     .sort((a, b) => a.order - b.order)[0];
                             return (
-                                <article className={"project-card " + (projectDragTarget === p.id ? "project-drop-target" : "")} key={p.id} data-project-id={p.id}>
+                                <article className={"project-card " + (projectDragTarget === p.id ? "project-drop-target " : "") + (dropSpot?.destination?.kind === "project" && dropSpot.destination.id === p.id ? "destination-drop-target" : "")} key={p.id} data-project-id={p.id} data-drop-project={p.id}>
                                     <div className="project-card-top">
                                         {view.startsWith("area:") && (
                                             <button type="button" className="project-drag-handle"
@@ -1465,6 +1502,7 @@ function App() {
                                                     aria-label={`Move ${t.title} up`}
                                                     disabled={
                                                         busy ||
+                                                        !dragEnabled ||
                                                         i === 0 ||
                                                         (p && projectTaskOrder[i - 1]?.heading !== t.heading) ||
                                                         (view === "upcoming" &&
@@ -1483,6 +1521,7 @@ function App() {
                                                     aria-label={`Move ${t.title} down`}
                                                     disabled={
                                                         busy ||
+                                                        !dragEnabled ||
                                                         i === projectTaskOrder.length - 1 ||
                                                         (p && projectTaskOrder[i + 1]?.heading !== t.heading) ||
                                                         (view === "upcoming" &&
@@ -1496,6 +1535,9 @@ function App() {
                                                 >
                                                     ↓
                                                 </button>
+                                                <button type="button" className="duplicate-button"
+                                                    aria-label={`Duplicate ${t.title}`} title="Duplicate task"
+                                                    disabled={busy} onClick={() => void commit(duplicateTask(w, t.id), "Task duplicated")}>⧉</button>
                                                 <button
                                                     className="edit-button"
                                                     aria-label={`Edit ${t.title}`}
