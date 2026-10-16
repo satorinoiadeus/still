@@ -556,3 +556,158 @@ code { font-size: 11px; overflow-wrap: anywhere; }
 .duplicate-button:hover,.duplicate-button:focus-visible { background:var(--tint); color:var(--accent); }
 .duplicate-button:disabled { opacity:.35; cursor:not-allowed; }
 @media(max-width:700px) { .duplicate-button { min-width:34px; min-height:34px; } }
+
+
+/* Still 0.3.3 · Quiet layout
+   All colors intentionally reuse Still's ORIGINAL green/cream/dark theme tokens.
+   The same stylesheet is bundled by Tauri for Android and Windows. */
+:root {
+    --quiet-space-1: 4px;
+    --quiet-space-2: 8px;
+    --quiet-space-3: 12px;
+    --quiet-space-4: 16px;
+    --quiet-space-5: 24px;
+    --quiet-space-6: 32px;
+    --quiet-radius: 10px;
+    --quiet-control-size: 38px;
+}
+.shell > aside { width: 248px; padding: 24px 13px 16px; }
+.shell > main { width: calc(100% - 248px); margin-left: 248px; max-width: none; padding: 20px clamp(24px, 4vw, 64px) 45px; }
+.shell > main > .topline { margin-bottom: 13px; padding-bottom: 12px; min-height: 28px; }
+.shell > main > header { margin: 15px 0 16px; }
+.shell > main > header .eyebrow { margin-bottom: 8px; font-size: 9px; letter-spacing: .13em; }
+.shell > main > header h1 { font-size: clamp(34px, 3.5vw, 48px); line-height: 1.13; margin: 0; letter-spacing: -.045em; }
+.shell > main > header .heading-line { gap: 16px; align-items: center; }
+.shell > main > header .heading-line > .secondary { flex: none; min-height: 35px; padding: 7px 12px; font-size: 12px; background: transparent; border-color: var(--line); color: var(--muted); }
+.shell > main > header .heading-line > .secondary:hover { background: var(--tint-soft); color: var(--accent); }
+.shell > main > header .view-description { margin: 9px 0 0; line-height: 1.5; font-size: 12px; max-width: 60ch; }
+.shell > main > header .area-add-project { margin-top: 9px; min-height: 34px; font-size: 12px; font-weight: 600; }
+.shell > main > header .area-add-icon { font-size: 16px; }
+.shell > main > header .project-info { margin-top: 12px; }
+.shell > main > .view-toolbar { display: flex; justify-content: flex-end; align-items: center; min-height: 38px; margin: 0 0 10px; position: relative; z-index: 8; }
+.shell > main > .view-toolbar .view-toolbar-hint { font-size: 11px; margin-right: auto; color: var(--muted); }
+.shell > main > .view-toolbar .controls-anchor { margin-left: auto; }
+.shell > main > .view-toolbar .controls-trigger { min-height: 34px; border-color: var(--line); background: transparent; box-shadow: none; font-size: 11px; border-radius: 9px; }
+.shell > main > .view-toolbar .controls-trigger:hover,.shell > main > .view-toolbar .controls-trigger.has-filters { background: var(--tint-soft); }
+.shell > main > .view-toolbar .controls-panel { background: var(--surface); }
+.project-cards { animation: none; }
+.project-cards .project-collection-heading { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 0 2px 12px; }
+.project-collection-heading h2 { font: 700 12px/1.4 Inter,ui-sans-serif,system-ui,sans-serif; color: var(--text); letter-spacing: .01em; margin: 0; }
+.project-collection-count { color: var(--muted); font-size: 11px; font-weight: 500; margin-left: 5px; font-variant-numeric: tabular-nums; }
+.project-display-switch { display: inline-flex; align-items: center; gap: 2px; padding: 2px; border: 1px solid var(--line); border-radius: 9px; background: var(--surface-soft); }
+.project-display-switch button { border: 0; border-radius: 7px; background: transparent; color: var(--muted); padding: 5px 10px; font-size: 11px; font-weight: 600; min-height: 29px; }
+.project-display-switch button.selected { background: var(--surface); color: var(--accent); box-shadow: 0 1px 3px #0000000b; }
+.project-display-switch button:hover { color: var(--accent); }
+.project-cards.as-list { display: grid; grid-template-columns: minmax(0,1fr); gap: 0; margin: 0 0 19px; }
+.project-cards.as-list .project-card {
+    display: grid;
+    grid-template-columns: minmax(180px, 1.4fr) minmax(125px, 1fr) minmax(72px, 110px);
+    grid-template-rows: auto auto;
+    column-gap: 16px;
+    align-items: center;
+    min-height: 66px;
+    padding: 11px 10px;
+    border: 0;
+    border-top: 1px solid var(--line);
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    transform: none;
+}
+.project-cards.as-list .project-card:last-child { border-bottom: 1px solid var(--line); }
+.project-cards.as-list .project-card:hover,.project-cards.as-list .project-card:focus-within { background: var(--surface-soft); border-color: var(--line); box-shadow: none; transform: none; }
+.project-cards.as-list .project-card-top { grid-column: 1; grid-row: 1; min-width: 0; justify-content: flex-start; gap: 8px; }
+.project-cards.as-list .project-title { flex: 1; min-width: 0; font-size: 13px; line-height: 1.35; font-weight: 650; display: flex; align-items: baseline; gap: 7px; }
+.project-cards.as-list .project-status-icon { color: var(--muted); font-size: 13px; }
+.project-cards.as-list .project-edit { flex: none; min-width: 30px; padding: 4px 6px; border-radius: 7px; opacity: 0; font-size: 18px; }
+.project-cards.as-list .project-card:hover .project-edit,.project-cards.as-list .project-card:focus-within .project-edit { opacity: 1; }
+.project-cards.as-list .project-outcome { grid-column: 1; grid-row: 2; margin: 2px 0 0 25px; font-size: 11px; color: var(--muted); line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.project-cards.as-list .project-next { grid-column: 2; grid-row: 1 / span 2; margin: 0; min-width: 0; justify-content: flex-start; }
+.project-cards.as-list .project-next-action { display: block; min-width: 0; width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left; padding: 5px 6px; border: 0; border-radius: 7px; background: transparent; color: var(--muted); font-size: 11px; }
+.project-cards.as-list .project-next-action:hover { background: var(--tint-soft); color: var(--accent); }
+.project-cards.as-list .project-next-action > span { margin-right: 5px; }
+.project-cards.as-list .project-add-action { opacity: 0; font-size: 11px; padding: 6px 4px; }
+.project-cards.as-list .project-card:hover .project-add-action,.project-cards.as-list .project-card:focus-within .project-add-action { opacity: 1; }
+.project-cards.as-list .project-progress-line { grid-column: 3; grid-row: 1 / span 2; display: flex; align-items: center; gap: 8px; min-width: 0; }
+.project-cards.as-list .project-progress-line progress { flex: 1; min-width: 25px; height: 4px; }
+.project-cards.as-list .project-progress-line small { flex: none; font-size: 10px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.project-cards.as-list .project-drag-handle { flex: none; margin-right: 0; opacity: .42; }
+.project-cards.as-list .project-card:hover .project-drag-handle,.project-cards.as-list .project-drag-handle:focus-visible { opacity: 1; }
+.project-cards.as-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 12px; margin: 0 0 24px; }
+.project-cards.as-cards .project-collection-heading { margin-bottom: 0; }
+.project-cards.as-cards .project-card { padding: 16px; border-radius: 12px; display: flex; flex-direction: column; align-items: stretch; min-height: 120px; }
+.project-cards.as-cards .project-card-top { align-items: flex-start; }
+.project-cards.as-cards .project-title { flex: 1; font-size: 13px; }
+.project-cards.as-cards .project-edit { padding: 3px 5px; font-size: 18px; }
+.project-cards.as-cards .project-outcome { font-size: 11px; line-height: 1.45; margin: 8px 0 0; }
+.project-cards.as-cards .project-progress-line { display: flex; gap: 9px; align-items: center; margin-top: auto; padding-top: 12px; }
+.project-cards.as-cards .project-progress-line progress { flex: 1; }
+.project-cards.as-cards .project-next { margin: 8px 0 0; }
+.project-cards.as-cards .project-next-action { border: 0; background: transparent; color: var(--muted); padding: 4px 0; text-align: left; font-size: 11px; line-height: 1.4; }
+.project-cards.as-cards .project-next-action:hover { color: var(--accent); }
+.project-cards.as-cards .project-add-action { padding: 4px 0; font-size: 11px; }
+.shell > main > .task-section { margin-top: 10px; }
+.shell > main > .task-section > .list-label { padding-bottom: 10px; }
+.shell > main > .task-section .task-row { min-height: 56px; padding-top: 12px; padding-bottom: 12px; gap: 12px; }
+.shell > aside .brand { margin-bottom: 21px; }
+.shell > aside .section-label { margin-top: 20px; margin-bottom: 6px; }
+.shell > aside .areas { min-height: 0; }
+.shell > aside .area-line { gap: 0; min-height: 39px; }
+.shell > aside .area-line .area-drag-handle { flex: 0 0 22px; width: 22px; min-width: 22px; padding: 0; min-height: 34px; opacity: .32; }
+.shell > aside .area-line:hover .area-drag-handle,.shell > aside .area-line:focus-within .area-drag-handle { opacity: .85; }
+.shell > aside .area-line .area-link { flex: 1; min-width: 0; width: auto; display: flex; align-items: center; gap: 8px; min-height: 39px; padding: 7px 5px; border: 0; border-radius: 8px; background: transparent; text-align: left; font-size: 12px; font-weight: 650; }
+.shell > aside .area-line .area-link.selected { color: var(--accent); background: var(--tint); }
+.shell > aside .area-line .area-link:hover { background: var(--tint-soft); }
+.shell > aside .area-line .area-symbol { flex: none; color: var(--muted); }
+.shell > aside .area-line .area-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.shell > aside .area-line .area-expand { display: grid; place-items: center; flex: 0 0 29px; width: 29px; min-height: 34px; border: 0; background: transparent; color: var(--muted); font-size: 19px; border-radius: 8px; }
+.shell > aside .area-line .area-expand:hover,.shell > aside .area-line .area-expand:focus-visible { background: var(--tint); color: var(--accent); }
+.shell > aside .area-line .area-edit { flex: 0 0 24px; width: 24px; padding: 4px 0; min-height: 30px; font-size: 16px; }
+.shell > aside .project-link { padding: 7px 10px 7px 40px; min-height: 32px; font-size: 11px; }
+.shell > aside .project-link.selected { font-weight: 650; }
+.shell > aside .new-project { padding: 8px 12px; }
+@media (max-width: 1050px) and (min-width: 701px) {
+    .shell > aside { width: 225px; }
+    .shell > main { width: calc(100% - 225px); margin-left: 225px; padding: 22px 28px 40px; }
+    .project-cards.as-list .project-card { grid-template-columns: minmax(160px,1.4fr) minmax(110px,1fr) 75px; column-gap: 8px; }
+}
+@media (max-width: 700px) {
+    .shell > aside { width: min(310px,85vw); padding-top: max(28px, env(safe-area-inset-top)); }
+    .shell > main { width: 100%; margin: 0; padding: 16px 18px calc(92px + env(safe-area-inset-bottom,0px)); }
+    .shell > main > .topline { margin-bottom: 9px; padding-bottom: 9px; }
+    .shell > main > header { margin: 12px 0 14px; }
+    .shell > main > header h1 { font-size: clamp(31px,8.5vw,42px); }
+    .shell > main > header .eyebrow { margin-bottom: 7px; }
+    .shell > main > header .heading-line > .secondary { min-height: 34px; font-size: 11px; padding: 6px 9px; }
+    .shell > main > header .area-add-project { margin-top: 8px; }
+    .shell > main > .view-toolbar { margin-bottom: 7px; }
+    .project-cards.as-list .project-card { grid-template-columns: minmax(0,1fr) auto; grid-template-rows: auto auto auto; min-height: 62px; column-gap: 9px; padding: 10px 4px; }
+    .project-cards.as-list .project-card-top { grid-column: 1 / -1; grid-row: 1; }
+    .project-cards.as-list .project-title { font-size: 13px; }
+    .project-cards.as-list .project-edit { opacity: 1; }
+    .project-cards.as-list .project-outcome { grid-column: 1; grid-row: 2; font-size: 10px; }
+    .project-cards.as-list .project-next { grid-column: 1; grid-row: 3; margin-left: 20px; margin-top: 1px; }
+    .project-cards.as-list .project-next-action { font-size: 10px; padding: 2px 4px; }
+    .project-cards.as-list .project-add-action { opacity: 1; font-size: 11px; }
+    .project-cards.as-list .project-progress-line { grid-column: 2; grid-row: 2 / span 2; width: 74px; }
+    .project-cards.as-list .project-progress-line small { font-size: 9px; }
+    .project-cards.as-cards { grid-template-columns: 1fr; }
+    .project-display-switch button { min-height: 32px; }
+    .shell > aside .area-line .area-drag-handle { opacity: .7; flex-basis: 25px; min-width: 25px; }
+    .shell > aside .area-line .area-expand { min-height: 40px; min-width: 35px; }
+    .shell > aside .area-line .area-edit { min-height: 36px; min-width: 27px; }
+    .shell > main > .task-section .task-row { min-height: 53px; padding-top: 10px; padding-bottom: 10px; }
+}
+@media (max-width: 390px) {
+    .shell > main { padding-left: 13px; padding-right: 13px; }
+    .project-display-switch button { padding: 5px 7px; }
+    .project-display-switch button span { display: none; }
+    .shell > main > header .heading-line > .secondary { font-size: 10px; }
+}
+@media (hover: none) {
+    .project-cards.as-list .project-edit,.project-cards.as-list .project-add-action { opacity: 1; }
+    .shell > aside .area-line .area-edit,.shell > aside .area-line .area-drag-handle { opacity: .8; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .project-card,.project-display-switch button,.area-expand { transition: none !important; animation: none !important; }
+}
