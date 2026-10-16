@@ -26,6 +26,11 @@ import {
     type Store,
 } from "./storage";
 import QuickAdd from "./QuickAdd";
+import {
+    FILTERS, SORTS, DEFAULT_CONTROLS, applyTaskControls, canDragTasks,
+    loadTaskControls, persistTaskControls, reorderNamedSections, reorderAreas,
+    type TaskControls,
+} from "./task-controls";
 import "./style.css";
 const navs = [
     ["inbox", "Inbox", "inbox"],
@@ -82,10 +87,8 @@ function App() {
         [busy, setBusy] = useState(false),
         [view, setView] = useState<View>("today"),
         [query, setQuery] = useState(""),
-        [layout, setLayout] = useState<"list" | "board">(() => localStorage.getItem("still.layout") === "board" ? "board" : "list"),
-        [compact, setCompact] = useState(() => localStorage.getItem("still.compact") === "true"),
-        [sortMode, setSortMode] = useState<"manual" | "date" | "priority" | "alphabetical">("manual"),
-        [priorityFilter, setPriorityFilter] = useState<"all" | Task["priority"]>("all"),
+        [controls, setControls] = useState<TaskControls>(loadTaskControls),
+        [filtersOpen, setFiltersOpen] = useState(false),
         [labelSearch, setLabelSearch] = useState(""),
         [editingSection, setEditingSection] = useState<string | null>(null),
         [sectionEditDraft, setSectionEditDraft] = useState(""),
@@ -113,7 +116,22 @@ function App() {
         [sectionDraft, setSectionDraft] = useState(""),
         [draggedId, setDraggedId] = useState<string | null>(null),
         [dropSpot, setDropSpot] = useState<DropSpot | null>(null),
-        [projectDragTarget, setProjectDragTarget] = useState<string | null>(null);
+        [projectDragTarget, setProjectDragTarget] = useState<string | null>(null),
+        [sectionDragTarget, setSectionDragTarget] = useState<string | null>(null),
+        [areaDragTarget, setAreaDragTarget] = useState<string | null>(null);
+    const { layout, compact } = controls;
+    const sortMode = controls.sort;
+    const priorityFilter = controls.priority;
+    const filterPanelRef = useRef<HTMLDivElement>(null);
+    function updateControls(patch: Partial<TaskControls>) {
+        setControls((previous) => ({ ...previous, ...patch }));
+    }
+    const activeFilterCount = [
+        controls.filter !== "all", controls.priority !== "all", !!controls.label,
+        !!controls.project, !!controls.area, !!controls.search.trim(),
+        controls.sort !== "manual", controls.reverse,
+    ].filter(Boolean).length;
+    const dragEnabled = canDragTasks(controls);
     const locked = useRef(false),
         current = useRef(w);
     current.current = w;
@@ -206,6 +224,7 @@ function App() {
     function go(v: View) {
         setView(v);
         setMenu(false);
+        setFiltersOpen(false);
     }
     function addTask(section = "") {
         let t = newTask();
@@ -263,10 +282,22 @@ function App() {
         window.addEventListener("keydown", key);
         return () => window.removeEventListener("keydown", key);
     }, [view, modal]);
+    useEffect(() => { persistTaskControls(controls); }, [controls]);
     useEffect(() => {
-        localStorage.setItem("still.layout", layout);
-        localStorage.setItem("still.compact", String(compact));
-    }, [layout, compact]);
+        if (!filtersOpen) return;
+        const dismiss = (event: PointerEvent) => {
+            if (!filterPanelRef.current?.contains(event.target as Node)) setFiltersOpen(false);
+        };
+        const escape = (event: KeyboardEvent) => {
+            if (event.key === "Escape") setFiltersOpen(false);
+        };
+        document.addEventListener("pointerdown", dismiss);
+        document.addEventListener("keydown", escape);
+        return () => {
+            document.removeEventListener("pointerdown", dismiss);
+            document.removeEventListener("keydown", escape);
+        };
+    }, [filtersOpen]);
     const todayKey = localDate();
     // Counts are independent of navigation, search typing and open dialogs.
     const navCounts = useMemo(
@@ -288,19 +319,9 @@ function App() {
     // Large workspaces no longer re-filter and re-sort on every unrelated render.
     const tasks = useMemo<Task[]>(
         () => w
-            ? w.tasks
-                  .filter((t) => matches(w, t, view, todayKey, query))
-                  .filter((t) => priorityFilter === "all" || t.priority === priorityFilter)
-                  .sort((a, b) => {
-                      if (sortMode === "alphabetical") return a.title.localeCompare(b.title);
-                      if (sortMode === "priority") return ({ high: 0, none: 1, low: 2 }[a.priority] - { high: 0, none: 1, low: 2 }[b.priority]) || a.order - b.order;
-                      if (sortMode === "date") return (a.scheduled ?? "9999-12-31").localeCompare(b.scheduled ?? "9999-12-31") || a.order - b.order;
-                      return view === "upcoming"
-                          ? (a.scheduled ?? "").localeCompare(b.scheduled ?? "") || a.order - b.order
-                          : a.order - b.order;
-                  })
+            ? applyTaskControls(w, w.tasks.filter((t) => matches(w, t, view, todayKey, query)), controls, todayKey)
             : [],
-        [w, view, todayKey, query, priorityFilter, sortMode],
+        [w, view, todayKey, query, controls],
     );
     const activeProjects = useMemo<Project[]>(
         () => w
@@ -466,6 +487,109 @@ function App() {
             if (!w.projects.some((x) => x.id === p.id)) go(`project:${p.id}`);
         }
     }
+    function moveAreaByKey(id: string, direction: number) {
+        if (!w || busy) return;
+        const ordered = [...w.areas].sort((a, b) => a.order - b.order);
+        const i = ordered.findIndex((a) => a.id === id);
+        const target = ordered[i + direction];
+        if (target) void commit(reorderAreas(w, id, target.id), "Areas reordered");
+    }
+    function startAreaDrag(e: React.PointerEvent<HTMLButtonElement>, id: string) {
+        if (!w || busy || e.button !== 0) return;
+        e.preventDefault();
+        dragCleanup.current?.();
+        const x = e.clientX, y = e.clientY;
+        let active = false, target: string | null = null;
+        const cleanup = () => {
+            window.removeEventListener("pointermove", move);
+            window.removeEventListener("pointerup", up);
+            window.removeEventListener("pointercancel", cancel);
+            document.body.classList.remove("is-sorting");
+            setAreaDragTarget(null);
+            dragCleanup.current = null;
+        };
+        const move = (event: PointerEvent) => {
+            if (event.pointerId !== e.pointerId) return;
+            if (!active && Math.hypot(event.clientX - x, event.clientY - y) < 7) return;
+            active = true;
+            event.preventDefault();
+            document.body.classList.add("is-sorting");
+            const row = document.elementFromPoint(event.clientX, event.clientY)?.closest<HTMLElement>("[data-area-id]");
+            target = row?.dataset.areaId && row.dataset.areaId !== id ? row.dataset.areaId : null;
+            setAreaDragTarget(target);
+            const sidebar = document.querySelector<HTMLElement>("aside .areas");
+            if (sidebar) {
+                const rect = sidebar.getBoundingClientRect();
+                if (event.clientY < rect.top + 35) sidebar.scrollTop -= 12;
+                if (event.clientY > rect.bottom - 35) sidebar.scrollTop += 12;
+            }
+        };
+        const up = (event: PointerEvent) => {
+            if (event.pointerId !== e.pointerId) return;
+            const dest = target;
+            cleanup();
+            if (active && dest && current.current) void commit(reorderAreas(current.current, id, dest), "Areas reordered");
+        };
+        const cancel = (event: PointerEvent) => { if (event.pointerId === e.pointerId) cleanup(); };
+        window.addEventListener("pointermove", move, { passive: false });
+        window.addEventListener("pointerup", up);
+        window.addEventListener("pointercancel", cancel);
+        dragCleanup.current = cleanup;
+    }
+    function moveSectionByKey(name: string, direction: number) {
+        if (!w || !p || busy) return;
+        const index = sectionNames.indexOf(name);
+        const target = sectionNames[index + direction];
+        if (target) void commit(reorderNamedSections(w, p.id, name, target), "Sections reordered");
+    }
+    function startSectionDrag(e: React.PointerEvent<HTMLButtonElement>, name: string) {
+        if (!w || !p || busy || e.button !== 0) return;
+        e.preventDefault();
+        dragCleanup.current?.();
+        const x = e.clientX, y = e.clientY;
+        let active = false, target: string | null = null;
+        const cleanup = () => {
+            window.removeEventListener("pointermove", move);
+            window.removeEventListener("pointerup", up);
+            window.removeEventListener("pointercancel", cancel);
+            document.body.classList.remove("is-sorting");
+            setSectionDragTarget(null);
+            dragCleanup.current = null;
+        };
+        const move = (event: PointerEvent) => {
+            if (event.pointerId !== e.pointerId) return;
+            if (!active && Math.hypot(event.clientX - x, event.clientY - y) < 7) return;
+            active = true;
+            event.preventDefault();
+            document.body.classList.add("is-sorting");
+            const row = document.elementFromPoint(event.clientX, event.clientY)?.closest<HTMLElement>("[data-section-id]");
+            target = row?.dataset.sectionId && row.dataset.sectionId !== name ? row.dataset.sectionId : null;
+            setSectionDragTarget(target);
+        };
+        const up = (event: PointerEvent) => {
+            if (event.pointerId !== e.pointerId) return;
+            const dest = target;
+            cleanup();
+            if (active && dest && current.current && p) void commit(reorderNamedSections(current.current, p.id, name, dest), "Sections reordered");
+        };
+        const cancel = (event: PointerEvent) => { if (event.pointerId === e.pointerId) cleanup(); };
+        window.addEventListener("pointermove", move, { passive: false });
+        window.addEventListener("pointerup", up);
+        window.addEventListener("pointercancel", cancel);
+        dragCleanup.current = cleanup;
+    }
+    function moveProjectByKey(id: string, direction: number) {
+        if (!w || busy) return;
+        const ids = shownProjects.map((p) => p.id);
+        const from = ids.indexOf(id);
+        const target = ids[from + direction];
+        if (!target) return;
+        ids.splice(from, 1);
+        ids.splice(ids.indexOf(target), 0, id);
+        const others = w.projects.filter((p) => !ids.includes(p.id)).sort((a, b) => a.order - b.order).map((p) => p.id);
+        const ranks = new Map([...ids, ...others].map((id, index) => [id, index]));
+        void commit({ ...w, projects: w.projects.map((p) => ({ ...p, order: ranks.get(p.id) ?? p.order })) }, "Projects reordered");
+    }
     function startProjectDrag(e: React.PointerEvent<HTMLButtonElement>, id: string) {
         if (busy || e.button !== 0 || !w || !view.startsWith("area:")) return;
         e.preventDefault();
@@ -513,7 +637,7 @@ function App() {
         dragCleanup.current = cleanup;
     }
     function startDrag(e: React.PointerEvent<HTMLButtonElement>, id: string) {
-        if (busy || e.button !== 0 || !w || ["trash", "logbook", "search"].includes(view)) return;
+        if (busy || !dragEnabled || e.button !== 0 || !w || ["trash", "logbook", "search"].includes(view)) return;
         const origin = e.currentTarget.closest<HTMLElement>("[data-task-id]");
         if (!origin) return;
         e.preventDefault();
@@ -603,7 +727,7 @@ function App() {
         }
     }
     function reorder(id: string, direction: number) {
-        if (!w) return;
+        if (!w || !dragEnabled) return;
         const shown = p ? projectTaskOrder : tasks;
         const i = shown.findIndex((t) => t.id === id),
             other = shown[i + direction];
@@ -660,8 +784,11 @@ function App() {
                     {sortAreasForOrderDisplay(
                         w.areas.map((a) => ({ ...a, name: a.title })),
                     ).map((a) => (
-                        <div key={a.id}>
+                        <div key={a.id} data-area-id={a.id} className={areaDragTarget === a.id ? "area-drag-target" : ""}>
                             <div className="area-line">
+                                <button type="button" className="area-drag-handle" aria-label={`Drag area ${a.title}`} title="Drag area · Arrow keys to reorder"
+                                    onPointerDown={(e) => startAreaDrag(e, a.id)}
+                                    onKeyDown={(e) => { if (e.key === "ArrowUp" || e.key === "ArrowDown") { e.preventDefault(); moveAreaByKey(a.id, e.key === "ArrowUp" ? -1 : 1); } }}>⠿</button>
                                 <button
                                     onClick={() => go(`area:${a.id}`)}
                                     className={
@@ -906,7 +1033,8 @@ function App() {
                                         {view.startsWith("area:") && (
                                             <button type="button" className="project-drag-handle"
                                                 aria-label={`Drag to reorder project ${p.title}`}
-                                                onPointerDown={(e) => startProjectDrag(e, p.id)}>⠿</button>
+                                                onPointerDown={(e) => startProjectDrag(e, p.id)}
+                                                onKeyDown={(e) => { if (e.key === "ArrowUp" || e.key === "ArrowDown") { e.preventDefault(); moveProjectByKey(p.id, e.key === "ArrowUp" ? -1 : 1); } }}>⠿</button>
                                         )}
                                         <button
                                             className="project-title"
@@ -992,24 +1120,70 @@ function App() {
                     </section>
                 )}
                 <div className="view-toolbar" aria-label="Task view options">
-                    {p && <div className="view-switch" role="group" aria-label="Project layout">
-                        <button className={layout === "list" ? "selected" : ""} onClick={() => setLayout("list")} aria-pressed={layout === "list"}>☷ List</button>
-                        <button className={layout === "board" ? "selected" : ""} onClick={() => setLayout("board")} aria-pressed={layout === "board"}>▦ Board</button>
-                    </div>}
-                    <select aria-label="Sort tasks" value={sortMode} onChange={(e) => setSortMode(e.target.value as typeof sortMode)}>
-                        <option value="manual">Manual order</option>
-                        <option value="date">Date</option>
-                        <option value="priority">Priority</option>
-                        <option value="alphabetical">A to Z</option>
-                    </select>
-                    <select aria-label="Filter by priority" value={priorityFilter} onChange={(e) => setPriorityFilter(e.target.value as typeof priorityFilter)}>
-                        <option value="all">All priorities</option>
-                        <option value="high">High only</option>
-                        <option value="none">Normal only</option>
-                        <option value="low">Low only</option>
-                    </select>
-                    <button className={compact ? "density-button selected" : "density-button"} onClick={() => setCompact(!compact)} aria-pressed={compact}>↕ {compact ? "Comfortable" : "Compact"}</button>
-                    {(priorityFilter !== "all" || sortMode !== "manual") && <button className="clear-filters" onClick={() => { setPriorityFilter("all"); setSortMode("manual"); }}>Clear filters</button>}
+                    <span className="view-toolbar-hint">{tasks.length} visible · {dragEnabled ? "Drag handles to arrange" : "Manual sort to drag"}</span>
+                    <div className="controls-anchor" ref={filterPanelRef}>
+                        <button type="button" className={"controls-trigger " + (activeFilterCount ? "has-filters" : "")}
+                            aria-expanded={filtersOpen} aria-controls="task-view-controls" aria-label="Expand filters and sorting"
+                            onClick={() => setFiltersOpen((open) => !open)}>
+                            ☷ Filter & sort {activeFilterCount > 0 && <span className="filter-count">{activeFilterCount}</span>} <span aria-hidden="true">{filtersOpen ? "⌃" : "⌄"}</span>
+                        </button>
+                        {filtersOpen && <div className="controls-panel" id="task-view-controls" role="region" aria-label="Expanded filters and sorting">
+                            <div className="controls-panel-heading"><strong>View options</strong><button type="button" aria-label="Close filters" onClick={() => setFiltersOpen(false)}>×</button></div>
+                            <div className="controls-fields">
+                                <label>Filter
+                                    <select aria-label="Filter tasks" value={controls.filter} onChange={(e) => updateControls({ filter: e.target.value as TaskControls["filter"] })}>
+                                        {FILTERS.map(([key, title]) => <option key={key} value={key}>{title}</option>)}
+                                    </select>
+                                </label>
+                                <label>Sort by
+                                    <select aria-label="Sort tasks" value={sortMode} onChange={(e) => updateControls({ sort: e.target.value as TaskControls["sort"] })}>
+                                        {SORTS.map(([key, title]) => <option key={key} value={key}>{title}</option>)}
+                                    </select>
+                                </label>
+                                <label>Priority
+                                    <select aria-label="Filter by priority" value={priorityFilter} onChange={(e) => updateControls({ priority: e.target.value as TaskControls["priority"] })}>
+                                        <option value="all">All priorities</option>
+                                        <option value="high">High only</option>
+                                        <option value="none">Normal only</option>
+                                        <option value="low">Low only</option>
+                                    </select>
+                                </label>
+                                <label>Label
+                                    <select aria-label="Filter by label" value={controls.label} onChange={(e) => updateControls({ label: e.target.value })}>
+                                        <option value="">All labels</option>
+                                        {labels.map((tag) => <option key={tag} value={tag}>@{tag}</option>)}
+                                    </select>
+                                </label>
+                                <label>Project
+                                    <select aria-label="Filter by project" value={controls.project} onChange={(e) => updateControls({ project: e.target.value })}>
+                                        <option value="">All projects</option>
+                                        {activeProjects.map((project) => <option key={project.id} value={project.id}>{project.title}</option>)}
+                                    </select>
+                                </label>
+                                <label>Area
+                                    <select aria-label="Filter by area" value={controls.area} onChange={(e) => updateControls({ area: e.target.value })}>
+                                        <option value="">All areas</option>
+                                        {w.areas.map((a) => <option key={a.id} value={a.id}>{a.title}</option>)}
+                                    </select>
+                                </label>
+                                <label className="controls-search">Search within view
+                                    <input aria-label="Search within view" placeholder="Find title, notes, label…" value={controls.search} onChange={(e) => updateControls({ search: e.target.value })} maxLength={300} />
+                                </label>
+                            </div>
+                            <div className="controls-toggles">
+                                <label><input type="checkbox" checked={controls.reverse} onChange={(e) => updateControls({ reverse: e.target.checked })} /> Reverse sort</label>
+                                <label><input type="checkbox" checked={compact} onChange={(e) => updateControls({ compact: e.target.checked })} /> Compact rows</label>
+                            </div>
+                            {p && <div className="view-switch" role="group" aria-label="Project layout">
+                                <button className={layout === "list" ? "selected" : ""} onClick={() => updateControls({ layout: "list" })} aria-pressed={layout === "list"}>☷ List</button>
+                                <button className={layout === "board" ? "selected" : ""} onClick={() => updateControls({ layout: "board" })} aria-pressed={layout === "board"}>▦ Board</button>
+                            </div>}
+                            <div className="controls-panel-footer">
+                                <button type="button" className="clear-filters" onClick={() => updateControls({ ...DEFAULT_CONTROLS, layout, compact })}>Reset filters</button>
+                                <button type="button" className="primary" onClick={() => setFiltersOpen(false)}>Done</button>
+                            </div>
+                        </div>}
+                    </div>
                 </div>
                 <section className={"task-section " + (compact ? "compact" : "") + (p && layout === "board" ? " board-task-section" : "")}>
                     <div className="list-label">
@@ -1028,13 +1202,21 @@ function App() {
                     {p && layout === "board" ? (
                         <div className="task-board" aria-label="Project board">
                             {["", ...sectionNames].map((name) => (
-                                <section key={name} className="board-column">
+                                <section key={name} data-drop-section={name} data-section-id={name || undefined}
+                                    className={"board-column " + (dropSpot?.taskId === null && dropSpot.section === name ? "drop-section " : "") + (sectionDragTarget === name ? "section-drag-target" : "")}>
                                     <div className="board-column-header">
+                                        {name && <button type="button" className="section-drag-handle" aria-label={`Drag section ${name}`} title="Drag section or use arrow keys"
+                                            onPointerDown={(e) => startSectionDrag(e, name)}
+                                            onKeyDown={(e) => { if (e.key === "ArrowLeft" || e.key === "ArrowRight") { e.preventDefault(); moveSectionByKey(name, e.key === "ArrowLeft" ? -1 : 1); } }}>⠿</button>}
                                         <strong>{name || "No section"}</strong>
                                         <span>{tasks.filter((t) => t.heading === name).length}</span>
                                     </div>
                                     {tasks.filter((t) => t.heading === name).map((t) => (
-                                        <article key={t.id} className="board-task-card">
+                                        <article key={t.id} data-task-id={t.id} data-heading={name}
+                                            className={"board-task-card " + (draggedId === t.id ? "drag-source " : "") + (dropSpot?.taskId === t.id ? "drop-" + dropSpot.placement : "")}>
+                                            <button type="button" className="drag-handle" aria-label={`Drag to reorder ${t.title}`} disabled={busy || !dragEnabled}
+                                                title={dragEnabled ? "Drag between sections" : "Reset sorting and filters to drag"} onPointerDown={(e) => startDrag(e, t.id)}
+                                                onKeyDown={(e) => { if (e.key === "ArrowUp" || e.key === "ArrowDown") { e.preventDefault(); reorder(t.id, e.key === "ArrowUp" ? -1 : 1); } }}>⠿</button>
                                             <button className={"check " + (t.priority === "high" ? "high" : "")} disabled={busy} aria-label={"Complete " + t.title} onClick={() => void commit(complete(w, t.id), "Task completed")}>✓</button>
                                             <div><button className="board-task-title" onClick={() => { setTask(t); setModal("task"); }}>{t.title}</button>
                                                 {t.scheduled && <small>{labelDate(t.scheduled)}</small>}
@@ -1078,6 +1260,7 @@ function App() {
                                     key={`section:${entry.title}`}
                                     className={"project-section-header " + (dropSpot?.taskId === null && dropSpot.section === entry.title ? "drop-section" : "")}
                                     data-drop-section={entry.title}
+                                    data-section-id={entry.title || undefined}
                                 >
                                     {editingSection === entry.title ? (
                                         <form className="section-rename-form" onSubmit={(e) => { e.preventDefault(); void renameSection(entry.title); }}>
@@ -1087,6 +1270,9 @@ function App() {
                                         </form>
                                     ) : <h3 className="group-title">{entry.title || "No section"} <small>{tasks.filter((t) => t.heading === entry.title).length}</small></h3>}
                                     {entry.title && <div className="section-actions">
+                                        <button type="button" className="section-drag-handle" aria-label={"Drag section " + entry.title} title="Drag section · Arrow keys to reorder"
+                                            onPointerDown={(e) => startSectionDrag(e, entry.title)}
+                                            onKeyDown={(e) => { if (e.key === "ArrowUp" || e.key === "ArrowDown") { e.preventDefault(); moveSectionByKey(entry.title, e.key === "ArrowUp" ? -1 : 1); } }}>⠿</button>
                                         <button type="button" aria-label={"Rename section " + entry.title} title="Rename section" onClick={() => { setEditingSection(entry.title); setSectionEditDraft(entry.title); }}>✎</button>
                                         <button type="button" aria-label={"Delete section " + entry.title} title="Delete section (keep tasks)" onClick={() => void deleteSection(entry.title)}>×</button>
                                     </div>}
@@ -1115,7 +1301,9 @@ function App() {
                                     }
                                 >
                                     {view !== "trash" && view !== "logbook" && view !== "search" && (
-                                        <button type="button" className="drag-handle" aria-label={`Drag to reorder ${t.title}`} title="Drag to reorder" disabled={busy} onPointerDown={(e) => startDrag(e, t.id)}>⠿</button>
+                                        <button type="button" className="drag-handle" aria-label={`Drag to reorder ${t.title}`} title={dragEnabled ? "Drag to reorder · Arrow keys to move" : "Switch to manual order and clear filters to drag"}
+                                            disabled={busy || !dragEnabled} onPointerDown={(e) => startDrag(e, t.id)}
+                                            onKeyDown={(e) => { if (e.key === "ArrowUp" || e.key === "ArrowDown") { e.preventDefault(); reorder(t.id, e.key === "ArrowUp" ? -1 : 1); } }}>⠿</button>
                                     )}
                                     <button
                                         className={
