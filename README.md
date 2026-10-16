@@ -66,3 +66,11 @@ Mobile screens have visible New area/New project controls, automatic navigation 
 ## Releases
 
 Version **0.2.2** adds project sections and Todoist-inspired drag animations while keeping Quiet Edition's visual design. The `still-release.yml` workflow builds Android and Windows installers, runs tests and publishes a GitHub prerelease only after both native builds succeed. The initial `release:` commit on `main` triggers the first prerelease. See [RELEASE.md](RELEASE.md) for signing and installation notes.
+
+## Still 0.3.1 — Quick Capture & Quality of Life
+
+The new **Quick add** composer opens from the bottom + button, **New task**, or the **N/Q** keyboard shortcuts. Type a task and press Enter to add it; Shift+Enter inserts a line break. Try `Email client tomorrow @work !high`, `Review draft Friday #Launch`, or `Call Alex in 3 days`. Pick an Area or Project, section, date, priority, and labels without leaving the composer. Turn on **Keep adding** to capture multiple tasks quickly. Existing task details remain editable in the full task editor.
+
+Project sections now support **Rename** and **Delete**. Deleting a section moves its tasks to **No section** rather than deleting tasks; Undo is available. Projects offer **List** and **Board** views. Task lists offer manual, date, priority and alphabetical sorting, a priority filter and compact density. The sidebar has clickable labels, counts, search, rename and removal; task label chips open filtered views. Label removal preserves tasks.
+
+These are original Still interactions inspired by modern task apps, not copied Todoist code or branding. Data stays offline, and existing Still backups remain compatible. This is a focused first quality-of-life batch, not a claim of 200 completed features.

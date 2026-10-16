@@ -56,7 +56,8 @@ export type View =
     | "trash"
     | "search"
     | `area:${string}`
-    | `project:${string}`;
+    | `project:${string}`
+    | `label:${string}`;
 export const uid = generateUUID;
 export function localDate(d = new Date()): string {
     return localDayKey(d);
@@ -221,6 +222,7 @@ export function matches(
             .includes(query.toLowerCase());
     if (t.completedAt || p?.state === "completed" || p?.state === "archived")
         return false;
+    if (view.startsWith("label:")) return t.tags.some((tag) => tag.toLocaleLowerCase() === decodeURIComponent(view.slice(6)).toLocaleLowerCase());
     if (view.startsWith("project:")) return t.projectId === view.slice(8);
     if (view.startsWith("area:"))
         return t.areaId === view.slice(5) || p?.areaId === view.slice(5);

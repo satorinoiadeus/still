@@ -1,18 +1,21 @@
-# Still v0.2.2 — independent repository
+# Still v0.3.1 — Quick Capture & Quality of Life
 
-Repository: `satorinoiadeus/still`. The earlier `Mindwtr` repository is preserved separately.
+Repository: https://github.com/satorinoiadeus/still
 
-## Build and publish
+## Highlights
 
-- `.github/workflows/still-release.yml` verifies source, builds a Windows NSIS `.exe` and Android `.apk`, then publishes a GitHub prerelease if every job succeeds.
-- The first commit on `main` with a message beginning `release:` publishes `v0.2.2`. Future tags `v*` or manual workflow dispatch can also trigger a release.
-- `.github/workflows/still-build.yml` is available for manual builds and pull-request verification.
-- Android uses development signing unless `STILL_ANDROID_DEBUG_KEYSTORE_BASE64` is configured. Windows installers are unsigned. Treat these as experimental builds; back up data before updating.
+- Todoist-inspired **Quick add** composer with keyboard-first capture, date suggestions, project/Area/section destination, priority and label chips.
+- Smart entry: `today`, `tomorrow`, weekdays, `next week`, `weekend`, `in 3 days`, `@label`, `#project`, `!high`, `!low`, `p1`–`p4` (mapped to Still's high/low priority).
+- Enter to add, Shift+Enter for a newline, and Keep adding for repeated capture. N and Q shortcuts open the composer when not typing.
+- **Rename and delete sections** without losing tasks; deleting a section moves its tasks to No section.
+- Project **List/Board** views, priority filters, sort by date/priority/title, compact density, and persistent layout preference.
+- Clickable labels on tasks, sidebar label search/counts, dedicated label views, rename and remove labels across tasks without deleting tasks.
+- Existing touch drag-to-reorder remains available in List view, with Undo and offline persistence.
 
-## What's new
+## Installation
 
-- Create named sections inside projects, including empty sections, and add tasks directly into them.
-- Drag tasks by the handle on desktop and touch devices. The floating card, insertion indicators, and smooth layout animations show where a task will land.
-- Move tasks between project sections by dropping on a task or section heading.
-- The previous keyboard-friendly up/down controls remain, and reduced-motion preferences are honored.
-- Existing tasks, headings, backups, storage and design remain compatible. No new runtime dependencies.
+GitHub Actions `.github/workflows/still-release.yml` verifies source, builds Windows NSIS EXE and Android APK, then publishes a prerelease only when both native builds succeed. Windows installers are unsigned. Android CI builds use development signing unless a persistent signing key is configured. Export a JSON backup before updating. The new APK may not install over an older APK if the signing key differs. This release retains the app identifier `app.still.tasks` and workspace format.
+
+## Limitations
+
+Board columns are currently a viewing layout, not a full Kanban workflow; touch drag-to-reorder is supported in List view. The quick-add date parser handles common English phrases but is not a full natural-language calendar parser. Still's existing three-level priority storage remains none/high/low. No network account or cloud sync has been added. Device-specific runtime testing remains separate from CI packaging.
