@@ -1,6 +1,6 @@
 [package]
 name = "still-tasks"
-version = "0.3.0"
+version = "0.3.1"
 description = "A little space for your next action"
 authors = ["Still", "DongDong (upstream foundations)"]
 license = "AGPL-3.0-only"
