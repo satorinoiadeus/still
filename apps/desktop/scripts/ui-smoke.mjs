@@ -148,7 +148,6 @@ fill(dialog.querySelector('textarea[aria-label="Quick add task name"]'), "First 
 await pause();
 await click("Add task ↗");
 state = JSON.parse(w.localStorage.getItem("still.workspace.v1"));
-console.log("DEBUG after section quick add", JSON.stringify(state.tasks.slice(-5).map((t) => ({title:t.title,heading:t.heading,projectId:t.projectId}))), "dialog", w.document.querySelector("[role=dialog]")?.textContent.slice(0,160));
 assert.equal(state.tasks.find((t) => t.title === "First section action").heading, "First steps");
 await click("New task");
 dialog = w.document.querySelector("[role=dialog]");
