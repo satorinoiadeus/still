@@ -400,6 +400,7 @@ function App() {
     const labels = [...new Set(w.tasks.filter((t) => !t.deletedAt).flatMap((t) => t.tags))]
         .sort((a, b) => a.localeCompare(b));
     async function renameLabel(oldName: string) {
+        if (!w) return;
         const proposed = window.prompt("Rename label", oldName)?.trim().replace(/^@/, "").replace(/\s+/g, "-");
         if (!proposed || proposed === oldName || proposed.length > 40) return;
         if (labels.some((x) => x.toLowerCase() === proposed.toLowerCase())) {
@@ -408,9 +409,10 @@ function App() {
         const next = { ...w, tasks: w.tasks.map((t) => ({
             ...t, tags: t.tags.map((x) => x === oldName ? proposed : x),
         })) };
-        if (await commit(next, "Label renamed") && view === "label:" + encodeURIComponent(oldName)) go("label:" + encodeURIComponent(proposed));
+        if (await commit(next, "Label renamed") && view === "label:" + encodeURIComponent(oldName)) go(("label:" + encodeURIComponent(proposed)) as View);
     }
     async function deleteLabel(name: string) {
+        if (!w) return;
         if (!await confirmChange("Remove @" + name + " from all tasks? Tasks will not be deleted.")) return;
         const next = { ...w, tasks: w.tasks.map((t) => ({ ...t, tags: t.tags.filter((x) => x !== name) })) };
         if (await commit(next, "Label removed") && view === "label:" + encodeURIComponent(name)) go("inbox");
@@ -724,7 +726,7 @@ function App() {
                     <input aria-label="Find labels" value={labelSearch} onChange={(e) => setLabelSearch(e.target.value)} placeholder="Find a label…" />
                     {labels.filter((x) => x.toLowerCase().includes(labelSearch.toLowerCase())).map((tag) => (
                         <div className="label-sidebar-row" key={tag}>
-                            <button className={view === "label:" + encodeURIComponent(tag) ? "selected" : ""} onClick={() => go("label:" + encodeURIComponent(tag))}>
+                            <button className={view === "label:" + encodeURIComponent(tag) ? "selected" : ""} onClick={() => go(("label:" + encodeURIComponent(tag)) as View)}>
                                 <span className="label-dot">●</span> {tag}
                                 <span className="count">{w.tasks.filter((t) => !t.deletedAt && !t.completedAt && t.tags.includes(tag)).length}</span>
                             </button>
@@ -1036,7 +1038,7 @@ function App() {
                                             <button className={"check " + (t.priority === "high" ? "high" : "")} disabled={busy} aria-label={"Complete " + t.title} onClick={() => void commit(complete(w, t.id), "Task completed")}>✓</button>
                                             <div><button className="board-task-title" onClick={() => { setTask(t); setModal("task"); }}>{t.title}</button>
                                                 {t.scheduled && <small>{labelDate(t.scheduled)}</small>}
-                                                {t.tags.length > 0 && <div className="board-tags">{t.tags.map((tag) => <button key={tag} onClick={() => go("label:" + encodeURIComponent(tag))}>@{tag}</button>)}</div>}
+                                                {t.tags.length > 0 && <div className="board-tags">{t.tags.map((tag) => <button key={tag} onClick={() => go(("label:" + encodeURIComponent(tag)) as View)}>@{tag}</button>)}</div>}
                                             </div>
                                         </article>
                                     ))}
@@ -1216,7 +1218,7 @@ function App() {
                                                 </span>
                                             )}
                                             {t.tags.map((tag) => (
-                                                <button key={tag} className="tag label-chip" onClick={() => go("label:" + encodeURIComponent(tag))} aria-label={"View label " + tag}>@{tag}</button>
+                                                <button key={tag} className="tag label-chip" onClick={() => go(("label:" + encodeURIComponent(tag)) as View)} aria-label={"View label " + tag}>@{tag}</button>
                                             ))}
                                         </div>
                                     </div>
