@@ -208,16 +208,18 @@ export function reorderNamedSections(w: Workspace, projectId: string, moved: str
     if (!project || !moved || !target || moved === target) return w;
     const all = [...new Set([...(project.sections ?? []), ...w.tasks.filter((t) => t.projectId === projectId).map((t) => t.heading).filter(Boolean)])];
     if (!all.includes(moved) || !all.includes(target)) return w;
+    const to = all.indexOf(target);
     const ids = all.filter((name) => name !== moved);
-    ids.splice(ids.indexOf(target), 0, moved);
+    ids.splice(to, 0, moved);
     return { ...w, projects: w.projects.map((p) => p.id === projectId ? { ...p, sections: ids } : p) };
 }
 export function reorderAreas(w: Workspace, moved: string, target: string): Workspace {
     if (moved === target) return w;
     const ids = [...w.areas].sort((a, b) => a.order - b.order).map((a) => a.id);
     if (!ids.includes(moved) || !ids.includes(target)) return w;
+    const to = ids.indexOf(target);
     const reordered = ids.filter((id) => id !== moved);
-    reordered.splice(reordered.indexOf(target), 0, moved);
+    reordered.splice(to, 0, moved);
     const rank = new Map(reordered.map((id, index) => [id, index]));
     return { ...w, areas: w.areas.map((a) => ({ ...a, order: rank.get(a.id) ?? a.order })) };
 }
