@@ -108,7 +108,10 @@ w.innerHeight = 844;
 w.document.querySelector('[aria-label="Open navigation"]').click();
 await pause();
 assert.ok(w.document.querySelector("aside.open"));
-await click("New area");
+const areaButton = w.document.querySelector('[aria-label="Add area"]');
+assert.ok(areaButton, "Browse drawer provides area creation");
+areaButton.click();
+await pause();
 assert.ok(
     !w.document.querySelector("aside.open"),
     "Drawer closes before creating an area",
@@ -118,7 +121,7 @@ fill(dialog.querySelector("input"), "Mobile life");
 await pause();
 await click("Save area");
 await waitFor(() => w.document.querySelector("main h1")?.textContent === "Mobile life", "area navigation");
-await click("New project");
+await click("Add project to Mobile life");
 dialog = w.document.querySelector("[role=dialog]");
 fill(dialog.querySelector("input"), "Mobile project");
 await pause();
