@@ -210,6 +210,7 @@ export function matches(
     view: View,
     today = localDate(),
     query = "",
+    includeCompleted = false,
 ): boolean {
     const p = hiddenProject(w, t),
         deleted = !!t.deletedAt || !!p?.deletedAt;
@@ -220,7 +221,7 @@ export function matches(
         return `${t.title} ${t.notes} ${t.tags.join(" ")} ${p?.title ?? ""}`
             .toLowerCase()
             .includes(query.toLowerCase());
-    if (t.completedAt || p?.state === "completed" || p?.state === "archived")
+    if ((t.completedAt && !includeCompleted) || p?.state === "completed" || p?.state === "archived")
         return false;
     if (view.startsWith("label:")) return t.tags.some((tag) => tag.toLocaleLowerCase() === decodeURIComponent(view.slice(6)).toLocaleLowerCase());
     if (view.startsWith("project:")) return t.projectId === view.slice(8);
@@ -254,7 +255,7 @@ export function complete(
             id: uid(),
             completedAt: null,
             nextId: null,
-            order: Math.max(0, ...n.tasks.map((x) => x.order)) + 1,
+            order: n.tasks.reduce((max, x) => Math.max(max, x.order), 0) + 1,
             scheduled: nextDate(base, t.repeat, t.repeatDay, today),
             deadline: null,
             checklist: t.checklist.map((c) => ({
@@ -280,7 +281,7 @@ export function moveTask(
     section: string | null = null,
 ): Workspace {
     const ids = visible.map((t) => t.id);
-    if (!ids.includes(movedId) || (targetId && !ids.includes(targetId))) return w;
+    if (!ids.includes(movedId) || targetId === movedId || (targetId && !ids.includes(targetId))) return w;
     const reordered = ids.filter((id) => id !== movedId);
     const targetIndex = targetId ? reordered.indexOf(targetId) : reordered.length;
     const insertAt = targetId

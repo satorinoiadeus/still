@@ -491,3 +491,68 @@ code { font-size: 11px; overflow-wrap: anywhere; }
 @media (prefers-reduced-motion:reduce) {
     .quick-add-form *, .view-toolbar *, .board-task-card { transition:none !important; animation:none !important; }
 }
+
+
+/* Still 0.3.2 — compact, expandable view controls and precise drag affordances */
+.view-toolbar { display:flex; align-items:center; justify-content:flex-end; gap:12px; position:relative; z-index:5; }
+.view-toolbar-hint { color:var(--muted); font-size:11px; margin-right:auto; }
+.controls-anchor { position:relative; margin-left:auto; }
+.controls-trigger { display:inline-flex; align-items:center; gap:9px; justify-content:center; min-height:38px; border:1px solid var(--line-strong); background:var(--surface); color:var(--text); padding:7px 13px; border-radius:11px; font-size:12px; font-weight:700; white-space:nowrap; box-shadow:0 2px 8px #00000007; }
+.controls-trigger:hover,.controls-trigger[aria-expanded="true"] { border-color:var(--accent); color:var(--accent); background:var(--tint-soft); }
+.controls-trigger.has-filters { border-color:var(--accent); }
+.filter-count { display:inline-grid; place-items:center; width:19px; height:19px; border-radius:99px; color:#fff; background:var(--accent); font-size:10px; font-weight:800; }
+.controls-panel { position:absolute; right:0; top:calc(100% + 8px); width:min(430px,calc(100vw - 26px)); max-height:min(78vh,680px); overflow:auto; background:var(--surface); color:var(--text); border:1px solid var(--line-strong); border-radius:17px; padding:18px; box-shadow:0 18px 60px #172d2330; z-index:60; }
+.controls-panel-heading { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:16px; }
+.controls-panel-heading strong { font-size:15px; }
+.controls-panel-heading button { width:32px; height:32px; border:0; background:var(--surface-soft); color:var(--muted); border-radius:9px; font-size:18px; }
+.controls-fields { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.controls-fields label { display:flex; flex-direction:column; gap:5px; font-size:11px; font-weight:700; color:var(--muted); min-width:0; }
+.controls-fields select,.controls-fields input { display:block; width:100%; min-width:0; min-height:39px; background:var(--surface-soft); color:var(--text); border:1px solid var(--line-strong); border-radius:9px; padding:7px 9px; font-size:12px; font-weight:500; }
+.controls-fields .controls-search { grid-column:1 / -1; }
+.controls-toggles { display:flex; align-items:center; gap:18px; margin:16px 0; flex-wrap:wrap; }
+.controls-toggles label { display:flex; align-items:center; gap:7px; font-size:12px; color:var(--text); }
+.controls-toggles input { accent-color:var(--accent); width:16px; height:16px; }
+.controls-panel .view-switch { display:flex; width:max-content; margin-bottom:14px; }
+.controls-panel-footer { display:flex; justify-content:space-between; align-items:center; gap:10px; border-top:1px solid var(--line); padding-top:13px; }
+.controls-panel-footer button { min-height:36px; padding:7px 12px; border-radius:9px; }
+.drag-handle,.project-drag-handle,.section-drag-handle,.area-drag-handle { touch-action:none; user-select:none; -webkit-user-select:none; -webkit-touch-callout:none; cursor:grab; }
+.drag-handle:active,.project-drag-handle:active,.section-drag-handle:active,.area-drag-handle:active { cursor:grabbing; }
+.drag-handle:disabled { cursor:not-allowed; opacity:.25; }
+.area-line { display:flex; align-items:center; }
+.area-drag-handle { display:inline-grid; place-items:center; flex:0 0 25px; min-height:33px; padding:0; border:0; border-radius:7px; background:transparent; color:var(--muted); font-size:16px; opacity:.55; }
+.area-line:hover .area-drag-handle,.area-drag-handle:focus-visible { opacity:1; }
+.area-drag-target > .area-line { background:var(--tint); outline:2px dashed var(--accent); outline-offset:-2px; border-radius:8px; }
+.section-drag-handle { display:inline-grid; place-items:center; flex:0 0 27px; min-width:27px; min-height:30px; padding:2px; border:0; background:transparent; color:var(--muted); border-radius:7px; font-size:17px; }
+.section-drag-handle:hover,.section-drag-handle:focus-visible { background:var(--tint); color:var(--accent); }
+.project-section-header.section-drag-target,.board-column.section-drag-target { outline:2px dashed var(--accent); outline-offset:-2px; background:var(--tint-soft); }
+.board-task-card { position:relative; align-items:flex-start; gap:8px; }
+.board-task-card .drag-handle { border:0; background:transparent; color:var(--muted); padding:2px; width:19px; min-width:19px; height:24px; opacity:.65; }
+.board-task-card .drag-handle:focus-visible { opacity:1; }
+.board-task-card.drag-source { opacity:.36; }
+.board-task-card.drop-before { box-shadow:inset 0 3px 0 var(--accent); }
+.board-task-card.drop-after { box-shadow:inset 0 -3px 0 var(--accent); }
+.board-column.drop-section { outline:2px dashed var(--accent); outline-offset:-3px; }
+.board-column-header { align-items:center; }
+.board-column-header strong { flex:1; }
+.board-column-header .section-drag-handle { margin-left:-5px; }
+@media(max-width:700px) {
+    .view-toolbar { justify-content:space-between; }
+    .view-toolbar-hint { font-size:10px; }
+    .controls-trigger { padding:8px 11px; min-height:39px; }
+    .controls-panel { position:fixed; right:12px; left:12px; top:auto; bottom:calc(70px + env(safe-area-inset-bottom,0px)); width:auto; max-height:min(72vh,620px); padding:15px; border-radius:17px; }
+    .controls-fields { gap:9px; }
+    .controls-toggles { gap:10px; }
+    .area-drag-handle { min-width:30px; min-height:38px; opacity:.9; }
+    .section-drag-handle { min-width:35px; min-height:38px; }
+    .board-task-card .drag-handle { min-width:27px; width:27px; min-height:32px; }
+}
+@media(prefers-reduced-motion:reduce) {
+    .controls-panel,.controls-trigger,.area-drag-target,.section-drag-target { animation:none !important; transition:none !important; }
+}
+
+/* Cross-container drag feedback and small action affordances */
+.destination-drop-target { outline:2px dashed var(--accent) !important; outline-offset:-2px; background:var(--tint) !important; border-radius:9px; }
+.duplicate-button { border:0; background:transparent; color:var(--muted); font-size:17px; border-radius:8px; min-width:30px; min-height:30px; padding:3px; cursor:pointer; }
+.duplicate-button:hover,.duplicate-button:focus-visible { background:var(--tint); color:var(--accent); }
+.duplicate-button:disabled { opacity:.35; cursor:not-allowed; }
+@media(max-width:700px) { .duplicate-button { min-width:34px; min-height:34px; } }

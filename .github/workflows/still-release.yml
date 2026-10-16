@@ -110,9 +110,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-          RELEASE_TAG: ${{ inputs.tag || (github.ref_name == 'main' && 'v0.3.1' || github.ref_name) }}
+          RELEASE_TAG: ${{ inputs.tag || (github.ref_name == 'main' && 'v0.3.2' || github.ref_name) }}
         run: |
           set -euo pipefail
           mapfile -d '' files < <(find release-assets -type f \( -name '*.apk' -o -name '*.exe' \) -print0)
           if [ "${#files[@]}" -lt 2 ]; then echo "Missing APK or EXE"; exit 1; fi
-          gh release create "$RELEASE_TAG" "${files[@]}" --target "$GITHUB_SHA" --prerelease --title "Still $RELEASE_TAG (experimental)" --notes "Still v0.3.1: faster task capture, smart dates, labels, list and board views, and section rename/delete. Experimental builds. Android uses development signing unless a persistent key is configured; Windows installer is unsigned. Back up your workspace before updating."
+          gh release create "$RELEASE_TAG" "${files[@]}" --target "$GITHUB_SHA" --prerelease --title "Still $RELEASE_TAG (experimental)" --notes "Still v0.3.2: 33 task filters, 13 sorting modes, expandable view controls, drag across tasks, sections, areas and projects, and backend data integrity upgrades. Experimental builds. Android uses development signing unless a persistent key is configured; Windows installer is unsigned. Back up your workspace before updating."
