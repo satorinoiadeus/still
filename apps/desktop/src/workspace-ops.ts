@@ -72,7 +72,7 @@ export function duplicateTask(w: Workspace, id: string): Workspace {
         deletedAt: null,
         nextId: null,
         checklist: source.checklist.map((c) => ({ ...c, id: uid(), done: false })),
-        order: Math.max(0, ...w.tasks.map((t) => t.order)) + 1,
+        order: w.tasks.reduce((max, t) => Math.max(max, t.order), 0) + 1,
     };
     return { ...w, tasks: [...w.tasks, copy] };
 }
