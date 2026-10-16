@@ -549,3 +549,10 @@ code { font-size: 11px; overflow-wrap: anywhere; }
 @media(prefers-reduced-motion:reduce) {
     .controls-panel,.controls-trigger,.area-drag-target,.section-drag-target { animation:none !important; transition:none !important; }
 }
+
+/* Cross-container drag feedback and small action affordances */
+.destination-drop-target { outline:2px dashed var(--accent) !important; outline-offset:-2px; background:var(--tint) !important; border-radius:9px; }
+.duplicate-button { border:0; background:transparent; color:var(--muted); font-size:17px; border-radius:8px; min-width:30px; min-height:30px; padding:3px; cursor:pointer; }
+.duplicate-button:hover,.duplicate-button:focus-visible { background:var(--tint); color:var(--accent); }
+.duplicate-button:disabled { opacity:.35; cursor:not-allowed; }
+@media(max-width:700px) { .duplicate-button { min-width:34px; min-height:34px; } }
