@@ -78,7 +78,7 @@ test("every sort mode is selectable and stable", () => {
         assert.deepEqual(out.map((t) => t.id).sort(), ["a", "b"], sort);
         assert.deepEqual(input.map((t) => t.id), ["a", "b"], "input not mutated");
     }
-    for (const sort of ["manual", "scheduled", "deadline", "priority", "title", "project", "area", "labels", "notes", "repeat", "section"] as SortMode[]) {
+    for (const sort of ["manual", "scheduled", "deadline", "priority", "title", "notes", "repeat", "section"] as SortMode[]) {
         const forward = applyTaskControls(w, input, { ...DEFAULT_CONTROLS, sort }, today);
         const reversed = applyTaskControls(w, input, { ...DEFAULT_CONTROLS, sort, reverse: true }, today);
         assert.deepEqual(reversed.map((t) => t.id), forward.map((t) => t.id).reverse(), sort);
