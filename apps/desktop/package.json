@@ -1,0 +1,42 @@
+{
+  "name": "@still/app",
+  "private": true,
+  "version": "0.2.2",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5173 --strictPort",
+    "build": "tsc --noEmit && vite build",
+    "test": "node --import tsx --test src/*.test.ts",
+    "tauri": "tauri",
+    "desktop": "tauri build --bundles nsis",
+    "android:init": "node scripts/init-android.mjs",
+    "android:build": "tauri android build --apk --debug --target aarch64",
+    "standalone": "node scripts/standalone.mjs",
+    "test:ui": "npm run standalone && node scripts/ui-smoke.mjs",
+    "format": "prettier --write src scripts *.json index.html",
+    "test:sql": "node scripts/check-sql.mjs",
+    "icons": "tauri icon assets/icon.svg"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2.0.0",
+    "@tauri-apps/plugin-dialog": "^2.0.0",
+    "@tauri-apps/plugin-fs": "^2.0.0",
+    "@tauri-apps/plugin-sql": "^2.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "@still/core": "0.2.2"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.0.0",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "happy-dom": "^21.0.1",
+    "prettier": "^3.9.10",
+    "tsx": "^4.0.0",
+    "typescript": "^5.9.0",
+    "vite": "^7.0.0",
+    "esbuild": "^0.27.0"
+  },
+  "license": "AGPL-3.0-only"
+}

@@ -1,0 +1,11 @@
+node_modules/
+**/dist/
+**/target/
+**/gen/
+**/Still.html
+*.apk
+*.exe
+*.keystore
+*.jks
+.env*
+**/src-tauri/icons/

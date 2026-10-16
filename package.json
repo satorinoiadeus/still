@@ -1,0 +1,27 @@
+{
+  "name": "still",
+  "version": "0.2.2",
+  "private": true,
+  "type": "module",
+  "license": "AGPL-3.0-only",
+  "workspaces": [
+    "apps/desktop",
+    "packages/core"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace @still/app --",
+    "build": "npm run build --workspace @still/app --",
+    "test": "npm run test --workspace @still/app --",
+    "tauri": "npm run tauri --workspace @still/app --",
+    "desktop": "npm run desktop --workspace @still/app --",
+    "android:init": "npm run android:init --workspace @still/app --",
+    "android:build": "npm run android:build --workspace @still/app --",
+    "standalone": "npm run standalone --workspace @still/app --",
+    "test:ui": "npm run test:ui --workspace @still/app --",
+    "test:sql": "npm run test:sql --workspace @still/app --",
+    "format": "npm run format --workspace @still/app --",
+    "verify": "npm test && npm run build && npm run test:ui && npm run test:sql",
+    "icons": "npm run icons --workspace @still/app",
+    "postinstall": "npm run icons"
+  }
+}
