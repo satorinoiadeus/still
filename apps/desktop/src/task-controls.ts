@@ -108,7 +108,7 @@ const between = (date: string | null, start: string, end: string) =>
     date !== null && date >= start && date <= end;
 const anyDate = (t: Task, pred: (s: string) => boolean) =>
     (t.scheduled !== null && pred(t.scheduled)) || (t.deadline !== null && pred(t.deadline));
-export function matchesTaskFilter(t: Task, kind: FilterKind, today = localDate()): boolean {
+export function matchesTaskFilter(t: Task, kind: FilterKind, today = localDate(), w?: Workspace): boolean {
     switch (kind) {
         case "all": return true;
         case "overdue": return anyDate(t, (d) => d < today) && !t.completedAt;
@@ -137,8 +137,8 @@ export function matchesTaskFilter(t: Task, kind: FilterKind, today = localDate()
         case "oneTime": return t.repeat === "none";
         case "inProject": return t.projectId !== null;
         case "noProject": return t.projectId === null;
-        case "inArea": return t.areaId !== null || t.projectId !== null;
-        case "noArea": return t.areaId === null && t.projectId === null;
+        case "inArea": return t.areaId !== null || !!(w && t.projectId && w.projects.find((p) => p.id === t.projectId)?.areaId);
+        case "noArea": return t.areaId === null && !(w && t.projectId && w.projects.find((p) => p.id === t.projectId)?.areaId);
         case "someday": return t.someday;
         case "actionable": return !t.someday;
         case "completed": return t.completedAt !== null;
@@ -176,7 +176,7 @@ export function applyTaskControls(
         if (opts.project && t.projectId !== opts.project) return false;
         if (opts.area && taskAreaId(t, w) !== opts.area) return false;
         if (label && !t.tags.some((tag) => norm(tag) === label)) return false;
-        if (!matchesTaskFilter(t, opts.filter, today)) return false;
+        if (!matchesTaskFilter(t, opts.filter, today, w)) return false;
         if (search) {
             const project = w.projects.find((p) => p.id === t.projectId);
             const haystack = norm([t.title, t.notes, t.heading, ...t.tags, project?.title ?? ""].join(" "));
