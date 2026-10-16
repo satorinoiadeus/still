@@ -97,7 +97,8 @@ select.value = "dark";
 select.dispatchEvent(new w.Event("change", { bubbles: true }));
 await pause();
 assert.equal(w.document.documentElement.dataset.theme, "dark");
-await click("×");
+w.document.querySelector('[aria-label="Close dialog"]').click();
+await pause();
 // Exercise the same visible creation controls used on a narrow mobile screen.
 w.innerWidth = 390;
 w.innerHeight = 844;
