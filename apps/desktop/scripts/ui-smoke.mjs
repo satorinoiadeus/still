@@ -44,13 +44,9 @@ assert.match(w.document.body.textContent, /Ask one lawyer/);
 await click("New task");
 let dialog = w.document.querySelector("[role=dialog]");
 assert.ok(dialog);
-fill(dialog.querySelector("input"), "Write proposal tomorrow #business !high");
+fill(dialog.querySelector('textarea[aria-label="Quick add task name"]'), "Write proposal tomorrow #business !high");
 await pause();
-await click("Parse into fields");
-dialog = w.document.querySelector("[role=dialog]");
-const inputs = dialog.querySelectorAll("input");
-assert.equal(inputs[1].value, "Write proposal");
-await click("Save task");
+await click("Add task ↗");
 assert.ok(!w.document.querySelector("[role=dialog]"));
 await click("Upcoming");
 assert.match(w.document.body.textContent, /Write proposal/);
@@ -147,16 +143,16 @@ assert.ok(sectionTaskButton);
 sectionTaskButton.click();
 await pause();
 dialog = w.document.querySelector("[role=dialog]");
-fill(dialog.querySelector("input[required]"), "First section action");
+fill(dialog.querySelector('textarea[aria-label="Quick add task name"]'), "First section action");
 await pause();
-await click("Save task");
+await click("Add task ↗");
 state = JSON.parse(w.localStorage.getItem("still.workspace.v1"));
 assert.equal(state.tasks.find((t) => t.title === "First section action").heading, "First steps");
 await click("New task");
 dialog = w.document.querySelector("[role=dialog]");
-fill(dialog.querySelector("input[required]"), "My mobile action");
+fill(dialog.querySelector('textarea[aria-label="Quick add task name"]'), "My mobile action");
 await pause();
-await click("Save task");
+await click("Add task ↗");
 state = JSON.parse(w.localStorage.getItem("still.workspace.v1"));
 const mobileProject = state.projects.find((p) => p.title === "Mobile project");
 assert.equal(mobileProject.areaId, mobileArea.id);
@@ -165,6 +161,15 @@ assert.equal(
     mobileProject.id,
 );
 assert.match(w.document.querySelector("main").textContent, /My mobile action/);
+// New quick-add and quality-of-life controls should be discoverable.
+assert.ok(w.document.querySelector('[aria-label="Sort tasks"]'));
+assert.ok(w.document.querySelector('[aria-label="Filter by priority"]'));
+assert.ok(w.document.querySelector('[aria-label="Project layout"]'));
+assert.ok(w.document.querySelector('[aria-label="Delete section First steps"]'));
+await click("Board");
+assert.ok(w.document.querySelector(".task-board"), "Board layout is available");
+await click("List");
+assert.ok(!w.document.querySelector(".task-board"), "List layout can be restored");
 console.log(
     "UI smoke passed: onboarding, capture, Trash, restore, recurrence, Undo, theme; mobile drawer, area → project → task creation and saved relationships.",
 );
