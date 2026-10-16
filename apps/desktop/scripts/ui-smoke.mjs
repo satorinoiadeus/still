@@ -162,15 +162,31 @@ assert.equal(
     mobileProject.id,
 );
 assert.match(w.document.querySelector("main").textContent, /My mobile action/);
-// New quick-add and quality-of-life controls should be discoverable.
+// New controls live in a collapsible corner rather than taking up screen space.
+assert.equal(w.document.querySelector('[aria-label="Sort tasks"]'), null, "Filters start collapsed");
+await click("Filter & sort");
 assert.ok(w.document.querySelector('[aria-label="Sort tasks"]'));
 assert.ok(w.document.querySelector('[aria-label="Filter by priority"]'));
+assert.ok(w.document.querySelector('[aria-label="Filter tasks"]'));
 assert.ok(w.document.querySelector('[aria-label="Project layout"]'));
 assert.ok(w.document.querySelector('[aria-label="Delete section First steps"]'));
+assert.ok(w.document.querySelector('[aria-label="Drag section First steps"]'));
+assert.ok(w.document.querySelector('[aria-label="Drag area Mobile life"]'));
 await click("Board");
 assert.ok(w.document.querySelector(".task-board"), "Board layout is available");
+assert.ok(w.document.querySelector(".board-task-card .drag-handle"), "Board tasks can be dragged");
 await click("List");
 assert.ok(!w.document.querySelector(".task-board"), "List layout can be restored");
+const priority = w.document.querySelector('[aria-label="Filter by priority"]');
+priority.value = "high";
+priority.dispatchEvent(new w.Event("change", { bubbles: true }));
+await pause();
+assert.equal(w.document.querySelectorAll(".task-row").length, 0, "Priority filtering updates visible tasks");
+await click("Reset filters");
+await pause();
+assert.ok(w.document.querySelectorAll(".task-row").length >= 2, "Reset restores visible tasks");
+await click("Done");
+assert.equal(w.document.querySelector('[aria-label="Sort tasks"]'), null, "Panel collapses again");
 console.log(
     "UI smoke passed: onboarding, capture, Trash, restore, recurrence, Undo, theme; mobile drawer, area → project → task creation and saved relationships.",
 );
