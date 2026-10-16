@@ -91,6 +91,11 @@ function App() {
         [query, setQuery] = useState(""),
         [controls, setControls] = useState<TaskControls>(loadTaskControls),
         [filtersOpen, setFiltersOpen] = useState(false),
+        [expandedAreas, setExpandedAreas] = useState<Set<string>>(() => new Set()),
+        [projectDisplay, setProjectDisplay] = useState<"list" | "cards">(() => {
+            try { return localStorage.getItem("still.project-display.v1") === "cards" ? "cards" : "list"; }
+            catch { return "list"; }
+        }),
         [labelSearch, setLabelSearch] = useState(""),
         [editingSection, setEditingSection] = useState<string | null>(null),
         [sectionEditDraft, setSectionEditDraft] = useState(""),
@@ -285,6 +290,17 @@ function App() {
         return () => window.removeEventListener("keydown", key);
     }, [view, modal]);
     useEffect(() => { persistTaskControls(controls); }, [controls]);
+    useEffect(() => {
+        try { localStorage.setItem("still.project-display.v1", projectDisplay); }
+        catch { /* Preference only; workspace must remain usable. */ }
+    }, [projectDisplay]);
+    function toggleArea(id: string) {
+        setExpandedAreas((previous) => {
+            const next = new Set(previous);
+            if (next.has(id)) next.delete(id); else next.add(id);
+            return next;
+        });
+    }
     useEffect(() => {
         if (!filtersOpen) return;
         const dismiss = (event: PointerEvent) => {
@@ -824,14 +840,19 @@ function App() {
                                     onKeyDown={(e) => { if (e.key === "ArrowUp" || e.key === "ArrowDown") { e.preventDefault(); moveAreaByKey(a.id, e.key === "ArrowUp" ? -1 : 1); } }}>⠿</button>
                                 <button
                                     onClick={() => go(`area:${a.id}`)}
-                                    className={
-                                        view === `area:${a.id}`
-                                            ? "selected"
-                                            : ""
-                                    }
+                                    className={"area-link " + (view === `area:${a.id}` ? "selected" : "")}
+                                    aria-current={view === `area:${a.id}` ? "page" : undefined}
                                 >
-                                    ▧ &nbsp; {a.title}
+                                    <span className="area-symbol" aria-hidden="true">▧</span>
+                                    <span className="area-name">{a.title}</span>
                                 </button>
+                                {activeProjects.some((p) => p.areaId === a.id) && (
+                                    <button type="button" className="area-expand" aria-label={(expandedAreas.has(a.id) ? "Collapse" : "Expand") + " projects in " + a.title}
+                                        aria-expanded={expandedAreas.has(a.id)}
+                                        onClick={() => toggleArea(a.id)}>
+                                        <span aria-hidden="true">{expandedAreas.has(a.id) ? "⌄" : "›"}</span>
+                                    </button>
+                                )}
                                 <button
                                     className="area-edit"
                                     aria-label={`Edit area ${a.title}`}
@@ -843,7 +864,7 @@ function App() {
                                     ···
                                 </button>
                             </div>
-                            {activeProjects
+                            {expandedAreas.has(a.id) && activeProjects
                                 .filter((p) => p.areaId === a.id)
                                 .map((p) => (
                                     <button
@@ -945,7 +966,7 @@ function App() {
                     </div>
                 )}
                 <header>
-                    <div className="eyebrow">STILL · YOUR QUIET SPACE</div>
+                    <div className="eyebrow">STILL</div>
                     <div className="heading-line">
                         <h1>{title}</h1>
                         {p ? (
@@ -971,14 +992,12 @@ function App() {
                             </span>
                         )}
                     </div>
-                    <p>
-                        {p?.notes ||
-                            subtitle[view] ||
-                            "Your projects and next actions, in one place."}
-                    </p>
+                    {(p?.notes || (!area && subtitle[view])) && (
+                        <p className="view-description">{p?.notes || subtitle[view]}</p>
+                    )}
                     {area && (
                         <button className="area-add-project" onClick={addProject}>
-                            <span className="area-add-icon">＋</span> Add project to {area.title}
+                            <span className="area-add-icon">＋</span> New project
                         </button>
                     )}
                     {p && (
@@ -1048,116 +1067,8 @@ function App() {
                         aria-label="Search tasks"
                     />
                 )}
-                {shownProjects.length > 0 && (
-                    <section className="project-cards">
-                        {shownProjects.map((p) => {
-                            const ts = w.tasks.filter(
-                                    (t) => t.projectId === p.id && !t.deletedAt,
-                                ),
-                                done = ts.filter((t) => t.completedAt).length,
-                                next = ts
-                                    .filter(
-                                        (t) =>
-                                            !t.completedAt &&
-                                            !t.someday &&
-                                            (!t.scheduled ||
-                                                t.scheduled <= localDate()),
-                                    )
-                                    .sort((a, b) => a.order - b.order)[0];
-                            return (
-                                <article className={"project-card " + (projectDragTarget === p.id ? "project-drop-target " : "") + (dropSpot?.destination?.kind === "project" && dropSpot.destination.id === p.id ? "destination-drop-target" : "")} key={p.id} data-project-id={p.id} data-drop-project={p.id}>
-                                    <div className="project-card-top">
-                                        {view.startsWith("area:") && (
-                                            <button type="button" className="project-drag-handle"
-                                                aria-label={`Drag to reorder project ${p.title}`}
-                                                onPointerDown={(e) => startProjectDrag(e, p.id)}
-                                                onKeyDown={(e) => { if (e.key === "ArrowUp" || e.key === "ArrowDown") { e.preventDefault(); moveProjectByKey(p.id, e.key === "ArrowUp" ? -1 : 1); } }}>⠿</button>
-                                        )}
-                                        <button
-                                            className="project-title"
-                                            onClick={() =>
-                                                p.deletedAt
-                                                    ? editProject(p)
-                                                    : go(`project:${p.id}`)
-                                            }
-                                        >
-                                            ◌ &nbsp; {p.title}
-                                        </button>
-                                        {view === "trash" ? (
-                                            <button
-                                                className="text-button"
-                                                onClick={() =>
-                                                    updateProject({
-                                                        ...p,
-                                                        deletedAt: null,
-                                                    })
-                                                }
-                                            >
-                                                Restore project
-                                            </button>
-                                        ) : view === "logbook" ? (
-                                            <button
-                                                className="text-button"
-                                                onClick={() =>
-                                                    updateProject({
-                                                        ...p,
-                                                        state: "active",
-                                                    })
-                                                }
-                                            >
-                                                Reopen
-                                            </button>
-                                        ) : (
-                                            <button
-                                                className="text-button"
-                                                onClick={() => editProject(p)}
-                                            >
-                                                Edit
-                                            </button>
-                                        )}
-                                    </div>
-                                    <p>
-                                        {p.state === "archived"
-                                            ? "Archived · "
-                                            : p.state === "completed"
-                                              ? "Completed · "
-                                              : ""}
-                                        {p.doneMeans || "One clear outcome."}
-                                    </p>
-                                    <progress
-                                        max={Math.max(1, ts.length)}
-                                        value={done}
-                                    />
-                                    <div className="project-next">
-                                        <small>
-                                            {done}/{ts.length} complete
-                                        </small>
-                                        {!p.deletedAt &&
-                                            p.state === "active" &&
-                                            (next ? (
-                                                <span>Next: {next.title}</span>
-                                            ) : (
-                                                <button
-                                                    className="text-button"
-                                                    onClick={() => {
-                                                        setTask({
-                                                            ...newTask(),
-                                                            projectId: p.id,
-                                                        });
-                                                        setModal("task");
-                                                    }}
-                                                >
-                                                    ＋ Add next action
-                                                </button>
-                                            ))}
-                                    </div>
-                                </article>
-                            );
-                        })}
-                    </section>
-                )}
                 <div className="view-toolbar" aria-label="Task view options">
-                    <span className="view-toolbar-hint">{tasks.length} visible · {dragEnabled ? "Drag handles to arrange" : "Manual sort to drag"}</span>
+                    {activeFilterCount > 0 && <span className="view-toolbar-hint">{tasks.length} matching {tasks.length === 1 ? "task" : "tasks"}</span>}
                     <div className="controls-anchor" ref={filterPanelRef}>
                         <button type="button" className={"controls-trigger " + (activeFilterCount ? "has-filters" : "")}
                             aria-expanded={filtersOpen} aria-controls="task-view-controls" aria-label="Expand filters and sorting"
@@ -1222,6 +1133,116 @@ function App() {
                         </div>}
                     </div>
                 </div>
+                {shownProjects.length > 0 && (
+                    <section className={"project-cards " + (projectDisplay === "list" ? "as-list" : "as-cards")} aria-label="Projects">
+                        <div className="project-collection-heading">
+                            <h2>Projects <span className="project-collection-count">{shownProjects.length}</span></h2>
+                            <div className="project-display-switch" role="group" aria-label="Project overview layout">
+                                <button type="button" aria-label="Compact project list" aria-pressed={projectDisplay === "list"}
+                                    className={projectDisplay === "list" ? "selected" : ""} onClick={() => setProjectDisplay("list")}>☷ <span>List</span></button>
+                                <button type="button" aria-label="Project cards" aria-pressed={projectDisplay === "cards"}
+                                    className={projectDisplay === "cards" ? "selected" : ""} onClick={() => setProjectDisplay("cards")}>▦ <span>Cards</span></button>
+                            </div>
+                        </div>
+                        {shownProjects.map((p) => {
+                            const ts = w.tasks.filter(
+                                    (t) => t.projectId === p.id && !t.deletedAt,
+                                ),
+                                done = ts.filter((t) => t.completedAt).length,
+                                next = ts
+                                    .filter(
+                                        (t) =>
+                                            !t.completedAt &&
+                                            !t.someday &&
+                                            (!t.scheduled ||
+                                                t.scheduled <= localDate()),
+                                    )
+                                    .sort((a, b) => a.order - b.order)[0];
+                            return (
+                                <article className={"project-card " + (projectDragTarget === p.id ? "project-drop-target " : "") + (dropSpot?.destination?.kind === "project" && dropSpot.destination.id === p.id ? "destination-drop-target" : "")} key={p.id} data-project-id={p.id} data-drop-project={p.id}>
+                                    <div className="project-card-top">
+                                        {view.startsWith("area:") && (
+                                            <button type="button" className="project-drag-handle"
+                                                aria-label={`Drag to reorder project ${p.title}`}
+                                                onPointerDown={(e) => startProjectDrag(e, p.id)}
+                                                onKeyDown={(e) => { if (e.key === "ArrowUp" || e.key === "ArrowDown") { e.preventDefault(); moveProjectByKey(p.id, e.key === "ArrowUp" ? -1 : 1); } }}>⠿</button>
+                                        )}
+                                        <button
+                                            className="project-title"
+                                            onClick={() =>
+                                                p.deletedAt
+                                                    ? editProject(p)
+                                                    : go(`project:${p.id}`)
+                                            }
+                                        >
+                                            <span className="project-status-icon" aria-hidden="true">◌</span> {p.title}
+                                        </button>
+                                        {view === "trash" ? (
+                                            <button
+                                                className="text-button"
+                                                onClick={() =>
+                                                    updateProject({
+                                                        ...p,
+                                                        deletedAt: null,
+                                                    })
+                                                }
+                                            >
+                                                Restore project
+                                            </button>
+                                        ) : view === "logbook" ? (
+                                            <button
+                                                className="text-button"
+                                                onClick={() =>
+                                                    updateProject({
+                                                        ...p,
+                                                        state: "active",
+                                                    })
+                                                }
+                                            >
+                                                Reopen
+                                            </button>
+                                        ) : (
+                                            <button
+                                                className="text-button project-edit"
+                                                aria-label={"Edit project " + p.title}
+                                                title="Edit project"
+                                                onClick={() => editProject(p)}
+                                            >
+                                                ···
+                                            </button>
+                                        )}
+                                    </div>
+                                    {p.doneMeans.trim() && <p className="project-outcome">{p.doneMeans}</p>}
+                                    {ts.length > 0 && (
+                                        <div className="project-progress-line">
+                                            <progress max={ts.length} value={done} aria-label={"Progress for " + p.title} />
+                                            <small>{done}/{ts.length}</small>
+                                        </div>
+                                    )}
+                                    {!p.deletedAt && p.state === "active" && (
+                                        <div className="project-next">
+                                            {next ? (
+                                                <button type="button" className="project-next-action" title={"Open next action: " + next.title}
+                                                    onClick={() => { setTask(next); setModal("task"); }}>
+                                                    <span aria-hidden="true">↳</span> {next.title}
+                                                </button>
+                                            ) : (
+                                                <button className="text-button project-add-action"
+                                                    onClick={() => {
+                                                        setTask({ ...newTask(), projectId: p.id });
+                                                        setModal("task");
+                                                    }}
+                                                >
+                                                    ＋ Next action
+                                                </button>
+                                            )}
+                                        </div>
+                                    )}
+                                </article>
+                            );
+                        })}
+                    </section>
+                )}
                 <section className={"task-section " + (compact ? "compact" : "") + (p && layout === "board" ? " board-task-section" : "")}>
                     <div className="list-label">
                         <span>
