@@ -305,7 +305,7 @@ function App() {
                           ? !p.deletedAt && p.state === "active" &&
                             p.areaId === view.slice(5)
                           : false,
-              )
+              ).sort((a, b) => a.order - b.order)
             : [],
         [w, view],
     );
@@ -628,14 +628,6 @@ function App() {
                 />
             )}
             <main>
-                <div className="mobile-create" aria-label="Create and organize">
-                    <button className="secondary" onClick={addArea}>
-                        ＋ New area
-                    </button>
-                    <button className="secondary" onClick={addProject}>
-                        ＋ New project
-                    </button>
-                </div>
                 <div className="topline">
                     <button
                         className="mobile plain"
@@ -667,7 +659,7 @@ function App() {
                     </div>
                 )}
                 <header>
-                    <div className="eyebrow">MAKE ROOM FOR WHAT MATTERS</div>
+                    <div className="eyebrow">STILL · YOUR QUIET SPACE</div>
                     <div className="heading-line">
                         <h1>{title}</h1>
                         {p ? (
@@ -698,6 +690,11 @@ function App() {
                             subtitle[view] ||
                             "Your projects and next actions, in one place."}
                     </p>
+                    {area && (
+                        <button className="area-add-project" onClick={addProject}>
+                            <span className="area-add-icon">＋</span> Add project to {area.title}
+                        </button>
+                    )}
                     {p && (
                         <div className="project-info">
                             <span>
@@ -1176,9 +1173,12 @@ function App() {
                     One thing at a time is enough.<span>✳</span>
                 </div>
             </main>
-            <button className="fab" onClick={() => addTask()} aria-label="Add task">
-                ＋
-            </button>
+            <nav className="mobile-bottom-bar" aria-label="Quick navigation">
+                <button type="button" onClick={() => go("inbox")} className={view === "inbox" ? "active" : ""}><NavIcon name="inbox"/><small>Inbox</small></button>
+                <button type="button" onClick={() => go("today")} className={view === "today" ? "active" : ""}><NavIcon name="sun"/><small>Today</small></button>
+                <button type="button" onClick={() => setMenu(true)} aria-label="Browse lists and areas"><NavIcon name="layers"/><small>Browse</small></button>
+                <button type="button" onClick={() => addTask()} className="mobile-bottom-add" aria-label="Add task">＋</button>
+            </nav>
             {message && (
                 <div className="toast" role="status">
                     <span>{message}</span>
