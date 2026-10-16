@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { blank, newTask, newProject, type Task, type Workspace } from "./domain";
+import { blank, newTask, newProject, matches, type Task, type Workspace } from "./domain";
 import {
     FILTERS, SORTS, DEFAULT_CONTROLS, applyTaskControls, canDragTasks,
     matchesTaskFilter, parseTaskControls, reorderNamedSections, reorderAreas,
@@ -155,4 +155,13 @@ test("area drag ignores no-op and missing targets", () => {
     assert.equal(reorderAreas(w, "a1", "a1"), w);
     assert.equal(reorderAreas(w, "missing", "a1"), w);
     assert.equal(reorderAreas(w, "a1", "missing"), w);
+});
+
+test("completed-only filtering can see completed tasks in project and area views", () => {
+    const done = task({ projectId: "p1", completedAt: "2026-10-15T12:00:00Z" });
+    assert.equal(matches(w, done, "project:p1", today), false);
+    assert.equal(matches(w, done, "project:p1", today, "", true), true);
+    assert.equal(matches(w, done, "area:a1", today, "", true), true);
+    assert.equal(matches(w, done, "area:a2", today, "", true), false);
+    assert.equal(applyTaskControls(w, [done], { ...DEFAULT_CONTROLS, filter: "completed" }, today).length, 1);
 });
