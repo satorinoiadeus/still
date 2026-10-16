@@ -585,7 +585,7 @@ function App() {
         const target = ids[from + direction];
         if (!target) return;
         ids.splice(from, 1);
-        ids.splice(ids.indexOf(target), 0, id);
+        ids.splice(from + direction, 0, id);
         const others = w.projects.filter((p) => !ids.includes(p.id)).sort((a, b) => a.order - b.order).map((p) => p.id);
         const ranks = new Map([...ids, ...others].map((id, index) => [id, index]));
         void commit({ ...w, projects: w.projects.map((p) => ({ ...p, order: ranks.get(p.id) ?? p.order })) }, "Projects reordered");
