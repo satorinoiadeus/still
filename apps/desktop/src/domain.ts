@@ -254,7 +254,7 @@ export function complete(
             id: uid(),
             completedAt: null,
             nextId: null,
-            order: Math.max(0, ...n.tasks.map((x) => x.order)) + 1,
+            order: n.tasks.reduce((max, x) => Math.max(max, x.order), 0) + 1,
             scheduled: nextDate(base, t.repeat, t.repeatDay, today),
             deadline: null,
             checklist: t.checklist.map((c) => ({
@@ -280,7 +280,7 @@ export function moveTask(
     section: string | null = null,
 ): Workspace {
     const ids = visible.map((t) => t.id);
-    if (!ids.includes(movedId) || (targetId && !ids.includes(targetId))) return w;
+    if (!ids.includes(movedId) || targetId === movedId || (targetId && !ids.includes(targetId))) return w;
     const reordered = ids.filter((id) => id !== movedId);
     const targetIndex = targetId ? reordered.indexOf(targetId) : reordered.length;
     const insertAt = targetId
