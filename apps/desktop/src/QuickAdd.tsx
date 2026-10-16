@@ -34,9 +34,9 @@ export default function QuickAdd({ base, workspace, busy, save, close }: Props) 
     async function submit() {
         if (busy || sending || !parsed.title.trim()) return;
         const projectId = target.startsWith("p:") ? target.slice(2) : null;
-        const areaId = projectId
-            ? workspace.projects.find((p) => p.id === projectId)?.areaId ?? null
-            : target.startsWith("a:") ? target.slice(2) : null;
+        // Still stores either a projectId or an areaId on a task, never both.
+        // Project membership already implies its Area through the project.
+        const areaId = projectId ? null : target.startsWith("a:") ? target.slice(2) : null;
         const task: Task = {
             ...newTask(),
             title: parsed.title.slice(0, 500),
