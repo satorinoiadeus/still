@@ -31,7 +31,7 @@ const click = async (text) => {
 const fill = (el, value) => {
     assert.ok(el);
     const setter = Object.getOwnPropertyDescriptor(
-        w.HTMLInputElement.prototype,
+        el.tagName === "TEXTAREA" ? w.HTMLTextAreaElement.prototype : w.HTMLInputElement.prototype,
         "value",
     ).set;
     setter.call(el, value);
