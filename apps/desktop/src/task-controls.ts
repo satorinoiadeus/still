@@ -1,4 +1,4 @@
-import { addDays, localDate, type Task, type Workspace } from "./domain";
+import { addDays, localDate, type Task, type Workspace, type Project, type Area } from "./domain";
 
 /** The filters are pure: no mutation, storage access, timers or network calls. */
 export const FILTERS = [
@@ -108,7 +108,7 @@ const between = (date: string | null, start: string, end: string) =>
     date !== null && date >= start && date <= end;
 const anyDate = (t: Task, pred: (s: string) => boolean) =>
     (t.scheduled !== null && pred(t.scheduled)) || (t.deadline !== null && pred(t.deadline));
-export function matchesTaskFilter(t: Task, kind: FilterKind, today = localDate(), w?: Workspace): boolean {
+export function matchesTaskFilter(t: Task, kind: FilterKind, today = localDate(), w?: Workspace, projectIndex?: Map<string, Project>): boolean {
     switch (kind) {
         case "all": return true;
         case "overdue": return anyDate(t, (d) => d < today) && !t.completedAt;
@@ -137,26 +137,26 @@ export function matchesTaskFilter(t: Task, kind: FilterKind, today = localDate()
         case "oneTime": return t.repeat === "none";
         case "inProject": return t.projectId !== null;
         case "noProject": return t.projectId === null;
-        case "inArea": return t.areaId !== null || !!(w && t.projectId && w.projects.find((p) => p.id === t.projectId)?.areaId);
-        case "noArea": return t.areaId === null && !(w && t.projectId && w.projects.find((p) => p.id === t.projectId)?.areaId);
+        case "inArea": return t.areaId !== null || !!(w && t.projectId && (projectIndex?.get(t.projectId) ?? w.projects.find((p) => p.id === t.projectId))?.areaId);
+        case "noArea": return t.areaId === null && !(w && t.projectId && (projectIndex?.get(t.projectId) ?? w.projects.find((p) => p.id === t.projectId))?.areaId);
         case "someday": return t.someday;
         case "actionable": return !t.someday;
         case "completed": return t.completedAt !== null;
         case "incomplete": return t.completedAt === null;
     }
 }
-function taskAreaId(t: Task, w: Workspace): string {
-    return t.areaId ?? w.projects.find((p) => p.id === t.projectId)?.areaId ?? "";
+function taskAreaId(t: Task, projects: Map<string, Project>): string {
+    return t.areaId ?? projects.get(t.projectId ?? "")?.areaId ?? "";
 }
-function field(t: Task, w: Workspace, sort: SortMode): string | number {
+function field(t: Task, projects: Map<string, Project>, areas: Map<string, Area>, sort: SortMode): string | number {
     switch (sort) {
         case "manual": return t.order;
         case "scheduled": return t.scheduled ?? "\uffff";
         case "deadline": return t.deadline ?? "\uffff";
         case "priority": return ({ high: 0, none: 1, low: 2 } as const)[t.priority];
         case "title": return norm(t.title);
-        case "project": return norm(w.projects.find((p) => p.id === t.projectId)?.title ?? "\uffff");
-        case "area": return norm(w.areas.find((a) => a.id === taskAreaId(t, w))?.title ?? "\uffff");
+        case "project": return norm(projects.get(t.projectId ?? "")?.title ?? "\uffff");
+        case "area": return norm(areas.get(taskAreaId(t, projects))?.title ?? "\uffff");
         case "labels": return norm([...t.tags].sort().join(",") || "\uffff");
         case "checklist": return t.checklist.length ? t.checklist.filter((x) => x.done).length / t.checklist.length : -1;
         case "notes": return t.notes.length;
@@ -171,14 +171,18 @@ export function applyTaskControls(
     const opts = parseTaskControls(options);
     const search = norm(opts.search.trim());
     const label = norm(opts.label);
+    // One indexed lookup per render instead of repeated linear project/area scans
+    // for every task and every comparator invocation.
+    const projects = new Map(w.projects.map((p) => [p.id, p]));
+    const areas = new Map(w.areas.map((a) => [a.id, a]));
     const visible = source.filter((t) => {
         if (opts.priority !== "all" && t.priority !== opts.priority) return false;
         if (opts.project && t.projectId !== opts.project) return false;
-        if (opts.area && taskAreaId(t, w) !== opts.area) return false;
+        if (opts.area && taskAreaId(t, projects) !== opts.area) return false;
         if (label && !t.tags.some((tag) => norm(tag) === label)) return false;
-        if (!matchesTaskFilter(t, opts.filter, today, w)) return false;
+        if (!matchesTaskFilter(t, opts.filter, today, w, projects)) return false;
         if (search) {
-            const project = w.projects.find((p) => p.id === t.projectId);
+            const project = projects.get(t.projectId ?? "");
             const haystack = norm([t.title, t.notes, t.heading, ...t.tags, project?.title ?? ""].join(" "));
             if (!haystack.includes(search)) return false;
         }
@@ -186,7 +190,7 @@ export function applyTaskControls(
     });
     return visible.map((task, index) => ({ task, index }))
         .sort((a, b) => {
-            const left = field(a.task, w, opts.sort), right = field(b.task, w, opts.sort);
+            const left = field(a.task, projects, areas, opts.sort), right = field(b.task, projects, areas, opts.sort);
             const nullish = (x: string | number) => x === "\uffff";
             // Undated items always go last, even in descending date sorts.
             if (nullish(left) !== nullish(right)) return nullish(left) ? 1 : -1;
