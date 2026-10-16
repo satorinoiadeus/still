@@ -104,7 +104,8 @@ function App() {
         [addingSection, setAddingSection] = useState(false),
         [sectionDraft, setSectionDraft] = useState(""),
         [draggedId, setDraggedId] = useState<string | null>(null),
-        [dropSpot, setDropSpot] = useState<DropSpot | null>(null);
+        [dropSpot, setDropSpot] = useState<DropSpot | null>(null),
+        [projectDragTarget, setProjectDragTarget] = useState<string | null>(null);
     const locked = useRef(false),
         current = useRef(w);
     current.current = w;
@@ -403,6 +404,52 @@ function App() {
             setModal(null);
             if (!w.projects.some((x) => x.id === p.id)) go(`project:${p.id}`);
         }
+    }
+    function startProjectDrag(e: React.PointerEvent<HTMLButtonElement>, id: string) {
+        if (busy || e.button !== 0 || !w || !view.startsWith("area:")) return;
+        e.preventDefault();
+        dragCleanup.current?.();
+        const startX = e.clientX, startY = e.clientY;
+        let moved = false;
+        let target: string | null = null;
+        const cleanup = () => {
+            window.removeEventListener("pointermove", onMove);
+            window.removeEventListener("pointerup", onUp);
+            window.removeEventListener("pointercancel", onCancel);
+            document.body.classList.remove("is-sorting");
+            setProjectDragTarget(null);
+            dragCleanup.current = null;
+        };
+        const onMove = (ev: PointerEvent) => {
+            if (ev.pointerId !== e.pointerId) return;
+            if (!moved && Math.hypot(ev.clientX - startX, ev.clientY - startY) < 7) return;
+            moved = true;
+            document.body.classList.add("is-sorting");
+            ev.preventDefault();
+            const at = document.elementFromPoint(ev.clientX, ev.clientY)?.closest<HTMLElement>("[data-project-id]");
+            target = at?.dataset.projectId && at.dataset.projectId !== id ? at.dataset.projectId : null;
+            setProjectDragTarget(target);
+            if (ev.clientY < 72) window.scrollBy({ top: -12, behavior: "auto" });
+            else if (ev.clientY > window.innerHeight - 72) window.scrollBy({ top: 12, behavior: "auto" });
+        };
+        const onUp = (ev: PointerEvent) => {
+            if (ev.pointerId !== e.pointerId) return;
+            const drop = target;
+            cleanup();
+            if (!moved || !drop || !w) return;
+            const ids = shownProjects.map((p) => p.id);
+            const from = ids.indexOf(id), to = ids.indexOf(drop);
+            if (from < 0 || to < 0) return;
+            ids.splice(from, 1);
+            ids.splice(to, 0, id);
+            const all = [...ids, ...w.projects.filter((p) => !ids.includes(p.id)).sort((a, b) => a.order - b.order).map((p) => p.id)];
+            void commit({ ...w, projects: w.projects.map((p) => ({ ...p, order: all.indexOf(p.id) })) }, "Projects reordered");
+        };
+        const onCancel = (ev: PointerEvent) => { if (ev.pointerId === e.pointerId) cleanup(); };
+        window.addEventListener("pointermove", onMove, { passive: false });
+        window.addEventListener("pointerup", onUp);
+        window.addEventListener("pointercancel", onCancel);
+        dragCleanup.current = cleanup;
     }
     function startDrag(e: React.PointerEvent<HTMLButtonElement>, id: string) {
         if (busy || e.button !== 0 || !w || ["trash", "logbook", "search"].includes(view)) return;
@@ -779,8 +826,13 @@ function App() {
                                     )
                                     .sort((a, b) => a.order - b.order)[0];
                             return (
-                                <article className="project-card" key={p.id}>
+                                <article className={"project-card " + (projectDragTarget === p.id ? "project-drop-target" : "")} key={p.id} data-project-id={p.id}>
                                     <div className="project-card-top">
+                                        {view.startsWith("area:") && (
+                                            <button type="button" className="project-drag-handle"
+                                                aria-label={`Drag to reorder project ${p.title}`}
+                                                onPointerDown={(e) => startProjectDrag(e, p.id)}>⠿</button>
+                                        )}
                                         <button
                                             className="project-title"
                                             onClick={() =>
