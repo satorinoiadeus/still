@@ -25,6 +25,7 @@ import {
     confirmReplacement,
     type Store,
 } from "./storage";
+import QuickAdd from "./QuickAdd";
 import "./style.css";
 const navs = [
     ["inbox", "Inbox", "inbox"],
@@ -81,6 +82,13 @@ function App() {
         [busy, setBusy] = useState(false),
         [view, setView] = useState<View>("today"),
         [query, setQuery] = useState(""),
+        [layout, setLayout] = useState<"list" | "board">(() => localStorage.getItem("still.layout") === "board" ? "board" : "list"),
+        [compact, setCompact] = useState(() => localStorage.getItem("still.compact") === "true"),
+        [sortMode, setSortMode] = useState<"manual" | "date" | "priority" | "alphabetical">("manual"),
+        [priorityFilter, setPriorityFilter] = useState<"all" | Task["priority"]>("all"),
+        [labelSearch, setLabelSearch] = useState(""),
+        [editingSection, setEditingSection] = useState<string | null>(null),
+        [sectionEditDraft, setSectionEditDraft] = useState(""),
         [menu, setMenu] = useState(false),
         [theme, setTheme] = useState(() => {
             try {
@@ -92,7 +100,7 @@ function App() {
             }
         }),
         [modal, setModal] = useState<
-            "task" | "project" | "area" | "settings" | "import" | null
+            "task" | "quick" | "project" | "area" | "settings" | "import" | null
         >(null),
         [task, setTask] = useState<Task | null>(null),
         [project, setProject] = useState<Project | null>(null),
@@ -209,7 +217,7 @@ function App() {
         if (view === "today") t.scheduled = localDate();
         if (view === "someday") t.someday = true;
         setTask(t);
-        setModal("task");
+        setModal("quick");
     }
     function addArea() {
         setMenu(false);
@@ -246,7 +254,7 @@ function App() {
                     el instanceof HTMLTextAreaElement ||
                     el instanceof HTMLSelectElement
                 ) &&
-                e.key.toLowerCase() === "n"
+                ["n", "q"].includes(e.key.toLowerCase())
             ) {
                 e.preventDefault();
                 addTask();
@@ -255,6 +263,10 @@ function App() {
         window.addEventListener("keydown", key);
         return () => window.removeEventListener("keydown", key);
     }, [view, modal]);
+    useEffect(() => {
+        localStorage.setItem("still.layout", layout);
+        localStorage.setItem("still.compact", String(compact));
+    }, [layout, compact]);
     const todayKey = localDate();
     // Counts are independent of navigation, search typing and open dialogs.
     const navCounts = useMemo(
@@ -278,14 +290,17 @@ function App() {
         () => w
             ? w.tasks
                   .filter((t) => matches(w, t, view, todayKey, query))
-                  .sort((a, b) =>
-                      view === "upcoming"
-                          ? (a.scheduled ?? "").localeCompare(b.scheduled ?? "") ||
-                            a.order - b.order
-                          : a.order - b.order,
-                  )
+                  .filter((t) => priorityFilter === "all" || t.priority === priorityFilter)
+                  .sort((a, b) => {
+                      if (sortMode === "alphabetical") return a.title.localeCompare(b.title);
+                      if (sortMode === "priority") return ({ high: 0, none: 1, low: 2 }[a.priority] - { high: 0, none: 1, low: 2 }[b.priority]) || a.order - b.order;
+                      if (sortMode === "date") return (a.scheduled ?? "9999-12-31").localeCompare(b.scheduled ?? "9999-12-31") || a.order - b.order;
+                      return view === "upcoming"
+                          ? (a.scheduled ?? "").localeCompare(b.scheduled ?? "") || a.order - b.order
+                          : a.order - b.order;
+                  })
             : [],
-        [w, view, todayKey, query],
+        [w, view, todayKey, query, priorityFilter, sortMode],
     );
     const activeProjects = useMemo<Project[]>(
         () => w
@@ -364,7 +379,7 @@ function App() {
             area?.title ??
             p?.title ??
             navs.find((n) => n[0] === view)?.[1] ??
-            "Search";
+            view.startsWith("label:") ? "@" + decodeURIComponent(view.slice(6)) : "Search";
     const sectionNames = p ? [...new Set([
         ...(p.sections ?? []),
         ...tasks.map((t) => t.heading).filter(Boolean),
@@ -382,6 +397,50 @@ function App() {
             ...projectTaskOrder.filter((t) => t.heading === name).map((task) => ({ kind: "task" as const, task, index: projectTaskOrder.indexOf(task) })),
         ]),
     ] : tasks.map((task, index) => ({ kind: "task" as const, task, index }));
+    const labels = [...new Set(w.tasks.filter((t) => !t.deletedAt).flatMap((t) => t.tags))]
+        .sort((a, b) => a.localeCompare(b));
+    async function renameLabel(oldName: string) {
+        const proposed = window.prompt("Rename label", oldName)?.trim().replace(/^@/, "").replace(/\s+/g, "-");
+        if (!proposed || proposed === oldName || proposed.length > 40) return;
+        if (labels.some((x) => x.toLowerCase() === proposed.toLowerCase())) {
+            setError("That label already exists."); return;
+        }
+        const next = { ...w, tasks: w.tasks.map((t) => ({
+            ...t, tags: t.tags.map((x) => x === oldName ? proposed : x),
+        })) };
+        if (await commit(next, "Label renamed") && view === "label:" + encodeURIComponent(oldName)) go("label:" + encodeURIComponent(proposed));
+    }
+    async function deleteLabel(name: string) {
+        if (!await confirmChange("Remove @" + name + " from all tasks? Tasks will not be deleted.")) return;
+        const next = { ...w, tasks: w.tasks.map((t) => ({ ...t, tags: t.tags.filter((x) => x !== name) })) };
+        if (await commit(next, "Label removed") && view === "label:" + encodeURIComponent(name)) go("inbox");
+    }
+    async function renameSection(name: string) {
+        if (!p || !w) return;
+        const nextName = sectionEditDraft.trim();
+        if (!nextName || nextName.length > 80 || (nextName !== name && sectionNames.includes(nextName))) {
+            setError("Choose a unique section name, up to 80 characters."); return;
+        }
+        if (await commit({
+            ...w,
+            projects: w.projects.map((x) => x.id === p.id ? { ...x, sections: (x.sections ?? []).map((n) => n === name ? nextName : n) } : x),
+            tasks: w.tasks.map((t) => t.projectId === p.id && t.heading === name ? { ...t, heading: nextName } : t),
+        }, "Section renamed")) setEditingSection(null);
+    }
+    async function deleteSection(name: string) {
+        if (!p || !w) return;
+        const affected = w.tasks.filter((t) => t.projectId === p.id && t.heading === name).length;
+        if (!await confirmChange("Delete section '" + name + "'? " + (affected ? affected + " task(s) will move to No section; nothing is deleted." : "No tasks will be deleted."))) return;
+        if (await commit({
+            ...w,
+            projects: w.projects.map((x) => x.id === p.id ? { ...x, sections: (x.sections ?? []).filter((n) => n !== name) } : x),
+            tasks: w.tasks.map((t) => t.projectId === p.id && t.heading === name ? { ...t, heading: "" } : t),
+        }, "Section deleted · tasks preserved")) setEditingSection(null);
+    }
+    async function saveQuickTask(t: Task) {
+        if (!w || busy || !t.title.trim()) return false;
+        return commit({ ...w, tasks: [...w.tasks, t] }, "Task added");
+    }
     async function updateTask(t: Task) {
         if (!w) return;
         const next = {
@@ -660,6 +719,20 @@ function App() {
                 <button className="new-project" onClick={addProject}>
                     ＋ New project
                 </button>
+                <div className="section-label">LABELS <span className="count">{labels.length || ""}</span></div>
+                <div className="label-sidebar">
+                    <input aria-label="Find labels" value={labelSearch} onChange={(e) => setLabelSearch(e.target.value)} placeholder="Find a label…" />
+                    {labels.filter((x) => x.toLowerCase().includes(labelSearch.toLowerCase())).map((tag) => (
+                        <div className="label-sidebar-row" key={tag}>
+                            <button className={view === "label:" + encodeURIComponent(tag) ? "selected" : ""} onClick={() => go("label:" + encodeURIComponent(tag))}>
+                                <span className="label-dot">●</span> {tag}
+                                <span className="count">{w.tasks.filter((t) => !t.deletedAt && !t.completedAt && t.tags.includes(tag)).length}</span>
+                            </button>
+                            <button className="label-more" aria-label={"Rename label " + tag} onClick={() => void renameLabel(tag)}>✎</button>
+                            <button className="label-more" aria-label={"Delete label " + tag} onClick={() => void deleteLabel(tag)}>×</button>
+                        </div>
+                    ))}
+                </div>
                 <div className="sidebar-foot">
                     <button onClick={() => setModal("settings")}>
                         ⚙ &nbsp; Settings & backups
@@ -916,7 +989,27 @@ function App() {
                         })}
                     </section>
                 )}
-                <section className="task-section">
+                <div className="view-toolbar" aria-label="Task view options">
+                    {p && <div className="view-switch" role="group" aria-label="Project layout">
+                        <button className={layout === "list" ? "selected" : ""} onClick={() => setLayout("list")} aria-pressed={layout === "list"}>☷ List</button>
+                        <button className={layout === "board" ? "selected" : ""} onClick={() => setLayout("board")} aria-pressed={layout === "board"}>▦ Board</button>
+                    </div>}
+                    <select aria-label="Sort tasks" value={sortMode} onChange={(e) => setSortMode(e.target.value as typeof sortMode)}>
+                        <option value="manual">Manual order</option>
+                        <option value="date">Date</option>
+                        <option value="priority">Priority</option>
+                        <option value="alphabetical">A to Z</option>
+                    </select>
+                    <select aria-label="Filter by priority" value={priorityFilter} onChange={(e) => setPriorityFilter(e.target.value as typeof priorityFilter)}>
+                        <option value="all">All priorities</option>
+                        <option value="high">High only</option>
+                        <option value="none">Normal only</option>
+                        <option value="low">Low only</option>
+                    </select>
+                    <button className={compact ? "density-button selected" : "density-button"} onClick={() => setCompact(!compact)} aria-pressed={compact}>↕ {compact ? "Comfortable" : "Compact"}</button>
+                    {(priorityFilter !== "all" || sortMode !== "manual") && <button className="clear-filters" onClick={() => { setPriorityFilter("all"); setSortMode("manual"); }}>Clear filters</button>}
+                </div>
+                <section className={"task-section " + (compact ? "compact" : "") + (p && layout === "board" ? " board-task-section" : "")}>
                     <div className="list-label">
                         <span>
                             {view === "today"
@@ -930,7 +1023,28 @@ function App() {
                             {tasks.length === 1 ? "task" : "tasks"}
                         </span>
                     </div>
-                    {tasks.length === 0 && !p ? (
+                    {p && layout === "board" ? (
+                        <div className="task-board" aria-label="Project board">
+                            {["", ...sectionNames].map((name) => (
+                                <section key={name} className="board-column">
+                                    <div className="board-column-header">
+                                        <strong>{name || "No section"}</strong>
+                                        <span>{tasks.filter((t) => t.heading === name).length}</span>
+                                    </div>
+                                    {tasks.filter((t) => t.heading === name).map((t) => (
+                                        <article key={t.id} className="board-task-card">
+                                            <button className={"check " + (t.priority === "high" ? "high" : "")} disabled={busy} aria-label={"Complete " + t.title} onClick={() => void commit(complete(w, t.id), "Task completed")}>✓</button>
+                                            <div><button className="board-task-title" onClick={() => { setTask(t); setModal("task"); }}>{t.title}</button>
+                                                {t.scheduled && <small>{labelDate(t.scheduled)}</small>}
+                                                {t.tags.length > 0 && <div className="board-tags">{t.tags.map((tag) => <button key={tag} onClick={() => go("label:" + encodeURIComponent(tag))}>@{tag}</button>)}</div>}
+                                            </div>
+                                        </article>
+                                    ))}
+                                    <button className="board-add" onClick={() => addTask(name)}>＋ Add task</button>
+                                </section>
+                            ))}
+                        </div>
+                    ) : tasks.length === 0 && !p ? (
                         <div className="empty">
                             <div className="empty-symbol">◌</div>
                             <h2>
@@ -963,7 +1077,17 @@ function App() {
                                     className={"project-section-header " + (dropSpot?.taskId === null && dropSpot.section === entry.title ? "drop-section" : "")}
                                     data-drop-section={entry.title}
                                 >
-                                    <h3 className="group-title">{entry.title || "No section"}</h3>
+                                    {editingSection === entry.title ? (
+                                        <form className="section-rename-form" onSubmit={(e) => { e.preventDefault(); void renameSection(entry.title); }}>
+                                            <input autoFocus aria-label="Rename section" maxLength={80} value={sectionEditDraft} onChange={(e) => setSectionEditDraft(e.target.value)} />
+                                            <button type="submit">Save</button>
+                                            <button type="button" onClick={() => setEditingSection(null)}>Cancel</button>
+                                        </form>
+                                    ) : <h3 className="group-title">{entry.title || "No section"} <small>{tasks.filter((t) => t.heading === entry.title).length}</small></h3>}
+                                    {entry.title && <div className="section-actions">
+                                        <button type="button" aria-label={"Rename section " + entry.title} title="Rename section" onClick={() => { setEditingSection(entry.title); setSectionEditDraft(entry.title); }}>✎</button>
+                                        <button type="button" aria-label={"Delete section " + entry.title} title="Delete section (keep tasks)" onClick={() => void deleteSection(entry.title)}>×</button>
+                                    </div>}
                                     <button type="button" className="section-add-task" onClick={() => addTask(entry.title)} aria-label={`Add task to ${entry.title || "No section"}`}>＋</button>
                                 </div>
                             );
@@ -1092,9 +1216,7 @@ function App() {
                                                 </span>
                                             )}
                                             {t.tags.map((tag) => (
-                                                <span key={tag} className="tag">
-                                                    #{tag}
-                                                </span>
+                                                <button key={tag} className="tag label-chip" onClick={() => go("label:" + encodeURIComponent(tag))} aria-label={"View label " + tag}>@{tag}</button>
                                             ))}
                                         </div>
                                     </div>
@@ -1264,8 +1386,10 @@ function App() {
                         role="dialog"
                         aria-modal="true"
                         aria-label={
-                            modal === "task"
-                                ? "Task editor"
+                            modal === "quick"
+                                ? "Quick add task"
+                                : modal === "task"
+                                  ? "Task editor"
                                 : modal === "project"
                                   ? "Project editor"
                                   : modal === "area"
@@ -1323,6 +1447,7 @@ function App() {
                         >
                             ×
                         </button>
+                        {modal === "quick" && task && <QuickAdd key={task.id} base={task} workspace={w} busy={busy} save={saveQuickTask} close={() => setModal(null)} />}
                         {modal === "task" && task && (
                             <TaskForm
                                 key={task.id}
