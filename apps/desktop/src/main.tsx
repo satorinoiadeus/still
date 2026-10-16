@@ -379,7 +379,7 @@ function App() {
             area?.title ??
             p?.title ??
             navs.find((n) => n[0] === view)?.[1] ??
-            view.startsWith("label:") ? "@" + decodeURIComponent(view.slice(6)) : "Search";
+            (view.startsWith("label:") ? "@" + decodeURIComponent(view.slice(6)) : "Search");
     const sectionNames = p ? [...new Set([
         ...(p.sections ?? []),
         ...tasks.map((t) => t.heading).filter(Boolean),
