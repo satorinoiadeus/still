@@ -74,3 +74,7 @@ The new **Quick add** composer opens from the bottom + button, **New task**, or 
 Project sections now support **Rename** and **Delete**. Deleting a section moves its tasks to **No section** rather than deleting tasks; Undo is available. Projects offer **List** and **Board** views. Task lists offer manual, date, priority and alphabetical sorting, a priority filter and compact density. The sidebar has clickable labels, counts, search, rename and removal; task label chips open filtered views. Label removal preserves tasks.
 
 These are original Still interactions inspired by modern task apps, not copied Todoist code or branding. Data stays offline, and existing Still backups remain compatible. This is a focused first quality-of-life batch, not a claim of 200 completed features.
+
+## Still 0.3.2 — Quiet Power Update
+
+The compact **Filter & sort** corner expands into 33 task filters, 13 sorting modes, priority/label/project/area selectors, in-view search, reverse sorting and compact mode. Controls persist locally and safely recover from invalid preferences. Drag tasks in List and Board views, drag between project sections, drag Areas and Projects, or drag a task to a sidebar Area, Project or Inbox. Arrow keys on drag handles offer keyboard reordering. Backend improvements include stable indexed selectors, safe task/project normalization, duplicate task with fresh IDs, no-op self-drops and large-workspace safety. See [RELEASE.md](RELEASE.md) for details.
