@@ -1,0 +1,40 @@
+name: Publish verified Still 1.0.0
+on:
+  push:
+    branches: [feat/hamsterbase-still-rebuild]
+    paths: [.github/workflows/release-verified.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Publish tested artifacts from the verified commit
+        run: |
+          test "$(gh api repos/$GH_REPO/actions/runs/39052030245 --jq .conclusion)" = success
+          test "$(gh api repos/$GH_REPO/actions/runs/39052030245 --jq .head_sha)" = 9e106855f0d679c4bfdb142a12a62493b39034ff
+          mkdir -p release/android release/windows release/web
+          gh run download 39052030245 -n Still-Android-testing-APK -D release/android
+          gh run download 39052030245 -n Still-Windows-x64-installer -D release/windows
+          gh run download 39052030245 -n Still-web -D release/web
+          cp release/android/*.apk release/Still-1.0.0-Android.apk
+          cp release/windows/*.exe release/Still-1.0.0-Windows-x64.exe
+          (cd release/web && zip -qr ../Still-1.0.0-web.zip .)
+          (cd release && sha256sum Still-* > SHA256SUMS.txt)
+          cat > release/notes.md <<'NOTES'
+          Still rebuilt from the actual HamsterBase Tasks source with sage light/dark themes, mobile navigation/search and appearance controls.
+
+          Verified commit: 9e106855f0d679c4bfdb142a12a62493b39034ff.
+          Passed type checking, lint, 8 engine tests, 15 browser checks, Android emulator install/launch, and installed Windows task creation/persistence.
+
+          Testing prerelease: development-signed Android APK and unsigned Windows installer. Separate app identity protects the old Still installation. Old Still JSON/SQLite migration is not supported. Export backups before changing installations. Live cloud integrations and physical-device behavior are not certified.
+          NOTES
+          if ! gh release view still-v1.0.0 >/dev/null 2>&1; then
+            gh release create still-v1.0.0 --target 9e106855f0d679c4bfdb142a12a62493b39034ff --prerelease --title 'Still 1.0.0 — HamsterBase rebuild' --notes-file release/notes.md release/Still-1.0.0-Android.apk release/Still-1.0.0-Windows-x64.exe release/Still-1.0.0-web.zip release/SHA256SUMS.txt
+          fi

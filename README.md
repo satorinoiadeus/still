@@ -1,80 +1,84 @@
 # Still
 
-A little space for your next action. An offline personal task manager for Android and Windows. Still has its own repository and keeps the earlier Mindwtr project untouched.
+A little space for your next action. A modern, local-first task manager built from the actual **HamsterBase Tasks** application, with warm neutral surfaces, sage accents, light/dark/e-ink themes, keyboard access, resizable/collapsible desktop navigation, mobile navigation and full-text local mobile search, and adjustable task spacing and accent colors.
 
-## What is included
+This development branch replaces the old Still application. **It is not a compatible upgrade of the old SQLite database.** Main and its release history remain unchanged. Read [DATA-MIGRATION.md](DATA-MIGRATION.md) before installing.
 
-Areas → projects → tasks → checklists. Inbox, Today, Upcoming, Anytime, Someday, Logbook, Trash, search, quick capture, date scheduling, deadlines, daily/weekly/monthly repeats, Undo, light/dark themes, project finish lines, ordering, named project sections (including empty sections), animated drag-to-reorder on touch and mouse, and JSON backups.
+## Foundation
 
-Still uses quiet green and neutral colors, a desktop sidebar, and mobile navigation. There are no accounts, sync, analytics, AI, email capture, calendars, MCP servers, Pomodoro timers, or network services.
+Upstream commit `5cebe7b4dd8464f5187a932a85785bf6c68eb206` is imported, not reimplemented. The Loro CRDT task model, scheduling, recurrence, areas, projects, headings, subtasks, ordering, saved views, command palette, local database adapters, import/export and synchronization implementations are retained. The only core adjustment is standard default imports for CryptoJS CommonJS/ESM interoperability; formats and algorithms are unchanged.
 
-## Run and verify
+Cloud accounts, payments, AI, attachment endpoints, self-hosted sync and native reminders are upstream integrations. Their source is preserved; availability and cross-device interoperability have **not** been certified for this derivative. No Still-hosted service is provided. Offline storage is supported; first-ever loading of the web app still requires its files. This is not an installable offline PWA.
 
-Install Node.js 24 and run from the repository root:
+## Run and check
+
+Node.js 22+, pnpm 10.15.0:
 
 ```sh
-npm ci
+pnpm install --frozen-lockfile
 npm run dev
-npm run verify
+npm run check
+npm test
+npm run web:build
+npm run electron:build
 ```
 
-The app is in `apps/desktop`, shared foundations in `packages/core`. `npm run standalone` creates `apps/desktop/Still.html` for an offline browser preview. Browser workspaces use browser-local storage; installed apps use SQLite. The preview is not a native installer.
+Serve `dist` with SPA fallback. Use `/desktop/inbox` for the desktop interface; Android user agents and narrow initial viewports open the mobile interface. Mobile and desktop retain their upstream routing behavior; reload after changing between phone and desktop emulation.
 
-## Build Windows EXE
-
-On Windows, install Rust 1.90, Visual Studio Build Tools with C++ and Windows SDK, and WebView2. Then:
+Browser workflow verification and screenshots:
 
 ```sh
-npm ci
-npm run desktop -- --ci
+npx playwright install --with-deps chromium
+npm run test:ui
 ```
 
-The NSIS installer is under `apps/desktop/src-tauri/target/release/bundle/nsis/`. Windows packages are unsigned unless signing is separately configured.
+Tests launch a local production preview themselves. See [VERIFICATION.md](VERIFICATION.md) for actual results and limits.
 
-## Build Android APK
+## Windows installer
 
-Install JDK 17, Android SDK API 36, build-tools 36.0.0, NDK 29.0.13846066, and Rust. Set `ANDROID_HOME`, `JAVA_HOME`, and `NDK_HOME` to their installed locations, then:
+On Windows x64 with Node 22 and pnpm:
 
 ```sh
-npm ci
-npm run android:init -- --ci
-npm run android:build -- --ci
+pnpm install --frozen-lockfile
+npm run web:build -- --use-relative-base
+npm run electron:build
+npm run electron:pack
 ```
 
-The ARM64 testing APK is under `apps/desktop/src-tauri/gen/android/app/build/outputs/apk/`. For a universal ARM64 + x86-64 build, run `npm run tauri -- android build --apk --debug --target aarch64 x86_64 --ci`.
+Electron-builder produces an unsigned NSIS installer in `release/`. Identity: `app.still.next.desktop`; data directory: `StillNext`. This intentionally coexists with the older Still app.
 
-`.github/workflows/still-build.yml` verifies the app before building Windows EXE and Android APK artifacts. An optional repository secret `STILL_ANDROID_DEBUG_KEYSTORE_BASE64` restores a persistent Android development key. Without it, a CI testing APK uses that runner's generated key and may not update an existing installation. Never commit signing keys. Production distribution requires production signing.
+## Android APK
 
-## Existing data
+Use JDK 21, Android SDK API 35 and build-tools 35.0.0. Set `ANDROID_HOME` and accept the SDK licenses.
 
-The application identifier is `app.still.tasks`, matching the earlier Still APK. Version 0.2.1 and the compatible `still.db` schema allow an upgrade when the signing key matches. This identifier is deliberately separate from the old app's identifier. Do not uninstall an existing app to bypass a signing mismatch without first exporting its data.
+```sh
+pnpm install --frozen-lockfile
+npm run web:build
+pnpm exec cap sync android
+cd android
+./gradlew assembleStandardDebug
+```
 
-For the previous app, export JSON, open Still → Settings & backups → Import backup, and review the preview before Merge or Replace. The original database/export is never modified. IDs, task relationships, notes, sections as headings, dates, completion, Trash, checklists, tags and supported repeats are copied. Existing Still backups remain compatible. Re-importing the same IDs does not duplicate tasks.
+Output: `android/app/build/outputs/apk/standard/debug/*.apk`. Identity: `app.still.next`. These APKs use a development signing key. A fresh GitHub runner generates a fresh key, so subsequent CI APKs may require a backup and uninstall of this testing app. Never uninstall your original Still app to install this rebuild. Production signing is not configured.
 
-Timed schedules become local dates. Waiting/reference statuses become ordinary tasks with a note; cancellations become Logbook entries. Advanced repeats pause with the original rule recorded in notes. Attachments, people, integrations, settings, and unsupported fields remain in the original export; keep it. Invalid references or dates reject the whole import. There is no direct migration of the old native database or app-private Android data.
+## Automated artifacts
 
-## Source and license
+[Still verified builds](https://github.com/satorinoiadeus/still/actions/workflows/still-build.yml) runs checks, engine tests, production build and browser workflows before Android/Windows packaging. Download artifacts from a **successful run for the exact commit**. An artifact is not proof of native device testing. No workflow merges main or publishes a public release automatically.
 
-AGPL-3.0-only; see LICENSE and NOTICE.md. Full previous implementations remain in Git history. All distributed changes must retain the applicable license and source obligations. The repository's URL may still use its original name; application branding is Still.
+## Source, reuse and attribution
 
-See REBUILD.md for the feature comparison and VERIFICATION.md for actual validation results.
+AGPL-3.0-only. Still is an independent derivative, not affiliated with HamsterBase. Keep LICENSE and [UPSTREAM.md](UPSTREAM.md) with distributed source. Original notices and MIT licenses for vendored VSCF/VS Code-derived infrastructure and build tooling remain in `src/packages`. Lucide supplies the existing icon system. Still's presentation changes are documented in [DESIGN.md](DESIGN.md). Optional third-party service names remain accurate in service-related screens.
 
-## Mobile update (0.2.1)
+### Still 1.1
 
-Mobile screens have visible New area/New project controls, automatic navigation to newly saved containers, lightweight drawer/press/entry motion, reduced-motion support and memoized navigation counts. Version 0.2.1 has compiled Android ARM64 APK and Windows x64 NSIS installer builds. The APK uses the existing test signing certificate; the Windows installer is unsigned. Native device/runtime testing remains unverified.
+See [release notes](RELEASE-1.1.md) for mobile batch actions, Todoist project CSV transfer,
+and WebDAV/Dropbox provider setup and limitations. All provider credentials and the
+sync encryption passphrase are local settings: enter them separately on every device.
+The same encrypted snapshot format and Loro engine serve both new providers.
+Mindwtr contributed small adapted sync utilities only; its task engine is not embedded.
 
-## Releases
-
-Version **0.2.2** adds project sections and Todoist-inspired drag animations while keeping Quiet Edition's visual design. The `still-release.yml` workflow builds Android and Windows installers, runs tests and publishes a GitHub prerelease only after both native builds succeed. The initial `release:` commit on `main` triggers the first prerelease. See [RELEASE.md](RELEASE.md) for signing and installation notes.
-
-## Still 0.3.1 — Quick Capture & Quality of Life
-
-The new **Quick add** composer opens from the bottom + button, **New task**, or the **N/Q** keyboard shortcuts. Type a task and press Enter to add it; Shift+Enter inserts a line break. Try `Email client tomorrow @work !high`, `Review draft Friday #Launch`, or `Call Alex in 3 days`. Pick an Area or Project, section, date, priority, and labels without leaving the composer. Turn on **Keep adding** to capture multiple tasks quickly. Existing task details remain editable in the full task editor.
-
-Project sections now support **Rename** and **Delete**. Deleting a section moves its tasks to **No section** rather than deleting tasks; Undo is available. Projects offer **List** and **Board** views. Task lists offer manual, date, priority and alphabetical sorting, a priority filter and compact density. The sidebar has clickable labels, counts, search, rename and removal; task label chips open filtered views. Label removal preserves tasks.
-
-These are original Still interactions inspired by modern task apps, not copied Todoist code or branding. Data stays offline, and existing Still backups remain compatible. This is a focused first quality-of-life batch, not a claim of 200 completed features.
-
-## Still 0.3.2 — Quiet Power Update
-
-The compact **Filter & sort** corner expands into 33 task filters, 13 sorting modes, priority/label/project/area selectors, in-view search, reverse sorting and compact mode. Controls persist locally and safely recover from invalid preferences. Drag tasks in List and Board views, drag between project sections, drag Areas and Projects, or drag a task to a sidebar Area, Project or Inbox. Arrow keys on drag handles offer keyboard reordering. Backend improvements include stable indexed selectors, safe task/project normalization, duplicate task with fresh IDs, no-op self-drops and large-workspace safety. See [RELEASE.md](RELEASE.md) for details.
+**Android testing updates:** export a `.hbTask` backup before replacing version 1.0.
+Its ephemeral signing key differs from 1.1, so Android requires uninstall/reinstall
+and backup restore. Never uninstall before saving your backup. The CI development
+key is cached for later versions; a durable private release key is needed for
+production upgrade guarantees.

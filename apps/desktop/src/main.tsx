@@ -1226,10 +1226,10 @@ function App() {
                     <div className="list-label">
                         <span>
                             {view === "today"
-                                ? "YOUR NEXT ACTIONS"
+                                ? "Your next actions"
                                 : p
-                                  ? "PROJECT ACTIONS"
-                                  : "TASKS"}
+                                  ? "Project actions"
+                                  : "Tasks"}
                         </span>
                         <span>
                             {tasks.length}{" "}

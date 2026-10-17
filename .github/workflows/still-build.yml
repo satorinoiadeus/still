@@ -1,91 +1,183 @@
-name: Still APK and Windows EXE
+name: Still verified builds
 on:
-  workflow_dispatch:
   push:
-    branches: ["experiment/**", "feature/**"]
+    branches: [feat/hamsterbase-still-rebuild]
+    paths-ignore: ['**.md', 'screenshots/**', 'verification/**']
   pull_request:
-    branches: [main]
+  workflow_dispatch:
 permissions:
   contents: read
 concurrency:
-  group: still-build-${{ github.ref }}
+  group: still-${{ github.ref }}
   cancel-in-progress: true
 jobs:
-  verify:
-    runs-on: ubuntu-24.04
+  web:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.15.0
       - uses: actions/setup-node@v4
         with:
-          node-version: '24'
-          cache: npm
-      - run: npm ci
-      - run: npm run verify
-  windows:
-    needs: verify
-    runs-on: windows-latest
-    timeout-minutes: 60
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '24'
-          cache: npm
-      - uses: dtolnay/rust-toolchain@stable
-        with:
-          toolchain: 1.90.0
-      - uses: Swatinem/rust-cache@v2
-        with:
-          workspaces: apps/desktop/src-tauri
-      - run: npm ci
-      - run: npm run desktop -- --ci
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: npm run check
+      - run: npm test
+      - run: npm run web:build
+      - run: npm run electron:build
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:ui
       - uses: actions/upload-artifact@v4
         with:
-          name: Still-Windows-EXE
-          path: apps/desktop/src-tauri/target/release/bundle/nsis/*.exe
-          if-no-files-found: error
-  android:
-    needs: verify
-    runs-on: ubuntu-24.04
-    timeout-minutes: 60
-    env:
-      HAS_KEY: ${{ secrets.STILL_ANDROID_DEBUG_KEYSTORE_BASE64 != '' }}
+          name: Still-web
+          path: dist
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Still-screenshots-and-verification
+          path: |
+            screenshots/still-*.png
+            verification/ui-results.json
+  windows:
+    needs: web
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.15.0
       - uses: actions/setup-node@v4
         with:
-          node-version: '24'
-          cache: npm
-      - uses: dtolnay/rust-toolchain@stable
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: npm run web:build -- --use-relative-base
+      - run: npm run electron:build
+      - run: npm run electron:pack
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+      - name: Verify installer exists
+        shell: pwsh
+        run: |
+          $installer = Get-ChildItem release/*.exe | Select-Object -First 1
+          if (-not $installer) { throw 'Missing NSIS installer' }
+          Get-FileHash $installer.FullName -Algorithm SHA256
+      - name: Install and exercise the Windows application
+        shell: pwsh
+        run: |
+          $installer = Get-ChildItem release/*.exe | Select-Object -First 1
+          $installDir = Join-Path $env:LOCALAPPDATA 'Still-Rebuild-Smoke'
+          $process = Start-Process $installer.FullName -ArgumentList '/S', "/D=$installDir" -Wait -PassThru
+          if ($process.ExitCode -ne 0) { throw "NSIS exited $($process.ExitCode)" }
+          $exe = Join-Path $installDir 'Still.exe'
+          if (-not (Test-Path $exe)) { throw "Installed application missing: $exe" }
+          node tests/windows.mjs $exe
+          if ($LASTEXITCODE -ne 0) { throw 'Installed application smoke test failed' }
+      - uses: actions/upload-artifact@v4
+        if: always()
         with:
-          toolchain: 1.90.0
-          targets: aarch64-linux-android
+          name: Still-Windows-runtime-verification
+          path: verification/windows-*
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Still-Windows-x64-installer
+          path: release/*.exe
+          if-no-files-found: error
+  android:
+    needs: web
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.15.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '17'
-      - name: Install Android SDK components
-        run: |
-          SDKMANAGER="$(find "$ANDROID_HOME/cmdline-tools" -type f -name sdkmanager | head -n 1)"
-          test -x "$SDKMANAGER"
-          yes | "$SDKMANAGER" --licenses >/dev/null || true
-          "$SDKMANAGER" 'platform-tools' 'platforms;android-36' 'build-tools;36.0.0' 'ndk;29.0.13846066'
-          echo "NDK_HOME=$ANDROID_HOME/ndk/29.0.13846066" >> "$GITHUB_ENV"
-      - uses: Swatinem/rust-cache@v2
+          java-version: 21
+      - uses: android-actions/setup-android@v3
         with:
-          workspaces: apps/desktop/src-tauri
-      - run: npm ci
-      - run: npm run android:init -- --ci
-      - name: Restore optional persistent development signing key
-        if: ${{ env.HAS_KEY == 'true' }}
-        env:
-          STILL_ANDROID_DEBUG_KEYSTORE_BASE64: ${{ secrets.STILL_ANDROID_DEBUG_KEYSTORE_BASE64 }}
+          packages: platform-tools platforms;android-35 build-tools;35.0.0
+      - run: pnpm install --frozen-lockfile
+      - uses: actions/download-artifact@v4
+        with:
+          name: Still-web
+          path: dist
+      - name: Restore development signing key for compatible testing updates
+        uses: actions/cache@v4
+        with:
+          path: ~/.android/debug.keystore
+          key: still-testing-signing-v1
+      - run: pnpm exec cap sync android
+      - run: chmod +x android/gradlew && cd android && ./gradlew assembleStandardDebug --no-daemon
+      - name: Verify APK signature and application identity
         run: |
-          mkdir -p "$HOME/.android"
-          printf '%s' "$STILL_ANDROID_DEBUG_KEYSTORE_BASE64" | base64 --decode > "$HOME/.android/debug.keystore"
-      - run: npm run android:build -- --ci
+          APK=$(find android/app/build/outputs/apk/standard/debug -name '*.apk' | head -1)
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose "$APK"
+          "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging "$APK" | tee apk-manifest.txt
+          grep "package: name='app.still.next'" apk-manifest.txt
+      - name: Enable Android emulator acceleration
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          arch: x86_64
+          target: google_apis
+          disable-animations: true
+          script: |
+            bash tests/android-smoke.sh
+            cd android && ./gradlew connectedStandardDebugAndroidTest --no-daemon
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Still-Android-runtime-verification
+          path: |
+            verification/android-*
+            android/app/build/reports/androidTests/connected/**
       - uses: actions/upload-artifact@v4
         with:
-          name: Still-Android-APK
-          path: apps/desktop/src-tauri/gen/android/app/build/outputs/apk/**/*.apk
+          name: Still-Android-testing-APK
+          path: android/app/build/outputs/apk/standard/debug/*.apk
           if-no-files-found: error
+
+  publish:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/feat/hamsterbase-still-rebuild'
+    needs: [web, windows, android]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: read
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      - name: Publish verified version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          TAG="still-v$VERSION"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "Release already published; preserving its original tested assets."
+            exit 0
+          fi
+          mkdir -p release
+          cp artifacts/Still-Android-testing-APK/*.apk "release/Still-$VERSION-Android.apk"
+          cp artifacts/Still-Windows-x64-installer/*.exe "release/Still-$VERSION-Windows-x64.exe"
+          (cd artifacts/Still-web && zip -qr "../../release/Still-$VERSION-web.zip" .)
+          (cd artifacts && zip -qr "../release/Still-$VERSION-verification.zip" Still-screenshots-and-verification Still-Windows-runtime-verification Still-Android-runtime-verification)
+          (cd release && sha256sum Still-* > SHA256SUMS.txt)
+          printf 'Verified source commit: %s\n\n' "$GITHUB_SHA" > release/notes.md
+          cat RELEASE-1.1.md >> release/notes.md
+          gh release create "$TAG" --target "$GITHUB_SHA" --prerelease --title "Still $VERSION" --notes-file release/notes.md release/*-Android.apk release/*-Windows-x64.exe release/*-web.zip release/*-verification.zip release/SHA256SUMS.txt

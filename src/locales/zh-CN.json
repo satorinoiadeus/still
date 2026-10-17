@@ -1,0 +1,2863 @@
+{
+  "__i18n_ease__": "true",
+  "account.apple_store_purchase_fetch.error": {
+    "defaultMessage": "Failed to get product",
+    "content": "获取产品失败"
+  },
+  "account.apple_store_purchase.fetching": {
+    "defaultMessage": "Loading Purchase Info...",
+    "content": "加载购买信息..."
+  },
+  "account.apple_store_purchase.purchasing": {
+    "defaultMessage": "Purchasing...",
+    "content": "购买中..."
+  },
+  "account.apple_store_purchase.success": {
+    "defaultMessage": "Purchase successful",
+    "content": "购买成功"
+  },
+  "account.apple_store_purchase.title": {
+    "defaultMessage": "Subscribe 1 Year Cloud Pro",
+    "content": "订阅 1 年云会员"
+  },
+  "account.copy.success": {
+    "defaultMessage": "Account ID copied to clipboard",
+    "content": "账户ID已复制到剪贴板"
+  },
+  "account.copySuccess": {
+    "defaultMessage": "Copied Successfully",
+    "content": "复制成功"
+  },
+  "account.delete": {
+    "defaultMessage": "Delete Account",
+    "content": "删除账户"
+  },
+  "account.delete.button": {
+    "defaultMessage": "Delete Account",
+    "content": "删除账户"
+  },
+  "account.delete.confirm": {
+    "defaultMessage": "Are you sure you want to delete your account? This action cannot be undone and will permanently delete all your data.",
+    "content": "您确定要删除您的账户吗？此操作无法撤销，将永久删除您所有的数据。"
+  },
+  "account.delete.title": {
+    "defaultMessage": "Delete Account",
+    "content": "删除账户"
+  },
+  "account.email": {
+    "defaultMessage": "Email",
+    "content": "电子邮件"
+  },
+  "account.error.deleteFailed": {
+    "defaultMessage": "Failed to delete account. Please try again.",
+    "content": "删除账户失败。请再试一次。"
+  },
+  "account.error.logoutFailed": {
+    "defaultMessage": "Failed to logout. Please try again.",
+    "content": "登出失败。请再试一次。"
+  },
+  "account.error.title": {
+    "defaultMessage": "Error",
+    "content": "错误"
+  },
+  "account.expiry": {
+    "defaultMessage": "Pro Expires",
+    "content": "会员到期时间"
+  },
+  "account.id": {
+    "defaultMessage": "ID",
+    "content": "ID"
+  },
+  "account.lifetime.link": {
+    "defaultMessage": "https://hamsterbase.com/store/?product=cloud-lifetime",
+    "content": "https://mbd.pub/o/bread/mbd-YZWWmp5saA=="
+  },
+  "account.lifetime.title": {
+    "defaultMessage": "Purchase HamsterBase Cloud Lifetime",
+    "content": "购买终身会员"
+  },
+  "account.logout": {
+    "defaultMessage": "Log out",
+    "content": "登出"
+  },
+  "account.logout.button": {
+    "defaultMessage": "Logout",
+    "content": "登出"
+  },
+  "account.logout.confirm": {
+    "defaultMessage": "Are you sure you want to logout?",
+    "content": "您确定要登出吗？"
+  },
+  "account.logout.title": {
+    "defaultMessage": "Logout",
+    "content": "登出"
+  },
+  "account.pro.link": {
+    "defaultMessage": "https://hamsterbase.com/store/?product=cloud",
+    "content": "https://mbd.pub/o/bread/mbd-YZWWmp5uZA=="
+  },
+  "account.pro.title": {
+    "defaultMessage": "Subscribe 1 Year Cloud Pro",
+    "content": "订阅 1 年云会员"
+  },
+  "account.purchase.error": {
+    "defaultMessage": "Failed to complete purchase {0}",
+    "content": "购买失败 {0}"
+  },
+  "account.title": {
+    "defaultMessage": "Account",
+    "content": "账户"
+  },
+  "addTask": {
+    "defaultMessage": "Add Task",
+    "content": "添加任务"
+  },
+  "ai_chat": {
+    "defaultMessage": "AI Chat",
+    "content": "AI 对话"
+  },
+  "ai_chat.awaiting_confirm": {
+    "defaultMessage": "Awaiting",
+    "content": "等待确认"
+  },
+  "ai_chat.cancel": {
+    "defaultMessage": "Cancel",
+    "content": "取消"
+  },
+  "ai_chat.canceled": {
+    "defaultMessage": "Canceled",
+    "content": "已取消"
+  },
+  "ai_chat.clear": {
+    "defaultMessage": "Clear",
+    "content": "清除"
+  },
+  "ai_chat.clear_chat": {
+    "defaultMessage": "Clear chat",
+    "content": "清除对话"
+  },
+  "ai_chat.confirm": {
+    "defaultMessage": "Confirm",
+    "content": "确认"
+  },
+  "ai_chat.empty": {
+    "defaultMessage": "Start a conversation with AI",
+    "content": "开始与 AI 对话"
+  },
+  "ai_chat.executed_success": {
+    "defaultMessage": "Executed",
+    "content": "已执行"
+  },
+  "ai_chat.executing": {
+    "defaultMessage": "Executing...",
+    "content": "执行中..."
+  },
+  "ai_chat.failed": {
+    "defaultMessage": "Failed",
+    "content": "失败"
+  },
+  "ai_chat.generating": {
+    "defaultMessage": "Generating...",
+    "content": "生成中..."
+  },
+  "ai_chat.go_to_settings": {
+    "defaultMessage": "Go to Settings",
+    "content": "前往设置"
+  },
+  "ai_chat.new_chat": {
+    "defaultMessage": "New Chat",
+    "content": "新对话"
+  },
+  "ai_chat.not_configured": {
+    "defaultMessage": "Please configure your AI API settings first",
+    "content": "请先配置 AI API 设置"
+  },
+  "ai_chat.parameters": {
+    "defaultMessage": "Parameters",
+    "content": "参数"
+  },
+  "ai_chat.placeholder": {
+    "defaultMessage": "Type your message...",
+    "content": "输入消息..."
+  },
+  "ai_chat.preparing": {
+    "defaultMessage": "Preparing...",
+    "content": "准备中..."
+  },
+  "ai_chat.reply_to_this": {
+    "defaultMessage": "Reply to this",
+    "content": "回复此消息"
+  },
+  "ai_chat.replying_to_message": {
+    "defaultMessage": "Reply #{0}",
+    "content": "回复 #{0}"
+  },
+  "ai_chat.result": {
+    "defaultMessage": "Result",
+    "content": "结果"
+  },
+  "ai_chat.status_responding": {
+    "defaultMessage": "Generating...",
+    "content": "生成中…"
+  },
+  "ai_chat.status_stopped": {
+    "defaultMessage": "Stopped",
+    "content": "已停止"
+  },
+  "ai_chat.success": {
+    "defaultMessage": "Success",
+    "content": "成功"
+  },
+  "ai_chat.thinking": {
+    "defaultMessage": "Thinking",
+    "content": "思考中"
+  },
+  "ai_chat.tool_batchEdit": {
+    "defaultMessage": "Batch Edit",
+    "content": "批量编辑"
+  },
+  "ai_chat.tool_createProject": {
+    "defaultMessage": "Create Project",
+    "content": "创建项目"
+  },
+  "ai_chat.tool_getData": {
+    "defaultMessage": "Get Data",
+    "content": "获取数据"
+  },
+  "ai_chat.tool_getProjectData": {
+    "defaultMessage": "Get Project Data",
+    "content": "获取项目数据"
+  },
+  "ai_chat.tool_requestReply": {
+    "defaultMessage": "Request Reply",
+    "content": "请求回复"
+  },
+  "ai_chat.tool_runJavaScript": {
+    "defaultMessage": "Run JavaScript",
+    "content": "运行 JavaScript"
+  },
+  "area.create_project": {
+    "defaultMessage": "Add Project",
+    "content": "添加项目"
+  },
+  "area.delete": {
+    "defaultMessage": "Delete Area",
+    "content": "删除领域"
+  },
+  "area.delete_area": {
+    "defaultMessage": "Delete Area",
+    "content": "删除领域"
+  },
+  "area.delete_area_confirm_description": {
+    "defaultMessage": "Are you sure you want to delete this area? This action cannot be undone.",
+    "content": "您确定要删除此领域吗？此操作无法撤销。"
+  },
+  "area.delete_area_confirm_title": {
+    "defaultMessage": "Delete Area",
+    "content": "删除领域"
+  },
+  "area.delete_confirm": {
+    "defaultMessage": "Delete",
+    "content": "删除"
+  },
+  "area.delete_description": {
+    "defaultMessage": "Are you sure you want to delete this area? This action cannot be undone.",
+    "content": "您确定要删除此领域吗？此操作无法撤销。"
+  },
+  "area.edit_title": {
+    "defaultMessage": "Edit Title",
+    "content": "编辑标题"
+  },
+  "area.new_project": {
+    "defaultMessage": "New Project",
+    "content": "新项目"
+  },
+  "area.newProject": {
+    "defaultMessage": "New Project",
+    "content": "新项目"
+  },
+  "area.noProjects": {
+    "defaultMessage": "No projects",
+    "content": "没有项目"
+  },
+  "area.noTasks": {
+    "defaultMessage": "No tasks",
+    "content": "没有任务"
+  },
+  "area.notFound": {
+    "defaultMessage": "Area not found",
+    "content": "未找到领域"
+  },
+  "area.projects": {
+    "defaultMessage": "Projects",
+    "content": "项目"
+  },
+  "area.tasks": {
+    "defaultMessage": "Tasks",
+    "content": "任务"
+  },
+  "area.title_placeholder": {
+    "defaultMessage": "New Area",
+    "content": "新领域"
+  },
+  "area.untitled": {
+    "defaultMessage": "New Area",
+    "content": "新领域"
+  },
+  "attachments.accessKeyId": {
+    "defaultMessage": "Access Key ID",
+    "content": "Access Key ID"
+  },
+  "attachments.accessKeyIdDesc": {
+    "defaultMessage": "Your S3 access key ID",
+    "content": "S3 访问密钥 ID"
+  },
+  "attachments.add": {
+    "defaultMessage": "Add attachment",
+    "content": "添加附件"
+  },
+  "attachments.addTitle": {
+    "defaultMessage": "Configure S3 Storage",
+    "content": "配置 S3 存储"
+  },
+  "attachments.bucket": {
+    "defaultMessage": "Bucket",
+    "content": "存储桶"
+  },
+  "attachments.bucketDesc": {
+    "defaultMessage": "Name of the storage bucket",
+    "content": "存储桶名称"
+  },
+  "attachments.clear": {
+    "defaultMessage": "Clear",
+    "content": "清除"
+  },
+  "attachments.clearConfirmDescription": {
+    "defaultMessage": "Existing attachments will become inaccessible until you reconfigure S3. The files in S3 will not be deleted.",
+    "content": "在重新配置 S3 之前，已有附件将无法访问。S3 上的文件不会被删除。"
+  },
+  "attachments.clearConfirmTitle": {
+    "defaultMessage": "Clear S3 configuration?",
+    "content": "清除 S3 配置？"
+  },
+  "attachments.cleared": {
+    "defaultMessage": "S3 configuration cleared",
+    "content": "S3 配置已清除"
+  },
+  "attachments.configure": {
+    "defaultMessage": "Configure",
+    "content": "配置"
+  },
+  "attachments.configureAction": {
+    "defaultMessage": "Set up",
+    "content": "配置"
+  },
+  "attachments.configured": {
+    "defaultMessage": "Configured",
+    "content": "已配置"
+  },
+  "attachments.currentDatabase": {
+    "defaultMessage": "Current database",
+    "content": "当前数据库"
+  },
+  "attachments.delete": {
+    "defaultMessage": "Delete",
+    "content": "删除"
+  },
+  "attachments.deleteConfirmDescription": {
+    "defaultMessage": "Are you sure you want to delete \"{0}\"? This only removes it from this task. The file in S3 will not be deleted.",
+    "content": "确定要删除「{0}」吗？仅从该任务中移除，S3 上的文件不会被删除。"
+  },
+  "attachments.deleteConfirmTitle": {
+    "defaultMessage": "Delete attachment?",
+    "content": "删除附件？"
+  },
+  "attachments.download": {
+    "defaultMessage": "Download",
+    "content": "下载"
+  },
+  "attachments.dropOrClick": {
+    "defaultMessage": "Click or drag files here to add attachments",
+    "content": "点击或拖拽文件到此处添加附件"
+  },
+  "attachments.edit": {
+    "defaultMessage": "Edit",
+    "content": "编辑"
+  },
+  "attachments.editTitle": {
+    "defaultMessage": "Edit S3 Configuration",
+    "content": "编辑 S3 配置"
+  },
+  "attachments.endpoint": {
+    "defaultMessage": "Endpoint URL",
+    "content": "Endpoint 地址"
+  },
+  "attachments.endpointDesc": {
+    "defaultMessage": "S3-compatible endpoint, e.g. https://s3.amazonaws.com",
+    "content": "S3 兼容的端点地址，例如 https://s3.amazonaws.com"
+  },
+  "attachments.failed": {
+    "defaultMessage": "Failed",
+    "content": "失败"
+  },
+  "attachments.file": {
+    "defaultMessage": "FILE",
+    "content": "FILE"
+  },
+  "attachments.forcePathStyle": {
+    "defaultMessage": "Force Path Style (for MinIO and some self-hosted S3)",
+    "content": "强制 Path Style（MinIO 和部分自建 S3 需要）"
+  },
+  "attachments.forcePathStyleDesc": {
+    "defaultMessage": "Required for MinIO and some self-hosted S3-compatible servers",
+    "content": "MinIO 和部分自建 S3 兼容服务需要开启"
+  },
+  "attachments.forcePathStyleTitle": {
+    "defaultMessage": "Force Path Style",
+    "content": "强制 Path Style"
+  },
+  "attachments.goToSettings": {
+    "defaultMessage": "Open Settings",
+    "content": "打开设置"
+  },
+  "attachments.heading": {
+    "defaultMessage": "Attachments",
+    "content": "附件"
+  },
+  "attachments.hide": {
+    "defaultMessage": "Hide",
+    "content": "隐藏"
+  },
+  "attachments.intro": {
+    "defaultMessage": "Configure S3-compatible storage for attachments in ",
+    "content": "为 "
+  },
+  "attachments.introSuffix": {
+    "defaultMessage": ". Configuration is stored locally on this device.",
+    "content": " 配置 S3 兼容的附件存储。配置仅保存在本机。"
+  },
+  "attachments.keyPrefix": {
+    "defaultMessage": "Key Prefix",
+    "content": "Key 前缀"
+  },
+  "attachments.keyPrefixDesc": {
+    "defaultMessage": "Optional prefix applied to every object key",
+    "content": "可选前缀，附加到每个对象 key 前"
+  },
+  "attachments.notConfigured": {
+    "defaultMessage": "S3 storage not configured",
+    "content": "尚未配置 S3 存储"
+  },
+  "attachments.notConfiguredDesc": {
+    "defaultMessage": "Add S3-compatible storage to enable attachments for tasks and projects.",
+    "content": "配置 S3 兼容存储后即可为任务和项目添加附件。"
+  },
+  "attachments.notConfiguredStatus": {
+    "defaultMessage": "unavailable",
+    "content": "不可用"
+  },
+  "attachments.notConfiguredWarning": {
+    "defaultMessage": "Storage not set up",
+    "content": "存储未配置"
+  },
+  "attachments.pasteNotConfigured": {
+    "defaultMessage": "Set up S3 storage in Settings before pasting images.",
+    "content": ""
+  },
+  "attachments.region": {
+    "defaultMessage": "Region",
+    "content": "区域"
+  },
+  "attachments.regionDesc": {
+    "defaultMessage": "Region code, e.g. us-east-1 or auto for Cloudflare R2",
+    "content": "区域代码，如 us-east-1；Cloudflare R2 填 auto"
+  },
+  "attachments.retry": {
+    "defaultMessage": "Retry",
+    "content": "重试"
+  },
+  "attachments.save": {
+    "defaultMessage": "Save",
+    "content": "保存"
+  },
+  "attachments.saved": {
+    "defaultMessage": "S3 configuration saved",
+    "content": "S3 配置已保存"
+  },
+  "attachments.saving": {
+    "defaultMessage": "Saving…",
+    "content": "保存中…"
+  },
+  "attachments.secretAccessKey": {
+    "defaultMessage": "Secret Access Key",
+    "content": "Secret Access Key"
+  },
+  "attachments.secretAccessKeyDesc": {
+    "defaultMessage": "Stored locally on this device only",
+    "content": "仅保存在本机"
+  },
+  "attachments.show": {
+    "defaultMessage": "Show",
+    "content": "显示"
+  },
+  "attachments.summary": {
+    "defaultMessage": "{0} files · {1}",
+    "content": "{0} 个文件 · {1}"
+  },
+  "attachments.switchConfirmAction": {
+    "defaultMessage": "Cancel uploads and switch",
+    "content": "取消上传并切换"
+  },
+  "attachments.switchConfirmDescription": {
+    "defaultMessage": "{0} file(s) are still uploading. Switching will cancel them.",
+    "content": "还有 {0} 个文件正在上传，切换会取消它们。"
+  },
+  "attachments.switchConfirmTitle": {
+    "defaultMessage": "Switch database?",
+    "content": "切换数据库？"
+  },
+  "attachments.test": {
+    "defaultMessage": "Test Connection",
+    "content": "测试连接"
+  },
+  "attachments.testFailed": {
+    "defaultMessage": "Connection failed",
+    "content": "连接失败"
+  },
+  "attachments.testing": {
+    "defaultMessage": "Testing…",
+    "content": "测试中…"
+  },
+  "attachments.testSuccess": {
+    "defaultMessage": "✓ Connection successful",
+    "content": "✓ 连接成功"
+  },
+  "attachments.uploadFailed": {
+    "defaultMessage": "Upload failed",
+    "content": "上传失败"
+  },
+  "attachments.uploading": {
+    "defaultMessage": "Uploading",
+    "content": "上传中"
+  },
+  "cancel": {
+    "defaultMessage": "Cancel",
+    "content": "取消"
+  },
+  "cliApproval.action.createArea": {
+    "defaultMessage": "New area",
+    "content": "新建领域"
+  },
+  "cliApproval.action.createHeading": {
+    "defaultMessage": "New heading",
+    "content": "新建标题"
+  },
+  "cliApproval.action.createProject": {
+    "defaultMessage": "New project",
+    "content": "新建项目"
+  },
+  "cliApproval.action.createTask": {
+    "defaultMessage": "New task",
+    "content": "新建任务"
+  },
+  "cliApproval.action.delete": {
+    "defaultMessage": "Delete",
+    "content": "删除"
+  },
+  "cliApproval.action.move": {
+    "defaultMessage": "Move",
+    "content": "移动"
+  },
+  "cliApproval.action.update": {
+    "defaultMessage": "Update",
+    "content": "更新"
+  },
+  "cliApproval.anchor.after": {
+    "defaultMessage": "after {0}",
+    "content": "放在 {0} 的后面"
+  },
+  "cliApproval.anchor.before": {
+    "defaultMessage": "before {0}",
+    "content": "放在 {0} 的前面"
+  },
+  "cliApproval.anchor.first": {
+    "defaultMessage": "at the top",
+    "content": "放在最前面"
+  },
+  "cliApproval.approve": {
+    "defaultMessage": "Approve",
+    "content": "批准"
+  },
+  "cliApproval.approveAll": {
+    "defaultMessage": "Approve All",
+    "content": "全部批准"
+  },
+  "cliApproval.approveAll.description": {
+    "defaultMessage": "Apply {0} pending change(s) from the CLI?",
+    "content": "确定应用来自 CLI 的 {0} 项待审批变更吗？"
+  },
+  "cliApproval.approveAll.descriptionWithConfirmation": {
+    "defaultMessage": "Apply {0} pending change(s)? {1} deletion request(s) will remain for separate confirmation.",
+    "content": "应用 {0} 项待处理变更？{1} 项删除请求将保留，需单独确认。"
+  },
+  "cliApproval.approveAll.title": {
+    "defaultMessage": "Approve all requests",
+    "content": "批准全部请求"
+  },
+  "cliApproval.approveAllCount": {
+    "defaultMessage": "Approve All ({0})",
+    "content": "全部批准 ({0})"
+  },
+  "cliApproval.approveScope": {
+    "defaultMessage": "Approve \"{0}\" ({1})",
+    "content": "批准“{0}” ({1})"
+  },
+  "cliApproval.approveScope.title": {
+    "defaultMessage": "Approve requests in \"{0}\"",
+    "content": "批准“{0}”的请求"
+  },
+  "cliApproval.banner": {
+    "defaultMessage": "{0} CLI change(s) waiting for approval",
+    "content": "{0} 项 CLI 变更等待审批"
+  },
+  "cliApproval.banner.review": {
+    "defaultMessage": "Review",
+    "content": "查看"
+  },
+  "cliApproval.confirmDelete.confirm": {
+    "defaultMessage": "Approve Delete",
+    "content": "确认删除"
+  },
+  "cliApproval.confirmDelete.description": {
+    "defaultMessage": "Delete \"{0}\"? This action cannot be undone.",
+    "content": "删除「{0}」？此操作无法撤销。"
+  },
+  "cliApproval.confirmDelete.title": {
+    "defaultMessage": "Approve deletion",
+    "content": "确认删除请求"
+  },
+  "cliApproval.empty": {
+    "defaultMessage": "No pending approvals",
+    "content": "暂无待审批项"
+  },
+  "cliApproval.explanation": {
+    "defaultMessage": "Explanation",
+    "content": ""
+  },
+  "cliApproval.field.children": {
+    "defaultMessage": "Children",
+    "content": "子项"
+  },
+  "cliApproval.field.dueDate": {
+    "defaultMessage": "Due date",
+    "content": "截止日期"
+  },
+  "cliApproval.field.items": {
+    "defaultMessage": "Items",
+    "content": "条目"
+  },
+  "cliApproval.field.notes": {
+    "defaultMessage": "Notes",
+    "content": "备注"
+  },
+  "cliApproval.field.parent": {
+    "defaultMessage": "Location",
+    "content": "位置"
+  },
+  "cliApproval.field.startDate": {
+    "defaultMessage": "Start date",
+    "content": "开始日期"
+  },
+  "cliApproval.field.status": {
+    "defaultMessage": "Status",
+    "content": "状态"
+  },
+  "cliApproval.field.tags": {
+    "defaultMessage": "Tags",
+    "content": "标签"
+  },
+  "cliApproval.field.title": {
+    "defaultMessage": "Title",
+    "content": "标题"
+  },
+  "cliApproval.filter.all": {
+    "defaultMessage": "All",
+    "content": "全部"
+  },
+  "cliApproval.invalid.itemMissing": {
+    "defaultMessage": "Item no longer exists",
+    "content": "条目已不存在"
+  },
+  "cliApproval.invalid.moveIntoTask": {
+    "defaultMessage": "A task cannot be moved under another task",
+    "content": "任务不能移动到其他任务下"
+  },
+  "cliApproval.invalid.nestingTooDeep": {
+    "defaultMessage": "A subtask cannot have subtasks of its own",
+    "content": "子任务下不能再有子任务"
+  },
+  "cliApproval.invalid.noChange": {
+    "defaultMessage": "Item already has these values",
+    "content": "条目已经是这些值"
+  },
+  "cliApproval.invalid.parentMissing": {
+    "defaultMessage": "Parent no longer exists",
+    "content": "上级条目已不存在"
+  },
+  "cliApproval.invalid.parentType": {
+    "defaultMessage": "Invalid parent type",
+    "content": "上级条目类型无效"
+  },
+  "cliApproval.invalid.positionReferenceMissing": {
+    "defaultMessage": "Position reference no longer exists",
+    "content": "位置参照条目已不存在"
+  },
+  "cliApproval.invalid.positionSelf": {
+    "defaultMessage": "An item cannot be positioned relative to itself",
+    "content": "条目不能相对于自身定位"
+  },
+  "cliApproval.invalid.subjectHasChildren": {
+    "defaultMessage": "A task with subtasks cannot be nested under another task",
+    "content": "带子任务的任务不能放到其他任务下"
+  },
+  "cliApproval.invalid.subtaskParentLocked": {
+    "defaultMessage": "A subtask cannot be moved out of its parent task",
+    "content": "子任务不能移出所属任务"
+  },
+  "cliApproval.invalid.taskMissing": {
+    "defaultMessage": "Task no longer exists",
+    "content": "任务已不存在"
+  },
+  "cliApproval.move.from": {
+    "defaultMessage": "From",
+    "content": "当前位置"
+  },
+  "cliApproval.move.to": {
+    "defaultMessage": "To",
+    "content": "移动到"
+  },
+  "cliApproval.op.cancelTask": {
+    "defaultMessage": "Cancel \"{0}\"",
+    "content": "取消“{0}”"
+  },
+  "cliApproval.op.completeTask": {
+    "defaultMessage": "Complete \"{0}\"",
+    "content": "完成“{0}”"
+  },
+  "cliApproval.op.createArea": {
+    "defaultMessage": "Create area \"{0}\"",
+    "content": "创建领域“{0}”"
+  },
+  "cliApproval.op.createHeadings": {
+    "defaultMessage": "Create {0} headings",
+    "content": "创建 {0} 个标题"
+  },
+  "cliApproval.op.createItems": {
+    "defaultMessage": "Create {0} items",
+    "content": "创建 {0} 个条目"
+  },
+  "cliApproval.op.createProject": {
+    "defaultMessage": "Create project \"{0}\"",
+    "content": "创建项目“{0}”"
+  },
+  "cliApproval.op.createProjects": {
+    "defaultMessage": "Create {0} projects",
+    "content": "创建 {0} 个项目"
+  },
+  "cliApproval.op.createTask": {
+    "defaultMessage": "Create task \"{0}\"",
+    "content": "创建任务“{0}”"
+  },
+  "cliApproval.op.createTasks": {
+    "defaultMessage": "Create {0} tasks",
+    "content": "创建 {0} 个任务"
+  },
+  "cliApproval.op.deleteTask": {
+    "defaultMessage": "Delete \"{0}\"",
+    "content": "删除“{0}”"
+  },
+  "cliApproval.op.moveTask": {
+    "defaultMessage": "Move \"{0}\" to {1}",
+    "content": "将“{0}”移动到 {1}"
+  },
+  "cliApproval.op.reopenTask": {
+    "defaultMessage": "Reopen \"{0}\"",
+    "content": "重新打开“{0}”"
+  },
+  "cliApproval.op.unknownTask": {
+    "defaultMessage": "Task {0}",
+    "content": "任务 {0}"
+  },
+  "cliApproval.op.updateTask": {
+    "defaultMessage": "Update \"{0}\"",
+    "content": "更新“{0}”"
+  },
+  "cliApproval.panel.title": {
+    "defaultMessage": "Pending approvals",
+    "content": "待审批"
+  },
+  "cliApproval.previewEvidence": {
+    "defaultMessage": "Preview {0}",
+    "content": ""
+  },
+  "cliApproval.reject": {
+    "defaultMessage": "Reject",
+    "content": "拒绝"
+  },
+  "cliApproval.rejectAll": {
+    "defaultMessage": "Reject All",
+    "content": "全部拒绝"
+  },
+  "cliApproval.rejectAll.description": {
+    "defaultMessage": "Reject {0} pending change(s) from the CLI?",
+    "content": "确定拒绝来自 CLI 的 {0} 项待审批变更吗？"
+  },
+  "cliApproval.rejectAll.title": {
+    "defaultMessage": "Reject all requests",
+    "content": "拒绝全部请求"
+  },
+  "cliApproval.setup.copy": {
+    "defaultMessage": "Copy",
+    "content": "复制"
+  },
+  "cliApproval.setup.copySuccess": {
+    "defaultMessage": "Prompt copied to clipboard",
+    "content": "提示词已复制到剪贴板"
+  },
+  "cliApproval.setup.description": {
+    "defaultMessage": "With the Still CLI installed, an AI agent can read your tasks and queue changes here for your approval. It works only while the desktop app is open — nothing changes until you approve it.",
+    "content": "装好 Still CLI 后，AI 就能读取你的任务，并把修改提交到这里等你审批。它只在客户端打开时有效，且未经你审批不会改动任何数据。"
+  },
+  "cliApproval.setup.promptLabel": {
+    "defaultMessage": "Send this to your AI",
+    "content": "把这段发给你的 AI"
+  },
+  "cliApproval.setup.title": {
+    "defaultMessage": "Let an AI agent manage your tasks",
+    "content": "让 AI 帮你管理任务"
+  },
+  "cliApproval.title": {
+    "defaultMessage": "Approvals",
+    "content": "审批"
+  },
+  "cliApproval.toast.applied": {
+    "defaultMessage": "{0} change(s) applied",
+    "content": "已应用 {0} 项变更"
+  },
+  "cliApproval.toast.failed": {
+    "defaultMessage": "{0} change(s) could not be applied",
+    "content": "{0} 项变更无法应用"
+  },
+  "cliApproval.value.inbox": {
+    "defaultMessage": "Inbox",
+    "content": "收件箱"
+  },
+  "cliApproval.value.none": {
+    "defaultMessage": "none",
+    "content": "无"
+  },
+  "cliApproval.value.root": {
+    "defaultMessage": "Root",
+    "content": "顶层"
+  },
+  "cliApproval.value.untitled": {
+    "defaultMessage": "Untitled",
+    "content": "未命名"
+  },
+  "common.cancel": {
+    "defaultMessage": "Cancel",
+    "content": "取消"
+  },
+  "common.close": {
+    "defaultMessage": "Close",
+    "content": "关闭"
+  },
+  "common.copy": {
+    "defaultMessage": "Copy",
+    "content": "复制"
+  },
+  "common.exporting": {
+    "defaultMessage": "Exporting...",
+    "content": "导出中..."
+  },
+  "common.importing": {
+    "defaultMessage": "Importing...",
+    "content": "导入中..."
+  },
+  "common.loading": {
+    "defaultMessage": "Loading...",
+    "content": "加载中..."
+  },
+  "common.more": {
+    "defaultMessage": "More",
+    "content": "更多"
+  },
+  "common.ok": {
+    "defaultMessage": "OK",
+    "content": "确定"
+  },
+  "common.save": {
+    "defaultMessage": "Save",
+    "content": "保存"
+  },
+  "common.untitled": {
+    "defaultMessage": "Untitled",
+    "content": "无标题"
+  },
+  "completed": {
+    "defaultMessage": "Completed",
+    "content": "已完成"
+  },
+  "completed_tasks.noCompletedTasks": {
+    "defaultMessage": "No completed tasks or projects yet",
+    "content": "尚无已完成的任务或项目"
+  },
+  "completed_tasks.title": {
+    "defaultMessage": "Completed",
+    "content": "已完成"
+  },
+  "confirm": {
+    "defaultMessage": "Confirm",
+    "content": "确认"
+  },
+  "create_popup.create_area": {
+    "defaultMessage": "Create Area",
+    "content": "创建领域"
+  },
+  "create_popup.create_project": {
+    "defaultMessage": "Create Project",
+    "content": "创建项目"
+  },
+  "create_popup.create_task": {
+    "defaultMessage": "Create Task",
+    "content": "创建任务"
+  },
+  "create_popup.create_view": {
+    "defaultMessage": "Create View",
+    "content": "创建视图"
+  },
+  "create_sask_action_sheet.task_notes_placeholder": {
+    "defaultMessage": "Add Notes...",
+    "content": "添加笔记..."
+  },
+  "create_sask_action_sheet.task_title_placeholder": {
+    "defaultMessage": "Task Title",
+    "content": "任务标题"
+  },
+  "create_task_page.add_due_date": {
+    "defaultMessage": "Set Due Date",
+    "content": "设置截止日期"
+  },
+  "create_task_page.add_reminder": {
+    "defaultMessage": "+ Add Reminder",
+    "content": "+ 添加提醒"
+  },
+  "create_task_page.add_start_date": {
+    "defaultMessage": "Set Start Date",
+    "content": "设置开始日期"
+  },
+  "create_task_page.add_subtask": {
+    "defaultMessage": "+ Add Subtask",
+    "content": "+ 添加子任务"
+  },
+  "create_task_page.add_tags": {
+    "defaultMessage": "Add Tags",
+    "content": "添加标签"
+  },
+  "create_task_page.cancel": {
+    "defaultMessage": "Cancel",
+    "content": "取消"
+  },
+  "create_task_page.confirm": {
+    "defaultMessage": "Confirm",
+    "content": "确认"
+  },
+  "create_task_page.due_date": {
+    "defaultMessage": "Due Date",
+    "content": "截止日期"
+  },
+  "create_task_page.title": {
+    "defaultMessage": "New Task",
+    "content": "新任务"
+  },
+  "database_not_found": {
+    "defaultMessage": "Database not found",
+    "content": "数据库未找到"
+  },
+  "database.account_logged_out": {
+    "defaultMessage": "Account logged out",
+    "content": "账户已登出"
+  },
+  "database.clearData": {
+    "defaultMessage": "Clear Data",
+    "content": "清除数据"
+  },
+  "database.clearData.confirm": {
+    "defaultMessage": "Are you sure you want to clear all data? This action cannot be undone.",
+    "content": "您确定要清除所有数据吗？此操作无法撤销。"
+  },
+  "database.current": {
+    "defaultMessage": "Current Database",
+    "content": "当前数据库"
+  },
+  "database.database_deleted": {
+    "defaultMessage": "Database was deleted in cloud",
+    "content": "数据库已在云中删除"
+  },
+  "database.databaseName": {
+    "defaultMessage": "Database Name",
+    "content": "数据库名称"
+  },
+  "database.databaseSize": {
+    "defaultMessage": "Database Size",
+    "content": "数据库大小"
+  },
+  "database.delete": {
+    "defaultMessage": "Delete Database",
+    "content": "删除数据库"
+  },
+  "database.delete.confirm": {
+    "defaultMessage": "Please enter database password to confirm. This action cannot be undone.",
+    "content": "请输入数据库密码以确认。此操作无法撤销。"
+  },
+  "database.delete.error.emptyPassword": {
+    "defaultMessage": "Please enter password",
+    "content": "请输入密码"
+  },
+  "database.delete.offline.confirm": {
+    "defaultMessage": "Are you sure you want to delete this offline database? This action cannot be undone.",
+    "content": "您确定要删除此离线数据库吗？此操作无法撤销。"
+  },
+  "database.isOffline": {
+    "defaultMessage": "Database is Offline",
+    "content": "数据库离线中"
+  },
+  "database.lastUpdated": {
+    "defaultMessage": "Last Updated",
+    "content": "最后更新"
+  },
+  "database.notFound": {
+    "defaultMessage": "Database not found",
+    "content": "数据库未找到"
+  },
+  "database.offline.reason": {
+    "defaultMessage": "Offline Reason",
+    "content": "离线原因"
+  },
+  "database.other_account": {
+    "defaultMessage": "This database does not belong to this account",
+    "content": "该数据库不属于此账户"
+  },
+  "database.other_reason": {
+    "defaultMessage": "Load cloud database error",
+    "content": "加载云数据库错误"
+  },
+  "database.password": {
+    "defaultMessage": "Password",
+    "content": "密码"
+  },
+  "database.switch": {
+    "defaultMessage": "Switch to Database",
+    "content": "切换数据库"
+  },
+  "database.switch.confirm": {
+    "defaultMessage": "Switch",
+    "content": "切换"
+  },
+  "database.switch.desc": {
+    "defaultMessage": "Enter your password to switch to this database",
+    "content": "请输入您的密码以切换到此数据库"
+  },
+  "database.switch.error.emptyPassword": {
+    "defaultMessage": "Please enter password",
+    "content": "请输入密码"
+  },
+  "database.switch.to": {
+    "defaultMessage": "Switch to Database",
+    "content": "切换到数据库"
+  },
+  "database.sync": {
+    "defaultMessage": "Sync",
+    "content": "同步"
+  },
+  "database.sync.success": {
+    "defaultMessage": "Sync successfully",
+    "content": "同步成功"
+  },
+  "database.token.copy.success": {
+    "defaultMessage": "Token copied to clipboard",
+    "content": "令牌已复制到剪贴板"
+  },
+  "database.token.created": {
+    "defaultMessage": "Token created. Copy it now.",
+    "content": "令牌已生成，请立即复制。"
+  },
+  "database.token.generate": {
+    "defaultMessage": "Generate Token",
+    "content": "生成令牌"
+  },
+  "database.token.namePrompt": {
+    "defaultMessage": "Token name",
+    "content": "令牌名称"
+  },
+  "database.token.revoke": {
+    "defaultMessage": "Revoke",
+    "content": "撤销"
+  },
+  "database.token.revoke.confirm": {
+    "defaultMessage": "Revoke this token? Any apps using it will stop working.",
+    "content": "撤销此令牌？正在使用它的应用将停止工作。"
+  },
+  "database.token.section": {
+    "defaultMessage": "Inbox Tokens",
+    "content": "收件箱令牌"
+  },
+  "databaseNotFound": {
+    "defaultMessage": "Database not found",
+    "content": "数据库未找到"
+  },
+  "date_picker.friday": {
+    "defaultMessage": "Fri",
+    "content": "周五"
+  },
+  "date_picker.go_to_today": {
+    "defaultMessage": "Go to today",
+    "content": "前往今天"
+  },
+  "date_picker.monday": {
+    "defaultMessage": "Mon",
+    "content": "周一"
+  },
+  "date_picker.no_date": {
+    "defaultMessage": "No date",
+    "content": "无日期"
+  },
+  "date_picker.saturday": {
+    "defaultMessage": "Sat",
+    "content": "周六"
+  },
+  "date_picker.someday": {
+    "defaultMessage": "Someday",
+    "content": "某天"
+  },
+  "date_picker.sunday": {
+    "defaultMessage": "Sun",
+    "content": "周日"
+  },
+  "date_picker.thursday": {
+    "defaultMessage": "Thu",
+    "content": "周四"
+  },
+  "date_picker.today": {
+    "defaultMessage": "Today",
+    "content": "今天"
+  },
+  "date_picker.today_button": {
+    "defaultMessage": "Today",
+    "content": "今天"
+  },
+  "date_picker.tomorrow": {
+    "defaultMessage": "Tomorrow",
+    "content": "明天"
+  },
+  "date_picker.tuesday": {
+    "defaultMessage": "Tue",
+    "content": "周二"
+  },
+  "date_picker.wednesday": {
+    "defaultMessage": "Wed",
+    "content": "周三"
+  },
+  "date.someday": {
+    "defaultMessage": "Someday",
+    "content": "某天"
+  },
+  "date.today": {
+    "defaultMessage": "Today",
+    "content": "今天"
+  },
+  "daysAgo": {
+    "defaultMessage": "{0} days ago",
+    "content": "{0}天前"
+  },
+  "daysLeft": {
+    "defaultMessage": "{0} days left",
+    "content": "还剩 {0} 天"
+  },
+  "deleteDatabase.error.limit": {
+    "defaultMessage": "You can only create 3 databases",
+    "content": "您只能创建3个数据库"
+  },
+  "deleteDatabase.error.wrongPassword": {
+    "defaultMessage": "Wrong password",
+    "content": "密码错误"
+  },
+  "desktop.recurring_task.body_hint": {
+    "defaultMessage": "After completing this task, the next task will be on:",
+    "content": "完成当前任务后，下一个任务的日期将是："
+  },
+  "desktop.recurring_task.invalid_rule": {
+    "defaultMessage": "Couldn't parse this rule",
+    "content": "无法解析这条规则"
+  },
+  "desktop.recurring_task.placeholder": {
+    "defaultMessage": "For example 1w, 2m, 1y3d, due:1d, start:2d",
+    "content": "例如 1w、2m、1y3d、due:1d、start:2d"
+  },
+  "desktop.recurring_task.syntax_hint": {
+    "defaultMessage": "Format: number + d / w / m / y, optionally prefixed with start: or due:",
+    "content": "格式：数字 + d / w / m / y，可加 start: 或 due: 前缀"
+  },
+  "desktop.recurring_task.title": {
+    "defaultMessage": "Recurring Settings",
+    "content": "循环规则"
+  },
+  "desktop.tag_editor.create_new_tag": {
+    "defaultMessage": "Create \"{0}\"",
+    "content": "创建标签 \"#{0}\""
+  },
+  "desktop.task_detail.add_reminder": {
+    "defaultMessage": "Add reminder",
+    "content": "添加提醒"
+  },
+  "desktop.task_detail.due_date": {
+    "defaultMessage": "Due Date",
+    "content": "截止日期"
+  },
+  "desktop.task_detail.notes_placeholder": {
+    "defaultMessage": "Add notes...",
+    "content": "添加笔记..."
+  },
+  "desktop.task_detail.reminders": {
+    "defaultMessage": "Reminders",
+    "content": "提醒"
+  },
+  "desktop.task_detail.reminders_empty": {
+    "defaultMessage": "No reminders",
+    "content": "暂无提醒"
+  },
+  "desktop.task_detail.start_date": {
+    "defaultMessage": "Start Date",
+    "content": "开始日期"
+  },
+  "desktop.task_detail.subtasks": {
+    "defaultMessage": "Subtasks",
+    "content": "子任务"
+  },
+  "desktop.task_detail.unset": {
+    "defaultMessage": "Not set",
+    "content": "未设置"
+  },
+  "display_settings.completed_tasks": {
+    "defaultMessage": "Completed Tasks",
+    "content": "已完成任务"
+  },
+  "display_settings.completed_tasks_range": {
+    "defaultMessage": "Completed Tasks Range",
+    "content": "已完成任务范围"
+  },
+  "display_settings.future_tasks": {
+    "defaultMessage": "Future Tasks",
+    "content": "未来任务"
+  },
+  "edit_task_item.add_subtask": {
+    "defaultMessage": "Add Subtask",
+    "content": "添加子任务"
+  },
+  "edit_task_item.delete": {
+    "defaultMessage": "Delete Task",
+    "content": "删除任务"
+  },
+  "edit_task_item.set_due_date": {
+    "defaultMessage": "Set Due Date",
+    "content": "设置截止日期"
+  },
+  "edit_task_item.set_reminder": {
+    "defaultMessage": "Set Reminder",
+    "content": "设置提醒"
+  },
+  "edit_task_item.set_start_date": {
+    "defaultMessage": "Set Start Date",
+    "content": "设置开始日期"
+  },
+  "edit_task_item.set_tags": {
+    "defaultMessage": "Set Tags",
+    "content": "设置标签"
+  },
+  "edit_task_item.task_notes_placeholder": {
+    "defaultMessage": "Add Notes",
+    "content": "添加笔记..."
+  },
+  "errorCreatingDirectory": {
+    "defaultMessage": "Error creating directory:",
+    "content": "创建目录时出错："
+  },
+  "errorDeletingDatabase": {
+    "defaultMessage": "Error deleting database:",
+    "content": "删除数据库时出错："
+  },
+  "errorEnsuringBaseDir": {
+    "defaultMessage": "Error ensuring base directory:",
+    "content": "确保基本目录时出错："
+  },
+  "errorListingDatabases": {
+    "defaultMessage": "Error listing databases:",
+    "content": "列出数据库时出错："
+  },
+  "errorReadingMetadata": {
+    "defaultMessage": "Error reading metadata for {0}:",
+    "content": "读取{0}的元数据时出错："
+  },
+  "form.hide": {
+    "defaultMessage": "Hide",
+    "content": "隐藏"
+  },
+  "form.show": {
+    "defaultMessage": "Show",
+    "content": "显示"
+  },
+  "futureProjects": {
+    "defaultMessage": "Future Projects",
+    "content": "未来项目"
+  },
+  "futureProjects.empty": {
+    "defaultMessage": "No future projects",
+    "content": "没有未来项目"
+  },
+  "heading.task_progress": {
+    "defaultMessage": "Task Progress",
+    "content": "任务进度"
+  },
+  "heading.title_placeholder": {
+    "defaultMessage": "Add heading title...",
+    "content": "添加标题..."
+  },
+  "home.futureProjects": {
+    "defaultMessage": "Future Projects",
+    "content": "未来项目"
+  },
+  "home.title": {
+    "defaultMessage": "Home",
+    "content": "首页"
+  },
+  "inbox": {
+    "defaultMessage": "Inbox",
+    "content": "收件箱"
+  },
+  "inbox.display": {
+    "defaultMessage": "Display",
+    "content": "显示"
+  },
+  "inbox.hoverMessage": {
+    "defaultMessage": "Create Task",
+    "content": "创建任务"
+  },
+  "inbox.taskDisplaySettings": {
+    "defaultMessage": "Task Display Settings",
+    "content": "任务显示设置"
+  },
+  "inbox.title": {
+    "defaultMessage": "Inbox",
+    "content": "收件箱"
+  },
+  "indexedDBStorageInvalidParams": {
+    "defaultMessage": "dbName and storeName are required",
+    "content": "dbName和storeName为必填项"
+  },
+  "invalid.date": {
+    "defaultMessage": "Invalid date format",
+    "content": "日期格式无效"
+  },
+  "keyNotFound": {
+    "defaultMessage": "Key not found",
+    "content": "未找到密钥"
+  },
+  "listItemsError": {
+    "defaultMessage": "Error listing items from IndexedDB:",
+    "content": "从 IndexedDB 列出项目时出错："
+  },
+  "localDatabaseName": {
+    "defaultMessage": "Local Database",
+    "content": "本地数据库"
+  },
+  "login.account.placeholder": {
+    "defaultMessage": "Enter your email",
+    "content": "输入您的电子邮件"
+  },
+  "login.agree": {
+    "defaultMessage": "I agree to",
+    "content": "我同意"
+  },
+  "login.and": {
+    "defaultMessage": "and",
+    "content": "和"
+  },
+  "login.createAccount": {
+    "defaultMessage": "Create one",
+    "content": "创建账户"
+  },
+  "login.error.accountExists": {
+    "defaultMessage": "Account already exists",
+    "content": "账户已存在"
+  },
+  "login.error.accountFormat": {
+    "defaultMessage": "Please enter a valid email format.",
+    "content": "请输入有效的电子邮件格式。"
+  },
+  "login.error.passwordMismatch": {
+    "defaultMessage": "Confirm password should be the same as password",
+    "content": "确认密码应与密码相同。"
+  },
+  "login.error.termsRequired": {
+    "defaultMessage": "You must agree to the terms",
+    "content": "您必须同意条款。"
+  },
+  "login.eula": {
+    "defaultMessage": "EULA",
+    "content": "最终用户许可协议"
+  },
+  "login.noAccount": {
+    "defaultMessage": "Don't have an account?",
+    "content": "没有账户？"
+  },
+  "login.password.placeholder": {
+    "defaultMessage": "Enter your password",
+    "content": "输入您的密码"
+  },
+  "login.privacyPolicy": {
+    "defaultMessage": "Privacy Policy",
+    "content": "隐私政策"
+  },
+  "login.signIn": {
+    "defaultMessage": "Sign In",
+    "content": "登录"
+  },
+  "login.submit": {
+    "defaultMessage": "Sign In",
+    "content": "登录"
+  },
+  "login.subtitle": {
+    "defaultMessage": "Welcome back! Please sign in to your account.",
+    "content": "欢迎回来！请登录您的账户。"
+  },
+  "login.tab.register": {
+    "defaultMessage": "Register",
+    "content": "注册"
+  },
+  "login.tab.signin": {
+    "defaultMessage": "Sign In",
+    "content": "登录"
+  },
+  "login.title": {
+    "defaultMessage": "Login & Register",
+    "content": "登录与注册"
+  },
+  "logs.thisWeek": {
+    "defaultMessage": "This Week",
+    "content": "本周"
+  },
+  "menu.about": {
+    "defaultMessage": "About Still",
+    "content": "关于 Still"
+  },
+  "menu.close": {
+    "defaultMessage": "Close Window",
+    "content": "关闭窗口"
+  },
+  "menu.copy": {
+    "defaultMessage": "Copy",
+    "content": "复制"
+  },
+  "menu.cut": {
+    "defaultMessage": "Cut",
+    "content": "剪切"
+  },
+  "menu.developer": {
+    "defaultMessage": "Developer",
+    "content": "开发者"
+  },
+  "menu.edit": {
+    "defaultMessage": "Edit",
+    "content": "编辑"
+  },
+  "menu.forceReload": {
+    "defaultMessage": "Force Reload",
+    "content": "强制重新加载"
+  },
+  "menu.githubIssue": {
+    "defaultMessage": "Github Issue",
+    "content": "GitHub 问题"
+  },
+  "menu.help": {
+    "defaultMessage": "Help",
+    "content": "帮助"
+  },
+  "menu.minimize": {
+    "defaultMessage": "Minimize",
+    "content": "最小化"
+  },
+  "menu.paste": {
+    "defaultMessage": "Paste",
+    "content": "粘贴"
+  },
+  "menu.quit": {
+    "defaultMessage": "Quit Still",
+    "content": "退出 Still"
+  },
+  "menu.reload": {
+    "defaultMessage": "Reload",
+    "content": "重新加载"
+  },
+  "menu.restoreWindow": {
+    "defaultMessage": "Restore Window",
+    "content": "恢复窗口"
+  },
+  "menu.selectAll": {
+    "defaultMessage": "Select All",
+    "content": "全选"
+  },
+  "menu.toggleDevTools": {
+    "defaultMessage": "Developer Tools",
+    "content": "开发者工具"
+  },
+  "menu.toggleFullscreen": {
+    "defaultMessage": "Toggle Full Screen",
+    "content": "切换全屏"
+  },
+  "menu.view": {
+    "defaultMessage": "View",
+    "content": "视图"
+  },
+  "menu.window": {
+    "defaultMessage": "Window",
+    "content": "窗口"
+  },
+  "menu.zoom": {
+    "defaultMessage": "Zoom",
+    "content": "缩放"
+  },
+  "message.undo": {
+    "defaultMessage": "Undo",
+    "content": "撤销"
+  },
+  "mobile.subtask.placeholder": {
+    "defaultMessage": "Subtask",
+    "content": "子任务"
+  },
+  "move_success": {
+    "defaultMessage": "Moved successfully",
+    "content": "移动成功"
+  },
+  "not_login": {
+    "defaultMessage": "Account is logged out",
+    "content": "账户已登出"
+  },
+  "notes_placeholder": {
+    "defaultMessage": "Add notes...",
+    "content": "添加笔记..."
+  },
+  "notification.permission.denied": {
+    "defaultMessage": "Notification permission denied",
+    "content": "通知权限被拒绝"
+  },
+  "offline.database": {
+    "defaultMessage": "Offline Database",
+    "content": "离线数据库"
+  },
+  "otherError": {
+    "defaultMessage": "An error occurred",
+    "content": "发生错误"
+  },
+  "privacy_policy": {
+    "defaultMessage": "Privacy Policy",
+    "content": "隐私政策"
+  },
+  "project_area_selector.move_to_root": {
+    "defaultMessage": "Move to root",
+    "content": "移动到根目录"
+  },
+  "project_area_selector.search": {
+    "defaultMessage": "Search projects and areas...",
+    "content": "搜索项目和领域..."
+  },
+  "project_heading.archive": {
+    "defaultMessage": "Archive Heading",
+    "content": "归档标题"
+  },
+  "project_heading.convert": {
+    "defaultMessage": "Convert",
+    "content": "转换"
+  },
+  "project_heading.convert_to_project": {
+    "defaultMessage": "Convert to Project",
+    "content": "转换为项目"
+  },
+  "project_heading.convert_to_project_description": {
+    "defaultMessage": "Are you sure you want to convert this heading to a project?",
+    "content": "您确定要将此标题转换为项目吗？"
+  },
+  "project_heading.delete": {
+    "defaultMessage": "Delete",
+    "content": "删除"
+  },
+  "project_heading.delete_heading": {
+    "defaultMessage": "Delete Heading",
+    "content": "删除标题"
+  },
+  "project_heading.delete_heading_description": {
+    "defaultMessage": "Are you sure you want to delete this heading?",
+    "content": "您确定要删除此标题吗？"
+  },
+  "project_heading.edit_title": {
+    "defaultMessage": "Edit Title",
+    "content": "编辑标题"
+  },
+  "project_heading.move": {
+    "defaultMessage": "Move Heading",
+    "content": "移动标题"
+  },
+  "project_heading.placeholder": {
+    "defaultMessage": "New Heading",
+    "content": "新的标题"
+  },
+  "project_heading.unarchive": {
+    "defaultMessage": "Unarchive Heading",
+    "content": "取消归档标题"
+  },
+  "project.add_heading": {
+    "defaultMessage": "Add Heading",
+    "content": "添加标题"
+  },
+  "project.area": {
+    "defaultMessage": "Area",
+    "content": "领域"
+  },
+  "project.cancel_project": {
+    "defaultMessage": "Cancel project",
+    "content": "取消项目"
+  },
+  "project.delete": {
+    "defaultMessage": "Delete",
+    "content": "删除"
+  },
+  "project.delete_project": {
+    "defaultMessage": "Delete Project",
+    "content": "删除项目"
+  },
+  "project.delete_project_description": {
+    "defaultMessage": "Are you sure you want to delete this project?",
+    "content": "您确定要删除此项目吗？"
+  },
+  "project.detail.notesPlaceholder": {
+    "defaultMessage": "Enter project notes...",
+    "content": "输入项目笔记..."
+  },
+  "project.due_date": {
+    "defaultMessage": "Due Date",
+    "content": "截止日期"
+  },
+  "project.due_date_placeholder": {
+    "defaultMessage": "Select due date",
+    "content": "选择截止日期"
+  },
+  "project.edit_due_date": {
+    "defaultMessage": "Edit Due Date",
+    "content": "编辑截止日期"
+  },
+  "project.edit_start_date": {
+    "defaultMessage": "Edit Start Date",
+    "content": "编辑开始日期"
+  },
+  "project.edit_tags": {
+    "defaultMessage": "Edit Tags",
+    "content": "编辑标签"
+  },
+  "project.edit_title": {
+    "defaultMessage": "Edit Title",
+    "content": "编辑标题"
+  },
+  "project.headerPlaceholder": {
+    "defaultMessage": "New Project",
+    "content": "新项目"
+  },
+  "project.mark_as_canceled": {
+    "defaultMessage": "Mark as Canceled",
+    "content": "标记为已取消"
+  },
+  "project.mark_as_completed": {
+    "defaultMessage": "Mark as Completed",
+    "content": "标记为已完成"
+  },
+  "project.mark_as_created": {
+    "defaultMessage": "Mark as Created",
+    "content": "标记为已创建"
+  },
+  "project.move_project": {
+    "defaultMessage": "Move Project",
+    "content": "移动项目"
+  },
+  "project.notes": {
+    "defaultMessage": "Notes",
+    "content": "笔记"
+  },
+  "project.notFound": {
+    "defaultMessage": "Project not found",
+    "content": "项目未找到"
+  },
+  "project.start_date": {
+    "defaultMessage": "Start Date",
+    "content": "开始日期"
+  },
+  "project.start_date_placeholder": {
+    "defaultMessage": "Select start date",
+    "content": "选择开始日期"
+  },
+  "project.status.toggle": {
+    "defaultMessage": "Toggle Project Status",
+    "content": "切换项目状态"
+  },
+  "project.tagFilter.all": {
+    "defaultMessage": "All",
+    "content": "全部"
+  },
+  "project.tagFilter.label": {
+    "defaultMessage": "Tags:",
+    "content": "标签："
+  },
+  "project.tagFilter.untagged": {
+    "defaultMessage": "No Tags",
+    "content": "无标签"
+  },
+  "project.task_progress": {
+    "defaultMessage": "Task Progress",
+    "content": "任务进度"
+  },
+  "project.task_progress_hint": {
+    "defaultMessage": "Select a task from the middle column to view its details",
+    "content": "从中间列选择一个任务以查看其详情"
+  },
+  "project.toggle_status_description": {
+    "defaultMessage": "There are {0} tasks left, what do you want to do?",
+    "content": "还有{0}个任务剩余，您想怎么做？"
+  },
+  "project.untitled": {
+    "defaultMessage": "New Project",
+    "content": "新项目"
+  },
+  "recurring_task.base_prefix": {
+    "defaultMessage": "From completion date:",
+    "content": "从完成日期："
+  },
+  "recurring_task.due_date_rule": {
+    "defaultMessage": "Due Date Rule",
+    "content": "截止日期规则"
+  },
+  "recurring_task.due_prefix": {
+    "defaultMessage": "From due date:",
+    "content": "从截止日期："
+  },
+  "recurring_task.invalid_rule": {
+    "defaultMessage": "Invalid rule",
+    "content": "无效规则"
+  },
+  "recurring_task.next_date": {
+    "defaultMessage": "Next date: {0}",
+    "content": "下次日期：{0}"
+  },
+  "recurring_task.rule_placeholder": {
+    "defaultMessage": "e.g. 1w, 2m, 1y3d, due:1d, start:2d",
+    "content": "例如：1w, 2m, 1y3d, due:1d, start:2d"
+  },
+  "recurring_task.settings_title": {
+    "defaultMessage": "Set Recurring Task Rules",
+    "content": "设置循环任务规则"
+  },
+  "recurring_task.start_date_rule": {
+    "defaultMessage": "Start Date Rule",
+    "content": "开始日期规则"
+  },
+  "recurring_task.start_prefix": {
+    "defaultMessage": "From start date:",
+    "content": "从开始日期："
+  },
+  "recurringDate.day": {
+    "defaultMessage": "day",
+    "content": "天"
+  },
+  "recurringDate.days": {
+    "defaultMessage": "days",
+    "content": "天"
+  },
+  "recurringDate.month": {
+    "defaultMessage": "month",
+    "content": "个月"
+  },
+  "recurringDate.months": {
+    "defaultMessage": "months",
+    "content": "个月"
+  },
+  "recurringDate.nextMonday": {
+    "defaultMessage": "Next Monday",
+    "content": "下周一"
+  },
+  "recurringDate.nextMonth1st": {
+    "defaultMessage": "Next month 1st",
+    "content": "下月1号"
+  },
+  "recurringDate.nextYearJan1": {
+    "defaultMessage": "Next year January 1st",
+    "content": "明年1月1日"
+  },
+  "recurringDate.then": {
+    "defaultMessage": "→",
+    "content": "→"
+  },
+  "recurringDate.tomorrow": {
+    "defaultMessage": "Tomorrow",
+    "content": "明天"
+  },
+  "recurringDate.week": {
+    "defaultMessage": "week",
+    "content": "周"
+  },
+  "recurringDate.weeks": {
+    "defaultMessage": "weeks",
+    "content": "周"
+  },
+  "recurringDate.year": {
+    "defaultMessage": "year",
+    "content": "年"
+  },
+  "recurringDate.years": {
+    "defaultMessage": "years",
+    "content": "年"
+  },
+  "register.agree": {
+    "defaultMessage": "I agree to",
+    "content": "我同意"
+  },
+  "register.and": {
+    "defaultMessage": "and",
+    "content": "和"
+  },
+  "register.confirmPassword.placeholder": {
+    "defaultMessage": "Enter your password again",
+    "content": "再次输入您的密码"
+  },
+  "register.eula": {
+    "defaultMessage": "EULA",
+    "content": "最终用户许可协议（EULA）"
+  },
+  "register.hasAccount": {
+    "defaultMessage": "Already have an account?",
+    "content": "已有账户？"
+  },
+  "register.privacyPolicy": {
+    "defaultMessage": "Privacy Policy",
+    "content": "隐私政策"
+  },
+  "register.signIn": {
+    "defaultMessage": "Sign in",
+    "content": "登录"
+  },
+  "register.submit": {
+    "defaultMessage": "Create Account",
+    "content": "创建账户"
+  },
+  "register.submit.label": {
+    "defaultMessage": "Register",
+    "content": "注册"
+  },
+  "register.subtitle": {
+    "defaultMessage": "Sign up and enjoy 30 days of free cloud sync!",
+    "content": "注册并享受30天免费云同步！"
+  },
+  "register.title": {
+    "defaultMessage": "Create Account",
+    "content": "创建账户"
+  },
+  "reminder.expired.title": {
+    "defaultMessage": "Task Reminder",
+    "content": "任务提醒"
+  },
+  "schedule": {
+    "defaultMessage": "Schedule",
+    "content": "日程安排"
+  },
+  "schedule.empty": {
+    "defaultMessage": "No scheduled tasks",
+    "content": "没有已安排的任务"
+  },
+  "scheduled.title": {
+    "defaultMessage": "Scheduled",
+    "content": "已安排"
+  },
+  "scheduled.tomorrow": {
+    "defaultMessage": "Tomorrow",
+    "content": "明天"
+  },
+  "search.no_results": {
+    "defaultMessage": "No results found",
+    "content": "未找到结果"
+  },
+  "search.placeholder": {
+    "defaultMessage": "Search tasks, projects, areas...",
+    "content": "搜索任务、项目、领域..."
+  },
+  "selection.clear_selection": {
+    "defaultMessage": "Clear Selection",
+    "content": "清除选择"
+  },
+  "settings.about": {
+    "defaultMessage": "About",
+    "content": "关于"
+  },
+  "settings.about.commit": {
+    "defaultMessage": "Commit",
+    "content": "版本"
+  },
+  "settings.account": {
+    "defaultMessage": "Account",
+    "content": "账户"
+  },
+  "settings.account.management": {
+    "defaultMessage": "Account Management",
+    "content": "账户管理"
+  },
+  "settings.ai": {
+    "defaultMessage": "AI Assistant",
+    "content": "AI 助手"
+  },
+  "settings.ai.api": {
+    "defaultMessage": "API",
+    "content": "API"
+  },
+  "settings.ai.api_token": {
+    "defaultMessage": "API Token",
+    "content": "API Token"
+  },
+  "settings.ai.api_token.description": {
+    "defaultMessage": "Your API authentication token",
+    "content": "你的 API 鉴权 Token。"
+  },
+  "settings.ai.api_token.placeholder": {
+    "defaultMessage": "Enter your API token",
+    "content": "输入 API Token"
+  },
+  "settings.ai.api_url": {
+    "defaultMessage": "API URL",
+    "content": "API 地址"
+  },
+  "settings.ai.api_url.description": {
+    "defaultMessage": "OpenAI compatible API endpoint URL",
+    "content": "兼容 OpenAI 协议的 API 地址。"
+  },
+  "settings.ai.display": {
+    "defaultMessage": "Display",
+    "content": "显示"
+  },
+  "settings.ai.hide_entry": {
+    "defaultMessage": "Hide AI Chat in Sidebar",
+    "content": "在侧边栏隐藏 AI 助手"
+  },
+  "settings.ai.hide_entry.description": {
+    "defaultMessage": "Hide the AI Chat entry from the sidebar.",
+    "content": "在侧边栏中隐藏 AI 助手入口。"
+  },
+  "settings.ai.model_name": {
+    "defaultMessage": "Model Name",
+    "content": "模型名称"
+  },
+  "settings.ai.model_name.description": {
+    "defaultMessage": "The AI model to use (e.g., deepseek-v4-pro, gpt-4, gpt-4o)",
+    "content": "使用的 AI 模型（例如 deepseek-v4-pro、gpt-4、gpt-4o）。"
+  },
+  "settings.appearance": {
+    "defaultMessage": "Appearance",
+    "content": "外观"
+  },
+  "settings.attachments": {
+    "defaultMessage": "Attachments",
+    "content": "附件"
+  },
+  "settings.back_to_app": {
+    "defaultMessage": "Back to App",
+    "content": "返回应用"
+  },
+  "settings.calendar": {
+    "defaultMessage": "Calendar",
+    "content": ""
+  },
+  "settings.calendar_week_start_day": {
+    "defaultMessage": "Week starts on",
+    "content": ""
+  },
+  "settings.calendar_week_start_day.description": {
+    "defaultMessage": "Choose the first day of the week in date pickers.",
+    "content": ""
+  },
+  "settings.cloud": {
+    "defaultMessage": "Cloud",
+    "content": "云端"
+  },
+  "settings.cloud.chinaServer": {
+    "defaultMessage": "Use China Server",
+    "content": "使用中国服务器"
+  },
+  "settings.cloud.chinaServer.description": {
+    "defaultMessage": "Switch to China server for better performance",
+    "content": "切换到中国服务器以获得更好的性能"
+  },
+  "settings.cloud.createDatabase": {
+    "defaultMessage": "Create CloudDatabase",
+    "content": "创建云数据库"
+  },
+  "settings.cloud.currentDatabase": {
+    "defaultMessage": "Current Database",
+    "content": "当前数据库"
+  },
+  "settings.cloud.database": {
+    "defaultMessage": "Database",
+    "content": "数据库"
+  },
+  "settings.cloud.error": {
+    "defaultMessage": "Failed to load databases",
+    "content": "加载数据库失败"
+  },
+  "settings.cloud.loading": {
+    "defaultMessage": "Loading...",
+    "content": "加载中..."
+  },
+  "settings.cloud.online_database": {
+    "defaultMessage": "Online Database",
+    "content": "在线数据库"
+  },
+  "settings.completedTasksRange": {
+    "defaultMessage": "Completed Tasks Range",
+    "content": "已完成任务范围"
+  },
+  "settings.completedTasksRange.all": {
+    "defaultMessage": "All time",
+    "content": "全部"
+  },
+  "settings.completedTasksRange.all.description": {
+    "defaultMessage": "Show all completed tasks",
+    "content": "显示所有已完成的任务"
+  },
+  "settings.completedTasksRange.day": {
+    "defaultMessage": "Last 24 hours",
+    "content": "过去24小时"
+  },
+  "settings.completedTasksRange.day.description": {
+    "defaultMessage": "Show tasks completed since start of yesterday",
+    "content": "显示自昨天开始以来已完成的任务"
+  },
+  "settings.completedTasksRange.description": {
+    "defaultMessage": "How long to keep completed tasks visible across all views.",
+    "content": "显示最近多长时间内完成的任务。"
+  },
+  "settings.completedTasksRange.month": {
+    "defaultMessage": "Last month",
+    "content": "最近 30 天"
+  },
+  "settings.completedTasksRange.month.description": {
+    "defaultMessage": "Show tasks completed since start of last month",
+    "content": "显示自上个月开始以来已完成的任务"
+  },
+  "settings.completedTasksRange.today": {
+    "defaultMessage": "Today",
+    "content": "今天"
+  },
+  "settings.completedTasksRange.today.description": {
+    "defaultMessage": "Show tasks completed since start of today",
+    "content": "显示自今天开始以来已完成的任务"
+  },
+  "settings.completedTasksRange.week": {
+    "defaultMessage": "Last week",
+    "content": "最近 7 天"
+  },
+  "settings.completedTasksRange.week.description": {
+    "defaultMessage": "Show tasks completed since start of last week",
+    "content": "显示自上周开始以来已完成的任务"
+  },
+  "settings.createDatabase.createAndUse": {
+    "defaultMessage": "Create and Use",
+    "content": "创建并使用"
+  },
+  "settings.createDatabase.databaseName": {
+    "defaultMessage": "Database",
+    "content": "数据库名"
+  },
+  "settings.createDatabase.password": {
+    "defaultMessage": "Password",
+    "content": "密码"
+  },
+  "settings.createDatabase.passwordReadOnly": {
+    "defaultMessage": "Password cannot be modified. Data will be permanently lost if forgotten.",
+    "content": "密码不可修改。忘记后数据将永久丢失。"
+  },
+  "settings.createDatabase.passwordRepeat": {
+    "defaultMessage": "Password Repeat",
+    "content": "密码重复"
+  },
+  "settings.createDatabase.title": {
+    "defaultMessage": "Create Cloud Database",
+    "content": "创建云数据库"
+  },
+  "settings.database.detail": {
+    "defaultMessage": "Database Details",
+    "content": "数据库详情"
+  },
+  "settings.displaySettings": {
+    "defaultMessage": "Task Display",
+    "content": "任务显示"
+  },
+  "settings.displaySettings.description": {
+    "defaultMessage": "Control which tasks are visible across all views (Today, Projects, Areas). These settings apply everywhere unless overridden in specific views.",
+    "content": "全局控制任务列表中默认显示的内容。"
+  },
+  "settings.dock_badge": {
+    "defaultMessage": "Dock Badge",
+    "content": "Dock 徽标"
+  },
+  "settings.dock_badge.count_type": {
+    "defaultMessage": "Badge Count Type",
+    "content": "徽标计数类型"
+  },
+  "settings.dock_badge.count_type.none": {
+    "defaultMessage": "None",
+    "content": "无"
+  },
+  "settings.dock_badge.count_type.overdue": {
+    "defaultMessage": "Overdue",
+    "content": "已过期"
+  },
+  "settings.dock_badge.count_type.overdue_and_today": {
+    "defaultMessage": "Overdue + Today",
+    "content": "已过期 + 今天"
+  },
+  "settings.dock_badge.count_type.overdue_today_and_inbox": {
+    "defaultMessage": "Overdue + Today + Inbox",
+    "content": "已过期 + 今天 + 收件箱"
+  },
+  "settings.export": {
+    "defaultMessage": "Export",
+    "content": "导出"
+  },
+  "settings.export.description": {
+    "defaultMessage": "Export your database to back up your data or transfer it to another device.",
+    "content": "将您的数据库导出，以备份数据或转移到另一个设备。"
+  },
+  "settings.feedback": {
+    "defaultMessage": "Customer Feedback",
+    "content": "客户反馈"
+  },
+  "settings.feedback.description": {
+    "defaultMessage": "If you have any questions, suggestions, or issues, please feel free to contact our support team.",
+    "content": "如果您有任何问题、建议或意见，请随时联系我们的客服团队。"
+  },
+  "settings.import": {
+    "defaultMessage": "Import",
+    "content": "导入"
+  },
+  "settings.import_export": {
+    "defaultMessage": "Import & Export",
+    "content": "导入 / 导出"
+  },
+  "settings.import.description": {
+    "defaultMessage": "Import your tasks from a backup file",
+    "content": "从备份文件中导入任务"
+  },
+  "settings.import.fileReadingFailed": {
+    "defaultMessage": "File reading failed",
+    "content": "文件读取失败"
+  },
+  "settings.import.importedSuccessfully": {
+    "defaultMessage": "Imported successfully",
+    "content": "导入成功"
+  },
+  "settings.import.invalidFileFormat": {
+    "defaultMessage": "Invalid file format",
+    "content": "无效的文件格式"
+  },
+  "settings.language": {
+    "defaultMessage": "Language",
+    "content": "语言"
+  },
+  "settings.language.description": {
+    "defaultMessage": "Select your preferred language.",
+    "content": "选择你偏好的语言。"
+  },
+  "settings.language.english": {
+    "defaultMessage": "English",
+    "content": "English"
+  },
+  "settings.local.database": {
+    "defaultMessage": "Local Database",
+    "content": "本地数据库"
+  },
+  "settings.local.database.description": {
+    "defaultMessage": "Local data stored on this device",
+    "content": "存储在此设备上的本地数据"
+  },
+  "settings.notes": {
+    "defaultMessage": "Notes",
+    "content": "笔记"
+  },
+  "settings.render_markdown": {
+    "defaultMessage": "Render Markdown",
+    "content": "渲染 Markdown"
+  },
+  "settings.render_markdown.description": {
+    "defaultMessage": "Render notes as markdown in task and project details.",
+    "content": "在任务和项目详情中将笔记渲染为 Markdown。"
+  },
+  "settings.showCompletedTasks": {
+    "defaultMessage": "Show Completed Tasks",
+    "content": "显示已完成任务"
+  },
+  "settings.showCompletedTasks.description": {
+    "defaultMessage": "Display finished tasks in all views.",
+    "content": "在所有视图中展示已完成的任务。"
+  },
+  "settings.showFutureTasks": {
+    "defaultMessage": "Show Future Tasks",
+    "content": "显示未来任务"
+  },
+  "settings.showFutureTasks.description": {
+    "defaultMessage": "Display tasks with future due dates in all views.",
+    "content": "在所有视图中显示截止日期在未来的任务。"
+  },
+  "settings.sidebar.account": {
+    "defaultMessage": "Account",
+    "content": "账户"
+  },
+  "settings.sidebar.data": {
+    "defaultMessage": "Data",
+    "content": "数据"
+  },
+  "settings.sidebar.general": {
+    "defaultMessage": "General",
+    "content": "通用"
+  },
+  "settings.sync": {
+    "defaultMessage": "Sync",
+    "content": "同步"
+  },
+  "settings.sync.noDatabases": {
+    "defaultMessage": "No databases available",
+    "content": "暂无可用数据库"
+  },
+  "settings.theme": {
+    "defaultMessage": "Theme",
+    "content": "主题"
+  },
+  "settings.theme.auto": {
+    "defaultMessage": "Auto (System)",
+    "content": "跟随系统"
+  },
+  "settings.theme.dark": {
+    "defaultMessage": "Dark",
+    "content": "深色"
+  },
+  "settings.theme.description": {
+    "defaultMessage": "Select your preferred theme.",
+    "content": "选择你偏好的主题。"
+  },
+  "settings.theme.eink": {
+    "defaultMessage": "E-Ink",
+    "content": "墨水屏"
+  },
+  "settings.theme.light": {
+    "defaultMessage": "Light",
+    "content": "浅色"
+  },
+  "settings.title": {
+    "defaultMessage": "Settings",
+    "content": "设置"
+  },
+  "settings.today": {
+    "defaultMessage": "Today",
+    "content": "今天"
+  },
+  "settings.today.group_by_area_project": {
+    "defaultMessage": "Group by Area / Project",
+    "content": "按区域 / 项目分组"
+  },
+  "settings.today.group_by_area_project.description": {
+    "defaultMessage": "Group projects by area and tasks by project on the Today page.",
+    "content": "在今天页面按区域对项目分组，按项目对任务分组。"
+  },
+  "settings.weekday.friday": {
+    "defaultMessage": "Friday",
+    "content": ""
+  },
+  "settings.weekday.monday": {
+    "defaultMessage": "Monday",
+    "content": ""
+  },
+  "settings.weekday.saturday": {
+    "defaultMessage": "Saturday",
+    "content": ""
+  },
+  "settings.weekday.sunday": {
+    "defaultMessage": "Sunday",
+    "content": ""
+  },
+  "settings.weekday.thursday": {
+    "defaultMessage": "Thursday",
+    "content": ""
+  },
+  "settings.weekday.tuesday": {
+    "defaultMessage": "Tuesday",
+    "content": ""
+  },
+  "settings.weekday.wednesday": {
+    "defaultMessage": "Wednesday",
+    "content": ""
+  },
+  "sidebar.create_menu": {
+    "defaultMessage": "Create New",
+    "content": "新建"
+  },
+  "sidebar.projects.title": {
+    "defaultMessage": "Projects",
+    "content": "项目"
+  },
+  "subtask.placeholder": {
+    "defaultMessage": "Add subtask...",
+    "content": "添加子任务..."
+  },
+  "sync.addServer": {
+    "defaultMessage": "Add Server",
+    "content": "添加服务器"
+  },
+  "sync.addServerSuccess": {
+    "defaultMessage": "Server added successfully",
+    "content": "服务器添加成功"
+  },
+  "sync.authToken": {
+    "defaultMessage": "Auth Token",
+    "content": "认证令牌"
+  },
+  "sync.authTokenPlaceholder": {
+    "defaultMessage": "Enter your authentication token",
+    "content": "输入您的认证令牌"
+  },
+  "sync.autoSync": {
+    "defaultMessage": "Auto Sync",
+    "content": ""
+  },
+  "sync.autoSync.description": {
+    "defaultMessage": "Sync automatically whenever the app regains focus.",
+    "content": ""
+  },
+  "sync.deleteConfigSuccess": {
+    "defaultMessage": "Configuration deleted successfully",
+    "content": "配置删除成功"
+  },
+  "sync.deleteServer": {
+    "defaultMessage": "Delete Server",
+    "content": "删除服务器"
+  },
+  "sync.deleteServer.description": {
+    "defaultMessage": "This action cannot be undone and will remove the server configuration from this device.",
+    "content": "此操作无法撤销，将从本设备移除该服务器配置。"
+  },
+  "sync.endpoint": {
+    "defaultMessage": "Endpoint",
+    "content": "端点"
+  },
+  "sync.error.invalidEndpoint": {
+    "defaultMessage": "Please enter a valid URL",
+    "content": "请输入有效的 URL"
+  },
+  "sync.folderName": {
+    "defaultMessage": "Folder Name",
+    "content": "文件夹名称"
+  },
+  "sync.folderNamePlaceholder": {
+    "defaultMessage": "tasks",
+    "content": "tasks"
+  },
+  "sync.selfHosted.add": {
+    "defaultMessage": "Add Selfhosted Server",
+    "content": "添加自托管服务器"
+  },
+  "sync.selfHosted.documentationLink": {
+    "defaultMessage": "View documentation",
+    "content": "查看文档"
+  },
+  "sync.selfHosted.documentationURL": {
+    "defaultMessage": "https://tasks.hamsterbase.com/guide/download/selfhosted.html",
+    "content": "https://tasks.hamsterbase.com/zh/guide/download/selfhosted.html"
+  },
+  "sync.selfHostedNoConfigDescription": {
+    "defaultMessage": "No server configured yet. Add one to sync tasks across devices.",
+    "content": "尚未配置服务器，添加后可在多设备间同步任务。"
+  },
+  "sync.selfHostedOnlyLocalDatabase": {
+    "defaultMessage": "Selfhosted sync is only available for local database.",
+    "content": "自托管同步仅适用于本地数据库。"
+  },
+  "sync.selfHostedServer": {
+    "defaultMessage": "Selfhosted Server",
+    "content": "自托管服务器"
+  },
+  "sync.selfHostedSync": {
+    "defaultMessage": "Selfhosted Sync",
+    "content": "自托管同步"
+  },
+  "sync.serverType": {
+    "defaultMessage": "Server Type",
+    "content": "服务器类型"
+  },
+  "sync.success": {
+    "defaultMessage": "Sync successful",
+    "content": "同步成功"
+  },
+  "sync.sync_success": {
+    "defaultMessage": "Sync completed successfully.",
+    "content": "同步成功完成。"
+  },
+  "sync.syncing": {
+    "defaultMessage": "Syncing...",
+    "content": "同步中..."
+  },
+  "sync.syncNow": {
+    "defaultMessage": "Sync Now",
+    "content": "立即同步"
+  },
+  "sync.syncSuccess": {
+    "defaultMessage": "Sync Successful",
+    "content": "同步成功"
+  },
+  "tag_editor.create_new_tag": {
+    "defaultMessage": "Create tag \"#{0}\"",
+    "content": "创建标签 \"#{0}\""
+  },
+  "tag_editor.empty_hint": {
+    "defaultMessage": "No matching tags",
+    "content": "没有匹配的标签"
+  },
+  "tag_editor.input_placeholder": {
+    "defaultMessage": "Search or create a tag",
+    "content": "搜索或创建标签"
+  },
+  "task_attr.move_to_inbox": {
+    "defaultMessage": "Move to Inbox",
+    "content": "移至收件箱"
+  },
+  "task_attr.no_areas": {
+    "defaultMessage": "No areas",
+    "content": "无领域"
+  },
+  "task_attr.no_location": {
+    "defaultMessage": "No locations",
+    "content": "无归属"
+  },
+  "task_attr.no_matching_location": {
+    "defaultMessage": "No matching locations",
+    "content": "没有匹配的归属"
+  },
+  "task_attr.search_project": {
+    "defaultMessage": "Search projects",
+    "content": "搜索项目"
+  },
+  "task.convert": {
+    "defaultMessage": "Convert",
+    "content": "转换"
+  },
+  "task.convert_to_project": {
+    "defaultMessage": "Convert to Project",
+    "content": "转换为项目"
+  },
+  "task.convert_to_project_description": {
+    "defaultMessage": "Are you sure you want to convert this task to a project?",
+    "content": "您确定要将此任务转换为项目吗？"
+  },
+  "task.delete": {
+    "defaultMessage": "Delete",
+    "content": "删除"
+  },
+  "task.delete_project": {
+    "defaultMessage": "Delete project",
+    "content": "删除项目"
+  },
+  "task.delete_project_confirm_description": {
+    "defaultMessage": "Are you sure you want to delete this project? This action cannot be undone.",
+    "content": "您确定要删除此项目吗？此操作无法撤销。"
+  },
+  "task.delete_project_confirm_title": {
+    "defaultMessage": "Delete Project",
+    "content": "删除项目"
+  },
+  "task.delete_task": {
+    "defaultMessage": "Delete Task",
+    "content": "删除任务"
+  },
+  "task.delete_task_description": {
+    "defaultMessage": "Are you sure you want to delete this task?",
+    "content": "您确定要删除此任务吗？"
+  },
+  "task.move": {
+    "defaultMessage": "Move Task",
+    "content": "移动任务"
+  },
+  "task.recurring_settings": {
+    "defaultMessage": "Recurring Settings",
+    "content": "循环设置"
+  },
+  "task.set_recurring": {
+    "defaultMessage": "Recurring Config",
+    "content": "循环配置"
+  },
+  "task.untitled": {
+    "defaultMessage": "New Task",
+    "content": "新任务"
+  },
+  "tasks.add_subtask": {
+    "defaultMessage": "Add subtask",
+    "content": "添加子任务"
+  },
+  "tasks.add.tags": {
+    "defaultMessage": "Not set",
+    "content": "未设置"
+  },
+  "tasks.click_to_create_subtask": {
+    "defaultMessage": "Click to create subtask",
+    "content": "点击创建子任务"
+  },
+  "tasks.daysAgo": {
+    "defaultMessage": "{0} days ago",
+    "content": "{0}天前"
+  },
+  "tasks.daysLeft": {
+    "defaultMessage": "{0} days left",
+    "content": "还有 {0} 天"
+  },
+  "tasks.due_date": {
+    "defaultMessage": "Due Date",
+    "content": "截止日期"
+  },
+  "tasks.due_date_label": {
+    "defaultMessage": "Due Date",
+    "content": "截止日期"
+  },
+  "tasks.due_date_placeholder": {
+    "defaultMessage": "Select due date",
+    "content": "选择截止日期"
+  },
+  "tasks.filterByTag": {
+    "defaultMessage": "Filter by Tag",
+    "content": "按标签筛选"
+  },
+  "tasks.id.copy": {
+    "defaultMessage": "Copy ID",
+    "content": "复制 ID"
+  },
+  "tasks.id.copySuccess": {
+    "defaultMessage": "ID copied to clipboard",
+    "content": "ID 已复制到剪贴板"
+  },
+  "tasks.location": {
+    "defaultMessage": "Location",
+    "content": "归属"
+  },
+  "tasks.location.empty": {
+    "defaultMessage": "Not set",
+    "content": "未设置"
+  },
+  "tasks.location.move": {
+    "defaultMessage": "Move to",
+    "content": "移动到"
+  },
+  "tasks.mark_as_canceled": {
+    "defaultMessage": "Mark as Canceled",
+    "content": "标记为已取消"
+  },
+  "tasks.mark_as_completed": {
+    "defaultMessage": "Mark as Completed",
+    "content": "标记为已完成"
+  },
+  "tasks.mark_as_created": {
+    "defaultMessage": "Mark as Created",
+    "content": "标记为已创建"
+  },
+  "tasks.notes_placeholder": {
+    "defaultMessage": "Add notes...",
+    "content": "添加笔记..."
+  },
+  "tasks.oneDayAgo": {
+    "defaultMessage": "1 day ago",
+    "content": "1天前"
+  },
+  "tasks.recurring": {
+    "defaultMessage": "Repeat",
+    "content": "重复"
+  },
+  "tasks.recurring_due_date": {
+    "defaultMessage": "DueDate: {0}",
+    "content": "截止日期：{0}"
+  },
+  "tasks.recurring_next_label": {
+    "defaultMessage": "Next task",
+    "content": "下一个任务"
+  },
+  "tasks.recurring_placeholder": {
+    "defaultMessage": "Not set",
+    "content": "未设置"
+  },
+  "tasks.recurring_start_date": {
+    "defaultMessage": "StartDate: {0}",
+    "content": "开始日期：{0}"
+  },
+  "tasks.reminders": {
+    "defaultMessage": "Reminders",
+    "content": "提醒"
+  },
+  "tasks.reminders_placeholder": {
+    "defaultMessage": "Add reminders",
+    "content": "添加提醒"
+  },
+  "tasks.select_task": {
+    "defaultMessage": "Select a task to view details",
+    "content": "选择一个任务以查看详情"
+  },
+  "tasks.selected_count": {
+    "defaultMessage": "Selected {0} items",
+    "content": "已选择 {0} 个项目"
+  },
+  "tasks.start_date": {
+    "defaultMessage": "Start Date",
+    "content": "开始日期"
+  },
+  "tasks.start_date_label": {
+    "defaultMessage": "Start Date",
+    "content": "开始日期"
+  },
+  "tasks.start_date_placeholder": {
+    "defaultMessage": "Select start date",
+    "content": "选择开始日期"
+  },
+  "tasks.subtasks": {
+    "defaultMessage": "Subtasks",
+    "content": "子任务"
+  },
+  "tasks.tags": {
+    "defaultMessage": "Tags",
+    "content": "标签"
+  },
+  "tasks.title_placeholder": {
+    "defaultMessage": "Add title...",
+    "content": "添加标题..."
+  },
+  "tasks.today": {
+    "defaultMessage": "Today",
+    "content": "今天"
+  },
+  "tasks.untitled": {
+    "defaultMessage": "New Task",
+    "content": "新任务"
+  },
+  "time_picker.cancel": {
+    "defaultMessage": "Cancel",
+    "content": "取消"
+  },
+  "time_picker.confirm": {
+    "defaultMessage": "Confirm",
+    "content": "确认"
+  },
+  "time_picker.remove": {
+    "defaultMessage": "Remove",
+    "content": "移除"
+  },
+  "time-picker.done": {
+    "defaultMessage": "Done",
+    "content": "完成"
+  },
+  "time-picker.presets": {
+    "defaultMessage": "Presets",
+    "content": "预设"
+  },
+  "time.today": {
+    "defaultMessage": "Today",
+    "content": "今天"
+  },
+  "time.tomorrow": {
+    "defaultMessage": "Tomorrow",
+    "content": "明天"
+  },
+  "today": {
+    "defaultMessage": "Today",
+    "content": "今天"
+  },
+  "today.group.noArea": {
+    "defaultMessage": "No Area",
+    "content": "无区域"
+  },
+  "today.group.noProject": {
+    "defaultMessage": "No Project",
+    "content": "无项目"
+  },
+  "today.noProjects": {
+    "defaultMessage": "No projects for today",
+    "content": "今天没有项目"
+  },
+  "today.projects": {
+    "defaultMessage": "Projects",
+    "content": "项目"
+  },
+  "today.tasks": {
+    "defaultMessage": "Tasks",
+    "content": "任务"
+  },
+  "view.create.placeholder": {
+    "defaultMessage": "New view",
+    "content": "新视图"
+  },
+  "view.delete.description": {
+    "defaultMessage": "Are you sure you want to delete this view? This cannot be undone.",
+    "content": "确定要删除此视图吗？此操作无法撤销。"
+  },
+  "view.delete.title": {
+    "defaultMessage": "Delete view",
+    "content": "删除视图"
+  },
+  "view.detail.empty": {
+    "defaultMessage": "No tasks match this view.",
+    "content": "没有任务匹配此视图。"
+  },
+  "view.detail.untitled": {
+    "defaultMessage": "Untitled view",
+    "content": "未命名视图"
+  },
+  "view.docs.ai.copied": {
+    "defaultMessage": "Copied",
+    "content": "已复制"
+  },
+  "view.docs.ai.copyButton": {
+    "defaultMessage": "Copy AI prompt",
+    "content": "复制 AI 提示词"
+  },
+  "view.docs.ai.copyFailed": {
+    "defaultMessage": "Failed to fetch AI prompt",
+    "content": "获取提示词失败"
+  },
+  "view.docs.ai.copySuccess": {
+    "defaultMessage": "AI prompt copied to clipboard",
+    "content": "提示词已复制到剪贴板"
+  },
+  "view.docs.ai.desc": {
+    "defaultMessage": "Copy the prompt below and send it to ChatGPT, Claude, or another AI along with your request (e.g. \"show my work tasks for this week\"). Paste the rule it returns into the Rule box on the right.",
+    "content": "把下面的提示词发给 ChatGPT、Claude 等 AI，并描述你的需求（比如\"显示我本周的工作任务\"），再把 AI 返回的规则粘到右侧 Rule 框。"
+  },
+  "view.docs.ai.descMobile": {
+    "defaultMessage": "Copy the prompt below and send it to ChatGPT, Claude, or another AI along with your request (e.g. \"show my work tasks for this week\"). Paste the rule it returns into the Rule box above.",
+    "content": "把下面的提示词发给 ChatGPT、Claude 等 AI，并描述你的需求（比如\"显示我本周的工作任务\"），再把 AI 返回的规则粘到上面的 Rule 框。"
+  },
+  "view.docs.ai.title": {
+    "defaultMessage": "AI assist",
+    "content": "AI 写规则"
+  },
+  "view.docs.ai.viewSource": {
+    "defaultMessage": "View source",
+    "content": "查看原文"
+  },
+  "view.docs.constants": {
+    "defaultMessage": "Constants",
+    "content": "常量"
+  },
+  "view.docs.fields": {
+    "defaultMessage": "Fields",
+    "content": "字段"
+  },
+  "view.docs.introBody": {
+    "defaultMessage": "Pick a starter below, or write your own expression in the Rule editor on the right.",
+    "content": "选择下方的常用规则，或在右侧 Rule 编辑器中手动编写表达式。"
+  },
+  "view.docs.introTitle": {
+    "defaultMessage": "Set a filter rule for this view",
+    "content": "为这个视图设置筛选规则"
+  },
+  "view.docs.operators": {
+    "defaultMessage": "Operators",
+    "content": "运算符"
+  },
+  "view.docs.referenceToggle": {
+    "defaultMessage": "Reference (fields / constants / operators)",
+    "content": "参考文档（字段 / 常量 / 运算符）"
+  },
+  "view.docs.starter.anytime": {
+    "defaultMessage": "Anytime",
+    "content": "任何时候"
+  },
+  "view.docs.starter.dueIn7Days": {
+    "defaultMessage": "Due in next 7 days",
+    "content": "7 天内到期"
+  },
+  "view.docs.starter.notCompleted": {
+    "defaultMessage": "Not completed",
+    "content": "未完成"
+  },
+  "view.docs.starter.overdue": {
+    "defaultMessage": "Overdue",
+    "content": "已逾期"
+  },
+  "view.docs.starter.someday": {
+    "defaultMessage": "Someday",
+    "content": "某天"
+  },
+  "view.docs.starter.taggedWork": {
+    "defaultMessage": "Tagged 'work'",
+    "content": "标签为 'work'"
+  },
+  "view.docs.starters": {
+    "defaultMessage": "Starters",
+    "content": "常用规则"
+  },
+  "view.field.descPlaceholder": {
+    "defaultMessage": "Add description...",
+    "content": "添加描述..."
+  },
+  "view.field.rule": {
+    "defaultMessage": "Rule",
+    "content": "规则"
+  },
+  "view.field.rulePlaceholder": {
+    "defaultMessage": "Write an expression, or pick a starter on the left",
+    "content": "在这里写表达式，或从左侧选一个常用规则"
+  },
+  "view.field.rulePlaceholderMobile": {
+    "defaultMessage": "Write an expression, or pick a starter below",
+    "content": "在这里写表达式，或从下面选一个常用规则"
+  },
+  "view.menu.delete": {
+    "defaultMessage": "Delete view",
+    "content": "删除视图"
+  },
+  "view.notFound": {
+    "defaultMessage": "View not found",
+    "content": "视图不存在"
+  },
+  "view.sidebar.add": {
+    "defaultMessage": "Add view",
+    "content": "添加视图"
+  },
+  "view.sidebar.empty": {
+    "defaultMessage": "No views yet",
+    "content": "暂无视图"
+  },
+  "view.sidebar.title": {
+    "defaultMessage": "Views",
+    "content": "视图"
+  },
+  "view.unsupported.body": {
+    "defaultMessage": "This view was created with a newer version of the app. Please update the app to open it.",
+    "content": "此视图由更新版本的应用创建，请更新应用以打开。"
+  },
+  "view.unsupported.title": {
+    "defaultMessage": "Update the app to view this",
+    "content": "更新应用以查看"
+  }
+}

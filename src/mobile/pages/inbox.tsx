@@ -1,0 +1,146 @@
+import { flushSync } from 'react-dom';
+import { getTodayTimestampInUtc } from '@/base/common/getTodayTimestampInUtc';
+import { InboxIcon, TaskDisplaySettingsIcon } from '@/components/icons';
+import { getInboxTasks } from '@/core/state/inbox/getInboxTasks';
+import { useService } from '@/hooks/use-service.ts';
+import { useWatchEvent } from '@/hooks/use-watch-event.ts';
+import { localize } from '@/nls';
+import { ITodoService } from '@/services/todo/common/todoService.ts';
+import { computeSectionRounding } from '@/mobile/components/dnd/projectedRounding';
+import { calculateDragDropAction } from '@/utils/dnd/calculateDragDropAction';
+import { DragDropElements } from '@/utils/dnd/dragDropCollision';
+import { singleListCollisionDetectionStrategy } from '@/utils/dnd/singleListCollisionDetectionStrategy';
+import { DragEndEvent, useDndContext } from '@dnd-kit/core';
+import { verticalListSortingStrategy } from '@dnd-kit/sortable';
+import classNames from 'classnames';
+import type { TreeID } from 'loro-crdt';
+import React, { useEffect } from 'react';
+import { useMobileTagFilter } from '../components/filter/useMobileTagFilter';
+import { PageLayout } from '../components/PageLayout';
+import TaskItemWrapper from '../components/taskItem/TaskItemWrapper';
+import { TaskItem } from '../components/todo/TaskItem';
+import { styles } from '../theme';
+import { useTaskDisplaySettingsMobile } from '../hooks/useTaskDisplaySettings';
+
+interface InboxTaskListProps {
+  tasks: React.ComponentProps<typeof TaskItem>['taskInfo'][];
+  willDisappearObjectIdSet: Set<string>;
+}
+
+// The card background lives on each row (see projectedRounding.ts), so this
+// has to render inside PageLayout's DndContext to follow the drag state.
+const InboxTaskList: React.FC<InboxTaskListProps> = ({ tasks, willDisappearObjectIdSet }) => {
+  const { active, over } = useDndContext();
+  const rounding = computeSectionRounding(
+    tasks.map((task) => task.id),
+    active?.id as string | undefined,
+    over?.id as string | undefined
+  );
+  return (
+    <div>
+      {tasks.map((task) => (
+        <TaskItemWrapper key={task.id} willDisappear={willDisappearObjectIdSet.has(task.id)} id={task.id}>
+          <TaskItem
+            taskInfo={task}
+            key={task.id}
+            className={classNames(styles.taskItemGroupBackground, {
+              [styles.taskItemGroupTopRound]: rounding.top.has(task.id),
+              [styles.taskItemGroupBottomRound]: rounding.bottom.has(task.id),
+            })}
+          />
+        </TaskItemWrapper>
+      ))}
+    </div>
+  );
+};
+
+export const InboxPage = () => {
+  const todoService = useService(ITodoService);
+  useWatchEvent(todoService.onStateChange);
+
+  const { showFutureTasks, showCompletedTasks, openTaskDisplaySettings, completedAfter } =
+    useTaskDisplaySettingsMobile('inbox');
+
+  const tagFilter = useMobileTagFilter();
+  const { observeTags } = tagFilter;
+
+  const {
+    inboxTasks,
+    willDisappearObjectIdSet,
+    allTags: latestAllTags,
+  } = getInboxTasks(todoService.modelState, {
+    currentDate: getTodayTimestampInUtc(),
+    showFutureTasks,
+    showCompletedTasks,
+    showCompletedTasksAfter: completedAfter,
+    keepAliveElements: todoService.keepAliveElements,
+    tags: tagFilter.value,
+  });
+
+  useEffect(() => {
+    observeTags(latestAllTags);
+  }, [latestAllTags, observeTags]);
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (!active || !over || typeof over.id !== 'string' || typeof active.id !== 'string') return;
+    const action = calculateDragDropAction(
+      over.id,
+      active.id,
+      inboxTasks.map((task) => task.id)
+    );
+    if (!action) return;
+    if (action.type === 'create') {
+      const taskId = flushSync(() =>
+        todoService.addTask({
+          title: '',
+          position: action.position,
+        })
+      );
+      todoService.editItem(taskId);
+    } else {
+      todoService.updateTask(active.id as TreeID, {
+        position: action.position,
+      });
+    }
+  };
+
+  const handleCreateTask = () => {
+    const task = flushSync(() =>
+      todoService.addTask({
+        title: '',
+      })
+    );
+    todoService.editItem(task);
+  };
+
+  const sortItems: string[] = inboxTasks
+    .map((task): string => task.id)
+    .concat([DragDropElements.lastPlacement, DragDropElements.create]);
+
+  return (
+    <PageLayout
+      onFabClick={handleCreateTask}
+      header={{
+        showBack: true,
+        id: 'inbox',
+        title: localize('inbox', 'Inbox'),
+        renderIcon: (className: string) => <InboxIcon className={className} />,
+        actions: [tagFilter.headerAction, { icon: <TaskDisplaySettingsIcon />, onClick: openTaskDisplaySettings }],
+      }}
+      dragOption={{
+        overlayItem: {},
+        collisionDetection: singleListCollisionDetectionStrategy,
+        onDragEnd: handleDragEnd,
+        sortable: {
+          lastPlacement: true,
+          items: sortItems,
+          strategy: verticalListSortingStrategy,
+        },
+      }}
+    >
+      {tagFilter.filterBar}
+      <InboxTaskList tasks={inboxTasks} willDisappearObjectIdSet={willDisappearObjectIdSet} />
+    </PageLayout>
+  );
+};

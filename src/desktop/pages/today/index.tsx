@@ -1,0 +1,200 @@
+import { getTodayTimestampInUtc } from '@/base/common/getTodayTimestampInUtc';
+import { useDesktopDndSensors } from '@/base/hooks/useDesktopDndSensors';
+import { FilterIcon, TodayIcon } from '@/components/icons';
+import { TaskList } from '@/components/taskList/taskList.ts';
+import { calculateDragPosition } from '@/core/dnd/calculateDragPosition';
+import { getTodayItems } from '@/core/state/today/getTodayItems';
+import { EntityHeader } from '@/desktop/components/common/EntityHeader';
+import { DesktopPage } from '@/desktop/components/DesktopPage';
+import { DesktopProjectList } from '@/desktop/components/DesktopProjectList/DesktopProjectList';
+import { DragOverlayItem } from '@/desktop/components/drag/DragOverlayItem';
+import { TagFilterBar } from '@/desktop/components/filter/TagFilterBar';
+import { useTagFilter } from '@/desktop/components/filter/useTagFilter';
+import { InboxTaskInput } from '@/desktop/components/inboxTaskInput/InboxTaskInput';
+import { ListContainer } from '@/desktop/components/listContainer/ListContainer';
+import { TaskListItem } from '@/desktop/components/todo/TaskListItem';
+import { desktopStyles } from '@/desktop/theme/main';
+import { useDesktopTaskDisplaySettings } from '@/desktop/hooks/useDesktopTaskDisplaySettings.ts';
+import { useTaskCommands } from '@/desktop/hooks/useTaskCommands';
+import { useService } from '@/hooks/use-service';
+import { useWatchEvent } from '@/hooks/use-watch-event';
+import { useRegisterEvent } from '@/hooks/useRegisterEvent';
+import { localize } from '@/nls';
+import { IListService } from '@/services/list/common/listService';
+import { ITodoService } from '@/services/todo/common/todoService';
+import { TestIds } from '@/testIds';
+import { closestCenter, DndContext, DragEndEvent } from '@dnd-kit/core';
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import type { TreeID } from 'loro-crdt';
+import React, { useEffect, useState } from 'react';
+import { flushSync } from 'react-dom';
+
+function isSameTags(a: string[], b: string[]) {
+  if (a.length !== b.length) return false;
+  return a.every((tag, index) => tag === b[index]);
+}
+
+export const Today = () => {
+  const todoService = useService(ITodoService);
+  const listService = useService(IListService);
+  useWatchEvent(listService.onMainListChange);
+  useWatchEvent(todoService.onStateChange);
+  const { showCompletedTasks, openTaskDisplaySettings } = useDesktopTaskDisplaySettings('today', {
+    hideShowFutureTasks: true,
+  });
+  const [allTags, setAllTags] = useState<string[]>([]);
+  const tagFilter = useTagFilter(allTags);
+
+  const sensors = useDesktopDndSensors();
+  const todayItems = getTodayItems(
+    todoService.modelState,
+    getTodayTimestampInUtc(),
+    {
+      showCompletedTasks,
+      showFutureTasks: false,
+      currentDate: getTodayTimestampInUtc(),
+      completedAfter: getTodayTimestampInUtc(),
+      recentChangedTaskSet: new Set<TreeID>(todoService.keepAliveElements as TreeID[]),
+    },
+    tagFilter.currentTag
+  );
+
+  useEffect(() => {
+    setAllTags((previousTags) => (isSameTags(previousTags, todayItems.allTags) ? previousTags : todayItems.allTags));
+  }, [todayItems.allTags]);
+
+  const items = todayItems.items;
+  const projects = items.filter((item) => item.type === 'project');
+  const tasks = items.filter((item) => item.type !== 'project');
+  const itemIds = items.map((item) => item.id);
+
+  useEffect(() => {
+    if (listService.mainList && listService.mainList.name === 'Today') {
+      listService.mainList.updateItems(itemIds);
+    } else {
+      listService.setMainList(new TaskList('Today', itemIds, [], null, null));
+    }
+  }, [listService, itemIds]);
+
+  useRegisterEvent(listService.mainList?.onListOperation, (event) => {
+    switch (event.type) {
+      case 'delete_item': {
+        flushSync(() => {
+          todoService.deleteItem(event.id);
+        });
+        if (event.focusItem) {
+          listService.mainList?.select(event.focusItem, {
+            multipleMode: false,
+            offset: 99999,
+            fireEditEvent: true,
+          });
+        }
+        break;
+      }
+    }
+  });
+
+  useRegisterEvent(listService.mainList?.onCreateNewOne, (event) => {
+    const afterId = event.afterId;
+    if (!afterId) {
+      return;
+    }
+    const newTaskId = flushSync(() => {
+      const newTask = todoService.addTask({
+        title: '',
+        startDate: getTodayTimestampInUtc(),
+      });
+      todoService.moveDateAssignedList(newTask, { previousElementId: afterId, type: 'afterElement' });
+      return newTask;
+    });
+    listService.mainList?.select(newTaskId, {
+      multipleMode: false,
+      offset: 0,
+      fireEditEvent: true,
+    });
+  });
+
+  useTaskCommands({ createTask: { startDate: getTodayTimestampInUtc() } });
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (!over) return;
+
+    const position = calculateDragPosition(
+      active.id as string,
+      over.id as string,
+      items.map((item) => item.id)
+    );
+
+    if (position) {
+      todoService.moveDateAssignedList(active.id as TreeID, position);
+    }
+  };
+
+  const mainList = listService.mainList;
+  if (!mainList) {
+    return null;
+  }
+
+  const isTagFilterActive = tagFilter.currentTag.type !== 'all';
+  return (
+    <DesktopPage
+      header={
+        <EntityHeader
+          renderIcon={() => <TodayIcon />}
+          extraActions={[
+            {
+              icon: <FilterIcon strokeWidth={1.5} />,
+              handleClick: tagFilter.clickFilter,
+              title: localize('tasks.filterByTag', 'Filter by Tag'),
+              testId: TestIds.EntityHeader.FilterToggleButton,
+              isActive: tagFilter.isFilterOpen || isTagFilterActive,
+            },
+          ]}
+          internalActions={{ displaySettings: { onOpen: (right, bottom) => openTaskDisplaySettings(right, bottom) } }}
+          title={localize('today', 'Today')}
+          titleDetail={
+            tagFilter.isFilterOpen ? (
+              <TagFilterBar tags={tagFilter.tags} selected={tagFilter.currentTag} onSelect={tagFilter.selectTag} />
+            ) : null
+          }
+        />
+      }
+    >
+      {(projects.length > 0 || !isTagFilterActive) && (
+        <>
+          <div className={desktopStyles.TodaySectionHeading}>
+            <span className={desktopStyles.TodaySectionTitle}>{localize('today.projects', 'Projects')}</span>
+            <span className={desktopStyles.TodaySectionCount}>{projects.length}</span>
+          </div>
+          <div>
+            <DesktopProjectList
+              projects={projects}
+              emptyStateLabel={localize('today.noProjects', 'No projects for today')}
+              useDateAssignedMove={true}
+            />
+          </div>
+        </>
+      )}
+      <div className={desktopStyles.TodaySectionHeading}>
+        <span className={desktopStyles.TodaySectionTitle}>{localize('today.tasks', 'Tasks')}</span>
+        <span className={desktopStyles.TodaySectionCount}>{tasks.length}</span>
+      </div>
+      <div>
+        <InboxTaskInput />
+        <ListContainer taskList={mainList}>
+          <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+            <SortableContext items={tasks.map((task) => task.id)} strategy={verticalListSortingStrategy}>
+              {tasks.map((task) => {
+                const willDisappear = todayItems.willDisappearObjectIdSet.has(task.id);
+                return <TaskListItem taskList={mainList} key={task.id} task={task} willDisappear={willDisappear} />;
+              })}
+            </SortableContext>
+            <DragOverlayItem />
+          </DndContext>
+        </ListContainer>
+      </div>
+    </DesktopPage>
+  );
+};

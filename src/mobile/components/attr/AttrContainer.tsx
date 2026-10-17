@@ -1,0 +1,58 @@
+import { CloseIcon } from '@/components/icons';
+import React from 'react';
+import { styles } from '../../theme';
+
+export interface AttrStyles {
+  row: string;
+  iconContainer: string;
+  content: string;
+  labelTitleColor?: string;
+}
+
+const defaultAttrStyles: AttrStyles = {
+  row: styles.editTaskAttrRow,
+  iconContainer: styles.editTaskAttrIconContainer,
+  content: styles.editTaskAttrContent,
+};
+
+interface AttrContainerProps {
+  icon: React.ReactNode;
+  children: React.ReactNode;
+  onClick?: () => void;
+  onClear?: () => void;
+  testId?: string;
+  attrStyles?: AttrStyles;
+}
+
+export const AttrContainer: React.FC<AttrContainerProps> = ({
+  icon,
+  children,
+  onClick,
+  onClear,
+  testId,
+  attrStyles = defaultAttrStyles,
+}) => {
+  return (
+    <div className={attrStyles.row} onClick={onClick} data-testid={testId}>
+      <div className={attrStyles.iconContainer}>{icon}</div>
+      <div className={attrStyles.content}>
+        {onClear ? (
+          <div className={styles.attrContentWithClear}>
+            {children}
+            <button
+              className={styles.createTaskReminderRemoveBtn}
+              onClick={(e) => {
+                e.stopPropagation();
+                onClear();
+              }}
+            >
+              <CloseIcon className={styles.createTaskRemoveIcon} strokeWidth={1.5} />
+            </button>
+          </div>
+        ) : (
+          children
+        )}
+      </div>
+    </div>
+  );
+};

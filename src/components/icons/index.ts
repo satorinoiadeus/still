@@ -1,0 +1,174 @@
+import {
+  AlarmClock,
+  AlertCircle,
+  AlignLeft,
+  Archive,
+  ArrowLeft,
+  ArrowRight,
+  ArrowRightLeft,
+  ArrowUp,
+  ArrowUpToLine,
+  Bell,
+  Bookmark,
+  BookmarkPlus,
+  Box,
+  Brain,
+  Calendar,
+  CalendarCheck,
+  CalendarClock,
+  CalendarRange,
+  CalendarX,
+  Check,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  Circle,
+  CircleCheck,
+  CircleCheckBig,
+  CircleHelp,
+  CirclePlus,
+  CircleSmall,
+  CircleX,
+  Cloud,
+  CloudAlert,
+  CloudOff,
+  Code,
+  Copy,
+  Download,
+  Database,
+  File,
+  FileText,
+  Image,
+  Filter,
+  Flag,
+  GripVertical,
+  Hash,
+  Home,
+  Inbox,
+  Info,
+  KeyRound,
+  Layers,
+  Link,
+  ListChecks,
+  LocateFixed,
+  MessageSquare,
+  MessageSquareReply,
+  MoreVertical,
+  Notebook,
+  Palette,
+  PanelLeft,
+  Paperclip,
+  PenLine,
+  Plus,
+  RefreshCw,
+  RotateCcw,
+  Repeat,
+  Repeat2,
+  Loader2,
+  Search,
+  Send,
+  Sparkles,
+  Tags,
+  ServerIcon,
+  Settings,
+  SlidersHorizontal,
+  Square,
+  SquareTerminal,
+  Sun,
+  Trash2,
+  TypeIcon,
+  User,
+  X,
+  FolderInput,
+} from 'lucide-react';
+
+export const AreaExpandedIcon = ChevronRight;
+export const BackIcon = ArrowLeft;
+export const TodayIcon = Sun;
+export const DueIcon = LocateFixed;
+export const HomeIcon = Home;
+export const InboxIcon = Inbox;
+export const LogIcon = CircleCheck;
+export const MenuIcon = MoreVertical;
+export const NoteIcon = FileText;
+export const FileIcon = File;
+export const ScheduledIcon = Calendar;
+export const RightArrowIcon = ArrowRight;
+export const SwitchDatabaseIcon = ArrowRightLeft;
+export const SettingsIcon = Settings;
+export const TagIcon = Tags;
+export const DragHandleIcon = GripVertical;
+export const SubtaskIcon = ListChecks;
+export const CloseIcon = X;
+export const CheckIcon = Check;
+export const CancelIcon = X;
+export const AreaIcon = Layers;
+export const ViewIcon = Bookmark;
+export const CreateViewIcon = BookmarkPlus;
+export const PlusIcon = Plus;
+export const PlusCircleIcon = CirclePlus;
+export const KeyIcon = KeyRound;
+export const LaterProjectsIcon = CalendarClock;
+export const HeadingIcon = TypeIcon;
+export const HashIcon = Hash;
+export const EditIcon = PenLine;
+export const NavIcon = ChevronRight;
+export const DeleteIcon = X;
+export const CloudIcon = Cloud;
+export const SelfHostedSyncIcon = ServerIcon;
+export const CloudOffIcon = CloudAlert;
+export const CloudSlashIcon = CloudOff;
+export const ImageIcon = Image;
+export const DatabaseIcon = Database;
+export const UserIcon = User;
+export const ChevronRightIcon = ChevronRight;
+export const TaskDisplaySettingsIcon = SlidersHorizontal;
+export const PaletteIcon = Palette;
+export const CalendarRangeIcon = CalendarRange;
+export const MoveIcon = FolderInput;
+export const CircleSmallIcon = CircleSmall;
+export const LeftIcon = ChevronLeft;
+export const RightIcon = ChevronRight;
+export const CircleIcon = Circle;
+export const InfoIcon = Info;
+export const AlertCircleIcon = AlertCircle;
+export const CircleCheckIcon = CircleCheckBig;
+export const CircleHelpIcon = CircleHelp;
+export const CalendarCheckIcon = CalendarCheck;
+export const CalendarXIcon = CalendarX;
+export const CopyIcon = Copy;
+export const CodeIcon = Code;
+export const DownloadIcon = Download;
+export const ChevronDownIcon = ChevronDown;
+export const Loader2Icon = Loader2;
+export const AlarmIcon = AlarmClock;
+export const PanelLeftIcon = PanelLeft;
+export const SyncIcon = RefreshCw;
+export const RotateCcwIcon = RotateCcw;
+export const ArchiveIcon = Archive;
+export const RepeatIcon = Repeat;
+export const Repeat2Icon = Repeat2;
+export const SearchIcon = Search;
+export const SquareTerminalIcon = SquareTerminal;
+export const AIIcon = Sparkles;
+export const BoxIcon = Box;
+export const ChatIcon = MessageSquare;
+export const ReplyIcon = MessageSquareReply;
+export const LinkIcon = Link;
+export const BrainIcon = Brain;
+export const TrashIcon = Trash2;
+export const ArrowUpIcon = ArrowUp;
+export const ArrowUpToLineIcon = ArrowUpToLine;
+export const StopIcon = Square;
+export const SendIcon = Send;
+export const NotebookIcon = Notebook;
+export const NotesIcon = AlignLeft;
+export const CalendarIcon = Calendar;
+export const FlagIcon = Flag;
+export const FilterIcon = Filter;
+export const ListChecksIcon = ListChecks;
+export const BellIcon = Bell;
+export const CircleXIcon = CircleX;
+export const TargetIcon = FlagIcon;
+export const TagsIcon = Tags;
+export const PaperclipIcon = Paperclip;

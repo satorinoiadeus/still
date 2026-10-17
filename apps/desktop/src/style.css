@@ -556,3 +556,6 @@ code { font-size: 11px; overflow-wrap: anywhere; }
 .duplicate-button:hover,.duplicate-button:focus-visible { background:var(--tint); color:var(--accent); }
 .duplicate-button:disabled { opacity:.35; cursor:not-allowed; }
 @media(max-width:700px) { .duplicate-button { min-width:34px; min-height:34px; } }
+
+/* Still: readable title case for Area section headings. */
+.list-label { text-transform: none; letter-spacing: normal; }

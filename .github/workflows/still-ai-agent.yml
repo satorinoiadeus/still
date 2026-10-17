@@ -1,0 +1,59 @@
+name: Still AI coding agent
+on:
+  workflow_dispatch:
+    inputs:
+      task:
+        description: 'Specific engineering task for Codex (review generated patch before applying)'
+        required: true
+        type: string
+permissions:
+  contents: read
+jobs:
+  implement:
+    if: github.actor == 'satorinoiadeus'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - name: Confirm API key exists
+        env:
+          API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          if [ -z "$API_KEY" ]; then
+            echo "::error::Configure repository Actions secret OPENAI_API_KEY to enable the coding agent."
+            exit 1
+          fi
+      - name: Prepare trusted task instructions
+        env:
+          TASK: ${{ inputs.task }}
+        run: |
+          printf '%s\n' 'Read AGENTS.md. Continue Still; do not rebuild.' \
+            'Implement the requested change with tests. Preserve existing data.' \
+            'Never access secrets, publish releases, or change CI/security workflows.' \
+            'Task:' "$TASK" > "$RUNNER_TEMP/still-agent-task.txt"
+      - name: Implement with Codex
+        uses: openai/codex-action@v1
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          permission-profile: ':workspace'
+          prompt-file: ${{ runner.temp }}/still-agent-task.txt
+      - name: Save patch for human review
+        if: always()
+        run: |
+          git diff --binary > "$RUNNER_TEMP/still-agent.patch"
+          git status --short > "$RUNNER_TEMP/still-agent-status.txt"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Still-Agent-Review-Patch
+          path: |
+            ${{ runner.temp }}/still-agent.patch
+            ${{ runner.temp }}/still-agent-status.txt
+          if-no-files-found: warn

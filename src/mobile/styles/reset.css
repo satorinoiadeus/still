@@ -1,0 +1,39 @@
+* {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  outline: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+::selection {
+  background: var(--color-brand-light);
+  color: var(--color-brand);
+}
+
+*:not(input, textarea) {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+}
+
+body {
+  background: var(--color-bg2);
+  color: var(--color-t1);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: -0.015em;
+}
+
+body svg {
+  stroke-width: 1.5;
+}
+
+*:focus:not(:focus-visible) {
+  outline: none;
+}

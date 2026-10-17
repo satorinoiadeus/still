@@ -1,0 +1,171 @@
+import { localize } from '@/nls';
+import { useService } from '@/hooks/use-service';
+import { useWatchEvent } from '@/hooks/use-watch-event';
+import { ActionSheet } from '@/mobile/components/ActionSheet';
+import { styles } from '@/mobile/theme';
+import { IWorkbenchOverlayService } from '@/services/overlay/common/WorkbenchOverlayService';
+import { OverlayEnum } from '@/services/overlay/common/overlayEnum';
+import React, { useRef, useEffect } from 'react';
+import { TimePickerActionSheetController } from './TimePickerActionSheetController';
+import { PRESET_TIMES, HOURS, MINUTES } from './constant';
+import { MobileButton } from '@/mobile/components/MobileButton';
+import {
+  getMobileTimePickerHourTestId,
+  getMobileTimePickerMinuteTestId,
+  getMobileTimePickerPresetTestId,
+  MobileTestIds,
+} from '@/mobile/testids';
+import classNames from 'classnames';
+
+interface TimeWheelProps {
+  value: number;
+  onChange: (value: number) => void;
+  options: number[];
+  formatValue?: (value: number) => string;
+  getOptionTestId?: (value: number) => string;
+}
+
+const TimeWheel: React.FC<TimeWheelProps> = ({
+  value,
+  onChange,
+  options,
+  formatValue = (v) => v.toString(),
+  getOptionTestId,
+}) => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const preventEvent = useRef(false);
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      preventEvent.current = true;
+      const selectedIndex = options.findIndex((option) => option === value);
+      if (selectedIndex !== -1) {
+        const itemHeight = 32;
+        const scrollTop = (selectedIndex + 2) * itemHeight;
+        scrollRef.current.scrollTop = Math.max(0, scrollTop);
+      }
+      preventEvent.current = false;
+    }
+  }, [value, options]);
+
+  const handleScroll = () => {
+    if (scrollTimeoutRef.current) {
+      clearTimeout(scrollTimeoutRef.current);
+    }
+    if (preventEvent.current) {
+      return;
+    }
+    scrollTimeoutRef.current = setTimeout(() => {
+      if (scrollRef.current) {
+        const itemHeight = 32;
+        const scrollTop = scrollRef.current.scrollTop;
+        const selectedIndex = Math.round(scrollTop / itemHeight) - 2;
+        onChange(options[selectedIndex]);
+      }
+    }, 250);
+  };
+
+  return (
+    <div
+      ref={scrollRef}
+      className={styles.timePickerWheel}
+      style={{ scrollSnapType: 'y mandatory' }}
+      onScroll={handleScroll}
+    >
+      <div className={styles.timePickerWheelInner}>
+        {options.map((option) => (
+          <div
+            key={option}
+            data-testid={getOptionTestId?.(option)}
+            className={classNames(styles.timePickerWheelOption, {
+              [styles.timePickerWheelOptionSelected]: value === option,
+              [styles.timePickerWheelOptionNormal]: value !== option,
+            })}
+            style={{ scrollSnapAlign: 'center' }}
+            onClick={() => onChange(option)}
+          >
+            {formatValue(option)}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export const TimePickerActionSheet: React.FC = () => {
+  const workbenchOverlayService = useService(IWorkbenchOverlayService);
+  useWatchEvent(workbenchOverlayService.onOverlayChange);
+  const controller: TimePickerActionSheetController | null = workbenchOverlayService.getOverlay(OverlayEnum.timePicker);
+  useWatchEvent(controller?.onStatusChange);
+
+  if (!controller) return null;
+
+  const selectedTime = controller.selectedTime;
+
+  if (!selectedTime) return null;
+
+  return (
+    <ActionSheet
+      zIndex={controller.zIndex}
+      onClose={() => controller.cancel()}
+      className={styles.datePickerBackground}
+      contentClassName={styles.datePickerActionSheetPadding}
+    >
+      <div className={styles.datePickerContentPadding}>
+        <div className={styles.timePickerHeader}>
+          <div className={styles.timePickerHeaderDate}>{selectedTime.date}</div>
+          <div className={styles.timePickerHeaderTime}>
+            {selectedTime.hour.toString().padStart(2, '0')}
+            <span className={styles.timePickerHeaderSeparator}>:</span>
+            {selectedTime.minute.toString().padStart(2, '0')}
+          </div>
+        </div>
+
+        <div className={styles.timePickerWheelRow}>
+          <TimeWheel
+            value={selectedTime.hour}
+            onChange={(hour) => controller.updateHour(hour)}
+            options={HOURS}
+            formatValue={(h) => h.toString().padStart(2, '0')}
+            getOptionTestId={getMobileTimePickerHourTestId}
+          />
+
+          <div className={styles.timePickerWheelSeparator}>-</div>
+
+          <TimeWheel
+            value={selectedTime.minute}
+            onChange={(minute) => controller.updateMinute(minute)}
+            options={MINUTES}
+            formatValue={(m) => m.toString().padStart(2, '0')}
+            getOptionTestId={getMobileTimePickerMinuteTestId}
+          />
+        </div>
+
+        <div className={styles.timePickerPresetSection}>
+          <div className={styles.timePickerPresetTitle}>{localize('time-picker.presets', 'Presets')}</div>
+          <div className={styles.timePickerPresetList}>
+            {PRESET_TIMES.map((preset) => (
+              <button
+                key={preset.label}
+                data-testid={getMobileTimePickerPresetTestId(preset.label)}
+                className={styles.timePickerPresetButton}
+                onClick={() => controller.setPresetTime(preset.hour, preset.minute)}
+              >
+                {preset.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <MobileButton
+          size="large"
+          onClick={() => controller.selectTime()}
+          data-testid={MobileTestIds.TimePicker.DoneButton}
+        >
+          {localize('time-picker.done', 'Done')}
+        </MobileButton>
+      </div>
+    </ActionSheet>
+  );
+};
