@@ -68,3 +68,17 @@ Output: `android/app/build/outputs/apk/standard/debug/*.apk`. Identity: `app.sti
 ## Source, reuse and attribution
 
 AGPL-3.0-only. Still is an independent derivative, not affiliated with HamsterBase. Keep LICENSE and [UPSTREAM.md](UPSTREAM.md) with distributed source. Original notices and MIT licenses for vendored VSCF/VS Code-derived infrastructure and build tooling remain in `src/packages`. Lucide supplies the existing icon system. Still's presentation changes are documented in [DESIGN.md](DESIGN.md). Optional third-party service names remain accurate in service-related screens.
+
+### Still 1.1
+
+See [release notes](RELEASE-1.1.md) for mobile batch actions, Todoist project CSV transfer,
+and WebDAV/Dropbox provider setup and limitations. All provider credentials and the
+sync encryption passphrase are local settings: enter them separately on every device.
+The same encrypted snapshot format and Loro engine serve both new providers.
+Mindwtr contributed small adapted sync utilities only; its task engine is not embedded.
+
+**Android testing updates:** export a `.hbTask` backup before replacing version 1.0.
+Its ephemeral signing key differs from 1.1, so Android requires uninstall/reinstall
+and backup restore. Never uninstall before saving your backup. The CI development
+key is cached for later versions; a durable private release key is needed for
+production upgrade guarantees.

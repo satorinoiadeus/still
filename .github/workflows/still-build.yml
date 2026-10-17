@@ -109,6 +109,11 @@ jobs:
         with:
           name: Still-web
           path: dist
+      - name: Restore development signing key for compatible testing updates
+        uses: actions/cache@v4
+        with:
+          path: ~/.android/debug.keystore
+          key: still-testing-signing-v1
       - run: pnpm exec cap sync android
       - run: chmod +x android/gradlew && cd android && ./gradlew assembleStandardDebug --no-daemon
       - name: Verify APK signature and application identity
@@ -139,3 +144,36 @@ jobs:
           name: Still-Android-testing-APK
           path: android/app/build/outputs/apk/standard/debug/*.apk
           if-no-files-found: error
+
+  publish:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/feat/hamsterbase-still-rebuild'
+    needs: [web, windows, android]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: read
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      - name: Publish verified version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          TAG="still-v$VERSION"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "Release already published; preserving its original tested assets."
+            exit 0
+          fi
+          mkdir -p release
+          cp artifacts/Still-Android-testing-APK/*.apk "release/Still-$VERSION-Android.apk"
+          cp artifacts/Still-Windows-x64-installer/*.exe "release/Still-$VERSION-Windows-x64.exe"
+          (cd artifacts/Still-web && zip -qr "../../release/Still-$VERSION-web.zip" .)
+          (cd artifacts && zip -qr "../release/Still-$VERSION-verification.zip" Still-screenshots-and-verification Still-Windows-runtime-verification Still-Android-runtime-verification)
+          (cd release && sha256sum Still-* > SHA256SUMS.txt)
+          printf 'Verified source commit: %s\n\n' "$GITHUB_SHA" > release/notes.md
+          cat RELEASE-1.1.md >> release/notes.md
+          gh release create "$TAG" --target "$GITHUB_SHA" --prerelease --title "Still $VERSION" --notes-file release/notes.md release/*-Android.apk release/*-Windows-x64.exe release/*-web.zip release/*-verification.zip release/SHA256SUMS.txt

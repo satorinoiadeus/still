@@ -2,7 +2,9 @@ import { Event } from '@hamsterbase/foundation/event';
 import { createDecorator } from '@hamsterbase/foundation/instantiation';
 
 export type ISelfhostedSyncServerConfig = {
-  type: 'selfhosted';
+  type: 'selfhosted' | 'webdav' | 'dropbox';
+  username?: string;
+  passphrase?: string;
   id: string;
   folder: string;
   entrypoint: string;

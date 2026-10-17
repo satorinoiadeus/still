@@ -1,3 +1,4 @@
+import { TodoistTransfer } from '@/still/TodoistTransfer';
 import { decodePatch } from '@/core/export/decode';
 import { encodePatch } from '@/core/export/encode';
 import { ItemGroup } from '@/desktop/components/Settings/ItemGroup';
@@ -103,6 +104,7 @@ export const ImportExportSettings: React.FC = () => {
           }}
         />
       </ItemGroup>
+    <TodoistTransfer />
     </SettingsContent>
   );
 };

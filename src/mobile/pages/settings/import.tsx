@@ -1,3 +1,4 @@
+import { TodoistTransfer } from '@/still/TodoistTransfer';
 import { SettingsIcon } from '@/components/icons';
 import { decodePatch } from '@/core/export/decode';
 import { useService } from '@/hooks/use-service.ts';
@@ -85,6 +86,7 @@ export const ImportPage = () => {
         ]}
         subtitle={localize('settings.import.description', 'Import your tasks from a backup file')}
       />
+    <TodoistTransfer />
     </PageLayout>
   );
 };

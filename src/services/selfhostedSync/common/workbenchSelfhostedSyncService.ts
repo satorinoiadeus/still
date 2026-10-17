@@ -1,3 +1,4 @@
+import { ProviderStorage } from '@/still/ProviderStorage';
 import { TaskModel } from '@/core/model';
 import { thirdpartySyncServersConfigKey } from '@/services/config/config';
 import { IConfigService } from '@/services/config/configService';
@@ -54,6 +55,7 @@ export class WorkbenchSelfhostedSyncService implements ISelfhostedSyncService {
   private storage: IDatabaseStorage | null = null;
 
   async addServer(config: Omit<ISelfhostedSyncServerConfig, 'id'>): Promise<string> {
+    if (this._syncing) throw new Error('Wait for the current sync to finish.');
     const serverId = generateUuid();
     const newServer: ISelfhostedSyncServerConfig = {
       ...config,
@@ -72,12 +74,15 @@ export class WorkbenchSelfhostedSyncService implements ISelfhostedSyncService {
   }
 
   async deleteServer(): Promise<void> {
+    if (this._syncing) throw new Error('Wait for the current sync to finish.');
     this.configService.save(thirdpartySyncServersConfigKey(), null);
     this.onStateChangeEmitter.fire();
     this.storage = null;
   }
 
   async sync(): Promise<void> {
+    if (this._syncing) return;
+    if (!this.enabled) throw new Error('Provider sync is available only for the local database.');
     const storage = this.storage;
     if (!storage) {
       throw new Error('No storage available for syncing');
@@ -100,7 +105,7 @@ export class WorkbenchSelfhostedSyncService implements ISelfhostedSyncService {
       } else {
         await storage.save(encodeBase64(ByteBuffer.wrap(taskModel.export())));
       }
-      this.todoService.import([taskModel.export()], 'local');
+      await this.todoService.import([taskModel.export()], 'local');
     } finally {
       this._syncing = false;
       this.onStateChangeEmitter.fire();
@@ -112,6 +117,9 @@ export class WorkbenchSelfhostedSyncService implements ISelfhostedSyncService {
       return null;
     }
     switch (config.type) {
+      case 'webdav':
+      case 'dropbox':
+        return new ProviderStorage(config);
       case 'selfhosted':
         return new SelfhostedServerStorage(config.id, config.entrypoint, config.authToken, config.folder);
       default: {

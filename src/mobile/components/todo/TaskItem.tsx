@@ -11,6 +11,7 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import classNames from 'classnames';
 import React from 'react';
+import { useMobileSelection } from '../MobileSelection';
 import { DragItem } from '../dnd/DragItem';
 import { TaskItemDueDate } from '../taskItem/TaskItemDueDate';
 import { TaskItemIcons } from '../taskItem/TaskItemIcons';
@@ -38,11 +39,13 @@ export const TaskItem: React.FC<TaskItemProps> = ({
   visualContext = 'default',
 }) => {
   const todoService = useService(ITodoService);
+  const selection = useMobileSelection(taskInfo.id, overlay);
+  const selecting = !!selection?.active && !overlay;
   // overlay: rendered inside the DragOverlay as the item held in hand —
   // must not register as a sortable nor collapse into the DragItem placeholder.
   const { attributes, listeners, setNodeRef, transform, transition, isDragging, node } = useSortable({
     id: taskInfo.id,
-    disabled: overlay || todoService.editingContent?.id === taskInfo.id,
+    disabled: selecting || overlay || todoService.editingContent?.id === taskInfo.id,
   });
   const { isEditing, itemClassName, shouldIgnoreClick } = useCancelEdit(node, taskInfo.id);
   // Keep the edit content mounted while the collapse transition plays out.
@@ -66,13 +69,24 @@ export const TaskItem: React.FC<TaskItemProps> = ({
 
   const collapsedRow = (
     <div className={classNames(styles.taskItemRoot, styles.taskItemGap)}>
-      <TaskStatusButton
-        taskId={taskInfo.id}
-        status={taskInfo.status}
-        className={styles.taskItemIconSize}
-        testId={MobileTestIds.TaskItem.StatusBox}
-        animationPhase={animationPhase}
-      />
+      {selecting ? (
+        <input
+          type="checkbox"
+          aria-label={`Select ${taskInfo.title}`}
+          checked={selection.selected.has(taskInfo.id)}
+          onClick={(event) => event.stopPropagation()}
+          onChange={() => selection.toggle(taskInfo.id)}
+          className="size-6 accent-brand"
+        />
+      ) : (
+        <TaskStatusButton
+          taskId={taskInfo.id}
+          status={taskInfo.status}
+          className={styles.taskItemIconSize}
+          testId={MobileTestIds.TaskItem.StatusBox}
+          animationPhase={animationPhase}
+        />
+      )}
       <div className={styles.taskItemContent}>
         <div className={styles.taskItemTitleRow}>
           <TaskItemTitle
@@ -115,15 +129,15 @@ export const TaskItem: React.FC<TaskItemProps> = ({
           ? [styles.listItemEditingBackground, styles.taskItemEditingShadow, styles.taskItemEditingRound]
           : [className, styles.listItemRound]
       )}
-      onClick={isEditing ? shouldIgnoreClick : handleTaskClick}
+      onClick={selecting ? () => selection.toggle(taskInfo.id) : isEditing ? shouldIgnoreClick : handleTaskClick}
       ref={overlay ? undefined : setNodeRef}
       style={style}
-      {...(isEditing || overlay ? {} : attributes)}
-      {...(isEditing || overlay ? {} : listeners)}
+      {...(selecting || isEditing || overlay ? {} : attributes)}
+      {...(selecting || isEditing || overlay ? {} : listeners)}
       data-status={taskInfo.status}
       data-status-animation={animationPhase}
     >
-      {showEditContent ? (
+      {showEditContent && !selecting ? (
         <EditTaskItem
           taskInfo={taskInfo}
           expanded={expanded}

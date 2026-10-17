@@ -468,7 +468,7 @@ export const baseStyles = {
   // Area detail section styles (matches Vue DetailPage spec)
   areaDetailSectionHeader: /*tw*/ 'flex items-center justify-between mb-2',
   areaDetailSectionHeaderIndent: /*tw*/ 'pl-4',
-  areaDetailSectionTitle: /*tw*/ 'text-sm font-medium text-t3 uppercase tracking-wide',
+  areaDetailSectionTitle: /*tw*/ 'text-sm font-medium text-t3',
   areaDetailSectionCard: /*tw*/ 'bg-bg1 rounded-2xl',
   areaDetailSectionSpacer: /*tw*/ 'h-3',
   areaDetailEmptyState: /*tw*/ 'flex items-center justify-center py-8 text-sm text-t3',

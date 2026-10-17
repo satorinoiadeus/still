@@ -1,3 +1,4 @@
+import { SyncOptions } from '@/still/SyncOptions';
 import { CloseIcon } from '@/components/icons';
 import { InfoItem } from '@/desktop/components/InfoItem';
 import { SettingButton } from '@/desktop/components/Settings/Button/Button';
@@ -108,7 +109,7 @@ export const SelfHostedSyncSettings: React.FC = () => {
         return (
           <>
             <ItemGroup>
-              <InfoItem label={formItemsLabel.serverType} value={formItemsLabel.selfHosted} />
+              <InfoItem label={formItemsLabel.serverType} value={selfhostedSyncService.config?.type === 'selfhosted' ? formItemsLabel.selfHosted : selfhostedSyncService.config?.type === 'webdav' ? 'WebDAV' : 'Dropbox'} />
               <InfoItem label={formItemsLabel.endpoint} value={config.entrypoint} />
               <InfoItem label={formItemsLabel.folderName} value={config.folder} />
               <SettingsItem
@@ -268,6 +269,7 @@ export const SelfHostedSyncSettings: React.FC = () => {
           </div>
         </div>
       )}
+    <SyncOptions />
     </SettingsContent>
   );
 };

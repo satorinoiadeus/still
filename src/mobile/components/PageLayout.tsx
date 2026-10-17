@@ -1,4 +1,5 @@
 import React from 'react';
+import { MobileSelectionProvider, MobileSelectionToolbar } from './MobileSelection';
 import { styles } from '../theme';
 import { PageHeader, PageHeaderProps } from './PageHeader';
 import classNames from 'classnames';
@@ -32,7 +33,13 @@ interface PageLayoutProps {
   disableSticky?: boolean;
 }
 
-export const PageLayout: React.FC<PageLayoutProps> = (props: PageLayoutProps) => {
+export const PageLayout: React.FC<PageLayoutProps> = (props) => (
+  <MobileSelectionProvider>
+    <PageLayoutContent {...props} />
+  </MobileSelectionProvider>
+);
+
+const PageLayoutContent: React.FC<PageLayoutProps> = (props) => {
   const sensors = useDragSensors();
 
   const childrenContainerPadding = classNames(styles.pageContentPaddingX, styles.pageContentPaddingY);
@@ -106,6 +113,7 @@ export const PageLayout: React.FC<PageLayoutProps> = (props: PageLayoutProps) =>
           />
         </div>
       )}
+      <MobileSelectionToolbar />
       {props.meta && <div className={styles.pageLayoutMetaSpacing}>{props.meta}</div>}
       <div className={styles.pageLayoutSafeBottom}>{children}</div>
       <div className={styles.pageLayoutKeyboardSpacer}></div>

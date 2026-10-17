@@ -1,3 +1,4 @@
+import { TodoistTransfer } from '@/still/TodoistTransfer';
 import { checkPlatform } from '@/base/browser/checkPlatform';
 import { SettingsIcon } from '@/components/icons';
 import { encodePatch } from '@/core/export/encode';
@@ -89,6 +90,7 @@ export const ExportSettings = () => {
           'Export your database to back up your data or transfer it to another device.'
         )}
       />
+    <TodoistTransfer />
     </PageLayout>
   );
 };

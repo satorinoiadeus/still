@@ -1,3 +1,4 @@
+import { SyncHttpService } from './syncHttpService';
 import { app, BrowserWindow, ipcMain, shell, Menu } from 'electron';
 import * as os from 'os';
 import * as path from 'path';
@@ -170,6 +171,7 @@ const dockBadgeService = new ElectronDockBadgeService();
 
 // Service registry
 const services: Record<string, unknown> = {
+  syncHttpService: new SyncHttpService(),
   databaseService: databaseService,
   menuService: menuService,
   dockBadgeService: dockBadgeService,

@@ -1,3 +1,4 @@
+import { SyncOptions } from '@/still/SyncOptions';
 import { CircleCheckIcon, DeleteIcon, SettingsIcon } from '@/components/icons';
 import { useService } from '@/hooks/use-service';
 import { useWatchEvent } from '@/hooks/use-watch-event';
@@ -52,7 +53,7 @@ export const SelfhostedSync = () => {
       const configItems: ListItemOption[] = [
         {
           title: formItemsLabel.serverType,
-          description: formItemsLabel.selfHosted,
+          description: selfhostedSyncService.config?.type === 'selfhosted' ? formItemsLabel.selfHosted : selfhostedSyncService.config?.type === 'webdav' ? 'WebDAV' : 'Dropbox',
           mode: {
             type: 'label',
             label: '',
@@ -145,6 +146,7 @@ export const SelfhostedSync = () => {
       }}
     >
       {renderPageContent()}
+    <SyncOptions />
     </PageLayout>
   );
 };

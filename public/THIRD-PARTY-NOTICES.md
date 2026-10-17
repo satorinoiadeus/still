@@ -79,3 +79,14 @@ Parts of this package are derived from Visual Studio Code.
 Copyright (c) Microsoft Corporation. All rights reserved.
 
 Visual Studio Code is licensed under the MIT License. The original copyright and license headers are retained in derived source files.
+
+## Mindwtr sync utilities
+
+Source: https://github.com/dongdongbh/Mindwtr
+Inspected revision: `09ff0454f5a7ca17b3ea75ea1495a0a370b91f87`.
+The Dropbox path normalization and missing-path classification helpers in
+`src/still/ProviderStorage.ts` are adapted from `packages/core/src/dropbox-sync-utils.ts`.
+Copyright remains with Mindwtr's authors and contributors. Licensed AGPL-3.0-only,
+the same license as Still (see LICENSE.md). WebDAV/Dropbox provider choices and
+transport separation were informed by Mindwtr; its task model and sync document
+format are not used. Still is not an official Mindwtr application.

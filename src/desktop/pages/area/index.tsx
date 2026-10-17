@@ -192,7 +192,7 @@ const AreaPageContent: React.FC<AreaPageContentProps> = ({ area, areaId }) => {
       {(projects.length > 0 || !isTagFilterActive) && (
         <>
           <div className={desktopStyles.TodaySectionHeading}>
-            <h2 className={desktopStyles.TodaySectionTitle}>{localize('area.projects', 'Projects')}</h2>
+            <h2 className="text-sm font-semibold text-t3">{localize('area.projects', 'Projects')}</h2>
           </div>
           <div>
             <DesktopProjectList
@@ -204,7 +204,7 @@ const AreaPageContent: React.FC<AreaPageContentProps> = ({ area, areaId }) => {
         </>
       )}
       <div className={desktopStyles.TodaySectionHeading}>
-        <h2 className={desktopStyles.TodaySectionTitle}>{localize('area.tasks', 'Tasks')}</h2>
+        <h2 className="text-sm font-semibold text-t3">{localize('area.tasks', 'Tasks')}</h2>
       </div>
       <div>
         <InboxTaskInput />
