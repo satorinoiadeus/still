@@ -86,7 +86,8 @@ export function MobileSelectionToolbar() {
   const apply = (update?: UpdateTaskSchema) => {
     try {
       todo.runInTransaction(() => {
-        for (const id of roots().reverse()) {
+        const ids = !update || update.position ? roots().reverse() : [...selected].filter(id => todo.modelState.taskObjectMap.get(id)?.type === 'task');
+        for (const id of ids) {
           if (update) todo.updateTask(id, update);
           else todo.deleteItem(id);
         }

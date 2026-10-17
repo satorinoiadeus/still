@@ -139,3 +139,7 @@
 }
 
 .still-select-entry { position: relative; z-index: 201; }
+
+.still-transfer label, .still-sync label { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.still-sync input, .still-sync select, .still-transfer select { width: 100%; }
+.still-batch label { display: flex; align-items: center; gap: 6px; max-width: 100%; }

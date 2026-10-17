@@ -132,6 +132,46 @@ try {
   await mobile.getByText('Travel', { exact: true }).first().click();
   await mobile.getByTestId('task-item').filter({ hasText: 'Pack a notebook' }).waitFor();
   passed('Imported Todoist project opens in the real project workspace');
+  await mobile.goto(base + '/inbox');
+  await mobile.getByTestId('mobile-select').click();
+  await mobile.getByRole('checkbox', { name: 'Select Choose one thing that matters', exact: true }).check();
+  await mobile.getByLabel('Move selected tasks').selectOption({ label: 'Travel' });
+  await nav.getByRole('button', { name: 'Projects', exact: true }).click();
+  await mobile.getByText('Travel', { exact: true }).first().click();
+  await mobile.getByTestId('task-item').filter({ hasText: 'Choose one thing that matters' }).waitFor();
+  await mobile.getByTestId('mobile-select').click();
+  await mobile.getByRole('checkbox', { name: 'Select Choose one thing that matters', exact: true }).check();
+  await mobile.getByLabel('Schedule selected tasks').fill(new Date().toISOString().slice(0, 10));
+  await mobile.getByTestId('mobile-select').waitFor();
+  await mobile.reload();
+  await mobile.getByTestId('task-item').filter({ hasText: 'Choose one thing that matters' }).waitFor();
+  passed('Mobile batch move and schedule persist in the selected project');
+  await mobile.getByTestId('mobile-select').click();
+  await mobile.getByRole('checkbox', { name: 'Select Choose one thing that matters', exact: true }).check();
+  await mobile.getByRole('button', { name: 'Delete…', exact: true }).click();
+  await mobile.getByRole('button', { name: 'Confirm delete', exact: true }).click();
+  await mobile.getByTestId('task-item').filter({ hasText: 'Choose one thing that matters' }).waitFor({ state: 'hidden' });
+  await mobile.reload();
+  assert.equal(await mobile.getByTestId('task-item').filter({ hasText: 'Choose one thing that matters' }).count(), 0);
+  passed('Mobile batch deletion requires confirmation and persists');
+  await page.goto(base + '/desktop/settings/import-export');
+  const chooseBackup = page.waitForEvent('filechooser');
+  await page.getByRole('button', { name: 'Import', exact: true }).click();
+  await (await chooseBackup).setFiles('tests/fixtures/area.hbTask');
+  await page.getByRole('button', { name: 'Import', exact: true }).waitFor();
+  await page.goto(base + '/desktop/area/ui-creative-area');
+  for(const title of ['Projects', 'Tasks']) {
+    const heading = page.getByRole('heading', { name: title, exact: true }); await heading.waitFor();
+    assert.equal(await heading.evaluate(element => getComputedStyle(element).textTransform), 'none');
+  }
+  await page.screenshot({ path: 'screenshots/still-area-desktop.png' });
+  await mobile.goto(base + '/area/ui-creative-area');
+  for(const title of ['Projects', 'Tasks']) {
+    const heading = mobile.getByText(title, { exact: true }).first(); await heading.waitFor();
+    assert.equal(await heading.evaluate(element => getComputedStyle(element).textTransform), 'none');
+  }
+  await mobile.screenshot({ path: 'screenshots/still-area-mobile.png' });
+  passed('Area Projects and Tasks headings retain sentence case on desktop and mobile');
   const remoteFiles = new Map();
   await context.route('https://dav.example/**', async route => {
     const req = route.request(); const method = req.method(); const name = new URL(req.url()).pathname.split('/').pop();
