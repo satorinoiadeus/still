@@ -2,6 +2,7 @@ name: Still verified builds
 on:
   push:
     branches: [feat/hamsterbase-still-rebuild]
+    paths-ignore: ['**.md', 'screenshots/**', 'verification/**']
   pull_request:
   workflow_dispatch:
 permissions:
@@ -63,6 +64,22 @@ jobs:
           $installer = Get-ChildItem release/*.exe | Select-Object -First 1
           if (-not $installer) { throw 'Missing NSIS installer' }
           Get-FileHash $installer.FullName -Algorithm SHA256
+      - name: Install and exercise the Windows application
+        shell: pwsh
+        run: |
+          $installer = Get-ChildItem release/*.exe | Select-Object -First 1
+          $installDir = Join-Path $env:LOCALAPPDATA 'Still-Rebuild-Smoke'
+          $process = Start-Process $installer.FullName -ArgumentList '/S', "/D=$installDir" -Wait -PassThru
+          if ($process.ExitCode -ne 0) { throw "NSIS exited $($process.ExitCode)" }
+          $exe = Join-Path $installDir 'Still.exe'
+          if (-not (Test-Path $exe)) { throw "Installed application missing: $exe" }
+          node tests/windows.mjs $exe
+          if ($LASTEXITCODE -ne 0) { throw 'Installed application smoke test failed' }
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Still-Windows-runtime-verification
+          path: verification/windows-*
       - uses: actions/upload-artifact@v4
         with:
           name: Still-Windows-x64-installer
@@ -103,3 +120,20 @@ jobs:
           name: Still-Android-testing-APK
           path: android/app/build/outputs/apk/standard/debug/*.apk
           if-no-files-found: error
+      - name: Enable Android emulator acceleration
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          arch: x86_64
+          target: google_apis
+          disable-animations: true
+          script: bash tests/android-smoke.sh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Still-Android-runtime-verification
+          path: verification/android-*
