@@ -13,3 +13,20 @@ Fifteen browser checks pass locally, including mobile search, in-session offline
 Native CI validation installs the NSIS installer and exercises task creation/persistence in the installed Windows app. Android CI checks the APK signature and package identity, installs it in an API 35 emulator and requires the task navigation UI to appear without an app crash. Results and native screenshots are attached to the exact Actions run. Notifications, paid cloud accounts, live self-hosted sync, attachment upload, AI endpoints and physical-device behavior remain outside the verified scope. Local Android sync succeeds; Gradle compilation stops at `services.gradle.org` with `java.net.SocketException: Network is unreachable`, and no Android SDK is installed. Local Windows packaging downloads Electron successfully, then stops because Wine is required for Windows executable resource editing on Linux. GitHub Actions is responsible for platform compilation. CI artifacts must be checked against the exact run/commit before distribution. Windows code signing and stable Android release signing are not configured.
 
 Known upstream build warnings: large main web chunk and a Zod circular dependency during Electron compilation. These are retained rather than stripping upstream capabilities to make the bundle look smaller. The old Still JSON/SQLite format has no safe converter; see DATA-MIGRATION.md.
+
+## Still 1.1 verification
+
+Release candidate: `d443cab9194f21eb7fbbcf2d819ade9086238644`.
+Local results: TypeScript and ESLint pass without warnings; 16 engine/CSV/encryption/provider tests pass; 23 browser checks pass without uncaught exceptions. Production Vite and Electron bundles compile. The additional checks cover mobile multi-selection, completion, move, scheduling, deletion confirmation, Todoist preview/backup/import/export, sentence-case area headings and the real provider sync service over controlled WebDAV responses. Dropbox pagination, remote errors, encryption failures and two-replica CRDT convergence are exercised by adapter tests.
+
+Native CI for this exact candidate: https://github.com/satorinoiadeus/still/actions/runs/39054737318
+The workflow gates publication on the installed Windows persistence/native HTTPS sync check, Android APK install/launch, and two Android instrumentation regression tests for WebDAV verbs/request policy. Check the run's final conclusion before distributing its binaries. Live WebDAV/Dropbox credentials, Dropbox OAuth/refresh, attachment provider transfer and physical-device behavior are outside the verified scope.
+
+Screenshots are actual running UI captures:
+
+- [Area desktop](screenshots/still-area-desktop.png) and [area mobile](screenshots/still-area-mobile.png)
+- [Mobile batch selection](screenshots/still-mobile-batch.png)
+- [Todoist transfer](screenshots/still-todoist-mobile.png)
+- [Sync configuration](screenshots/still-sync-mobile.png)
+
+See [release notes](RELEASE-1.1.md), particularly the required Android 1.0 backup/reinstall/restore procedure.

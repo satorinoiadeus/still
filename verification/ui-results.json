@@ -57,6 +57,38 @@
       "passed": true
     },
     {
+      "name": "Mobile batch selection and deletion cancellation preserve tasks",
+      "passed": true
+    },
+    {
+      "name": "Mobile batch completion uses real persisted tasks",
+      "passed": true
+    },
+    {
+      "name": "Todoist preview, backup, import and project CSV download through mobile UI",
+      "passed": true
+    },
+    {
+      "name": "Imported Todoist project opens in the real project workspace",
+      "passed": true
+    },
+    {
+      "name": "Mobile batch move and schedule persist in the selected project",
+      "passed": true
+    },
+    {
+      "name": "Mobile batch deletion requires confirmation and persists",
+      "passed": true
+    },
+    {
+      "name": "Area Projects and Tasks headings retain sentence case on desktop and mobile",
+      "passed": true
+    },
+    {
+      "name": "WebDAV connection, encrypted upload, stored configuration and repeat sync through real service",
+      "passed": true
+    },
+    {
       "name": "No uncaught browser exceptions",
       "passed": true
     }
