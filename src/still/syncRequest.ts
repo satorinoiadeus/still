@@ -1,4 +1,4 @@
-import { Capacitor, CapacitorHttp } from '@capacitor/core';
+import { Capacitor, CapacitorHttp, registerPlugin } from '@capacitor/core';
 export interface SyncRequest {
   url: string;
   method: string;
@@ -10,6 +10,7 @@ export interface SyncResponse {
   body: string;
 }
 export type SyncRequester = (request: SyncRequest) => Promise<SyncResponse>;
+const androidHttp = registerPlugin<{ request(request: SyncRequest): Promise<SyncResponse> }>('StillSyncHttp');
 export const syncRequest: SyncRequester = async (request) => {
   if (typeof window !== 'undefined' && window.electronAPI) {
     return (await window.electronAPI.serviceChannel.call({
@@ -18,6 +19,7 @@ export const syncRequest: SyncRequester = async (request) => {
       args: [request],
     })) as SyncResponse;
   }
+  if (Capacitor.getPlatform() === 'android') return androidHttp.request(request);
   if (Capacitor.isNativePlatform()) {
     const response = await CapacitorHttp.request({
       url: request.url,

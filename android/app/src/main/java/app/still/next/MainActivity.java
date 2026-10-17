@@ -10,6 +10,7 @@ public class MainActivity extends BridgeActivity {
   public void onCreate(Bundle savedInstanceState) {
         // Register plugins
     this.registerPlugin(AndroidSourcePlugin.class);
+    this.registerPlugin(StillSyncHttpPlugin.class);
     super.onCreate(savedInstanceState);
   }
 
