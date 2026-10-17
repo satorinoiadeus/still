@@ -48,3 +48,11 @@ button { cursor: pointer; }
 .still-mobile-nav button[aria-current=page] { color: var(--color-brand); background: var(--color-brand-light); font-weight: 600; }
 .still-mobile-nav svg { width: 20px; height: 20px; }
 #page-content { padding-bottom: calc(80px + env(safe-area-inset-bottom)); }
+
+.still-search-input { display: flex; align-items: center; gap: 12px; padding: 14px; margin-block: 12px; border: 1px solid var(--color-line-regular); border-radius: 14px; background: var(--color-bg1); color: var(--color-t2); }
+.still-search-input input { min-width: 0; flex: 1; outline: none; font-size: 16px; color: var(--color-t1); }
+.still-search-summary { font-size: 13px; color: var(--color-t2); margin: 16px 4px; }
+.still-search-results { overflow: hidden; border-radius: 16px; background: var(--color-bg1); }
+.still-search-results button { width: 100%; min-height: 56px; display: flex; gap: 12px; align-items: center; padding: 14px; text-align: left; border-bottom: 1px solid var(--color-line-light); }
+.still-search-results span { min-width: 0; overflow-wrap: anywhere; }
+.still-search-results small { display: block; font-size: 11px; color: var(--color-t2); margin-top: 4px; text-transform: capitalize; }

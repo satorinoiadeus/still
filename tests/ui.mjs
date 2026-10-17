@@ -26,7 +26,7 @@ try {
   for (const title of ['Choose one thing that matters', 'Give the workspace a little room', 'Plan a quieter week']) await add(title);
   passed('Desktop task creation through real composer');
   await page.waitForTimeout(500);
-  await page.reload(); await page.waitForTimeout(1000); console.log('RELOAD', await page.locator('body').innerText(), 'ERRORS', errors); await page.getByTestId('task-list-item').filter({ hasText: 'Plan a quieter week' }).waitFor();
+  await page.reload(); await page.getByTestId('task-list-item').filter({ hasText: 'Plan a quieter week' }).waitFor();
   passed('IndexedDB persistence across reload');
   const row = page.getByTestId('task-list-item').filter({ hasText: 'Plan a quieter week' });
   await row.click();
@@ -78,6 +78,13 @@ try {
   await mobile.screenshot({ path: 'screenshots/still-mobile.png' });
   await mobile.setViewportSize({ width: 768, height: 1024 });
   assert.equal(await mobile.evaluate(() => document.documentElement.scrollWidth > innerWidth), false); passed('Tablet width has no horizontal overflow');
+  await nav.getByRole('button', { name: 'Search', exact: true }).click();
+  await mobile.getByRole('textbox', { name: 'Search tasks, projects and areas' }).fill('tomorrow');
+  await mobile.getByRole('button').filter({ hasText: 'A little space for tomorrow' }).click();
+  await mobile.getByTestId('edit-task-title-input').waitFor();
+  passed('Mobile search opens the real task editor');
+  await nav.getByRole('button', { name: 'Today', exact: true }).click();
+  await nav.getByRole('button', { name: 'Inbox', exact: true }).click();
   // Loaded web app continues accepting changes without a network connection; not a first-load offline PWA claim.
   await context.setOffline(true); await mobile.getByTestId('mobile-home-create-task-button').click();
   await mobile.getByTestId('edit-task-title-input').fill('Captured offline'); await mobile.getByTestId('edit-task-title-input').blur();

@@ -1,3 +1,4 @@
+import { MobileSearch } from './pages/search';
 import React from 'react';
 import { MobileHome } from './pages/home.tsx';
 import { TodayPage } from './pages/today.tsx';
@@ -33,6 +34,7 @@ interface IPage {
 }
 
 export const pages: IPage[] = [
+  { url: '/search', content: <MobileSearch /> },
   {
     url: '/home',
     content: <MobileHome></MobileHome>,

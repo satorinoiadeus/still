@@ -1,5 +1,5 @@
 import React from 'react';
-import { Inbox, Sun, CalendarDays, Layers, Settings } from 'lucide-react';
+import { Inbox, Sun, CalendarDays, Layers, Search } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router';
 import { localize } from '@/nls';
 
@@ -12,7 +12,7 @@ export const StillNavigation = () => {
     { path: '/today', label: localize('today', 'Today'), Icon: Sun },
     { path: '/scheduled', label: localize('schedule', 'Upcoming'), Icon: CalendarDays },
     { path: '/home', label: localize('sidebar.projects.title', 'Projects'), Icon: Layers },
-    { path: '/settings', label: localize('settings', 'Settings'), Icon: Settings },
+    { path: '/search', label: 'Search', Icon: Search },
   ];
   return <nav className="still-mobile-nav" aria-label="Main navigation">
     {items.map(({ path, label, Icon }) => <button key={path} type="button"

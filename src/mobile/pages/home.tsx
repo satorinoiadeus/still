@@ -1,5 +1,5 @@
 import { getTodayTimestampInUtc } from '@/base/common/getTodayTimestampInUtc.ts';
-import { AreaIcon, CreateViewIcon, HomeIcon, SettingsIcon, SyncIcon } from '@/components/icons';
+import { AreaIcon, CreateViewIcon, HomeIcon, SearchIcon, SettingsIcon, SyncIcon } from '@/components/icons';
 import { FlattenedResult } from '@/core/state/home/flattenedItemsToResult.ts';
 import { flattenRootCollections } from '@/core/state/home/getFlattenRootCollections.ts';
 import { getFutureProjects } from '@/core/state/home/getFutureProjects.ts';
@@ -174,6 +174,7 @@ export const MobileHome = () => {
         title: 'Still',
         renderIcon: (className: string) => <HomeIcon className={className} />,
         actions: [
+          { icon: <SearchIcon />, onClick: () => navigate({ path: '/search' }) },
           {
             icon: <SettingsIcon className={styles.headerActionButtonIcon} strokeWidth={1.5} />,
             onClick: () => navigate({ path: '/settings' }),

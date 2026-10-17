@@ -12,6 +12,9 @@ importers:
         specifier: 0.1.0
         version: 0.1.0
     devDependencies:
+      playwright:
+        specifier: 1.51.1
+        version: 1.51.1
       '@aws-sdk/client-s3':
         specifier: ^3.713.0
         version: 3.1051.0
@@ -5129,6 +5132,26 @@ packages:
 
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
+
+  fsevents@2.3.2:
+    resolution:
+      integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==
+    engines:
+      node: ^8.16.0 || ^10.6.0 || >=11.0.0
+    os:
+    - darwin
+  playwright-core@1.51.1:
+    resolution:
+      integrity: sha512-/crRMj8+j/Nq5s8QcvegseuyeZPxpQCZb6HNk3Sos3BlZyAknRjoyJPFWkpNn8v0+P3WiwqFF8P+zQo4eqiNuw==
+    engines:
+      node: '>=18'
+    hasBin: true
+  playwright@1.51.1:
+    resolution:
+      integrity: sha512-kkx+MB2KQRkyxjYPc3a0wLZZoDczmppyGJIvQ43l+aZihkaVvmu/21kiyaHeHjiFxjxNNFnUncKmcGIyOojsaw==
+    engines:
+      node: '>=18'
+    hasBin: true
 
 snapshots:
 
@@ -10652,3 +10675,12 @@ snapshots:
   zod@4.3.5: {}
 
   zwitch@2.0.4: {}
+
+  fsevents@2.3.2:
+    optional: true
+  playwright-core@1.51.1: {}
+  playwright@1.51.1:
+    dependencies:
+      playwright-core: 1.51.1
+    optionalDependencies:
+      fsevents: 2.3.2

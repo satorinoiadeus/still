@@ -15,7 +15,7 @@ export const FAB: React.FC<FABProps> = ({ onClick }) => {
 
   return (
     <div
-      className={classNames('fixed right-5 bottom-24 safe-bottom')}
+      className={classNames('fixed right-5 bottom-24 safe-bottom z-[1000]')}
       style={{
         display: hideFABWhenKeyboardShow ? 'var(--fab-display, block)' : 'block',
       }}

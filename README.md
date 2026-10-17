@@ -1,6 +1,6 @@
 # Still
 
-A little space for your next action. A modern, local-first task manager built from the actual **HamsterBase Tasks** application, with warm neutral surfaces, sage accents, light/dark/e-ink themes, keyboard access, resizable/collapsible desktop navigation, mobile navigation, and adjustable task spacing and accent colors.
+A little space for your next action. A modern, local-first task manager built from the actual **HamsterBase Tasks** application, with warm neutral surfaces, sage accents, light/dark/e-ink themes, keyboard access, resizable/collapsible desktop navigation, mobile navigation and full-text local mobile search, and adjustable task spacing and accent colors.
 
 This development branch replaces the old Still application. **It is not a compatible upgrade of the old SQLite database.** Main and its release history remain unchanged. Read [DATA-MIGRATION.md](DATA-MIGRATION.md) before installing.
 
@@ -28,7 +28,6 @@ Serve `dist` with SPA fallback. Use `/desktop/inbox` for the desktop interface; 
 Browser workflow verification and screenshots:
 
 ```sh
-npm install --no-save --package-lock=false playwright@1.51.1
 npx playwright install --with-deps chromium
 npm run test:ui
 ```

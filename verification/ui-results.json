@@ -45,6 +45,10 @@
       "passed": true
     },
     {
+      "name": "Mobile search opens the real task editor",
+      "passed": true
+    },
+    {
       "name": "Offline in-session task creation",
       "passed": true
     },
