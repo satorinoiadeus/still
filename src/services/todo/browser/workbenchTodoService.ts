@@ -1,0 +1,335 @@
+import { getPeerId, resetPeerId } from '@/base/browser/getPeerId';
+import { ITEM_STATUS_TIMING } from '@/base/common/itemStatusAnimation';
+import { TaskModel } from '@/core/model.ts';
+import { getProject } from '@/core/state/getProject';
+import {
+  batchEdit as executeBatchEdit,
+  BatchEditParams,
+  BatchEditResult,
+} from '@/core/state/tasks/batchEdit/batchEdit';
+import { createProjectWithChildren } from '@/core/state/tasks/createProject/createProjectWithChildren';
+import { CreateProjectWithChildrenParams } from '@/core/state/tasks/createProject/types';
+import { ITaskModelData } from '@/core/type';
+import {
+  AttachmentSchema,
+  CreateAreaSchema,
+  CreateAttachmentSchema,
+  CreateProjectHeadingSchema,
+  CreateProjectSchema,
+  CreateReminderSchema,
+  CreateTaskSchema,
+  CreateTaskViewSchema,
+  ItemMovePosition,
+  ProjectStatusTransition,
+  ReminderWithId,
+  UpdateAreaSchema,
+  UpdateProjectHeadingSchema,
+  UpdateProjectSchema,
+  UpdateReminderSchema,
+  UpdateTaskSchema,
+  UpdateTaskViewSchema,
+} from '@/core/type.ts';
+import { IDatabaseStorage } from '@/services/database/common/database';
+import { EditingContent, ITodoService, TaskCommand, VIEW_SCHEMA_VERSION } from '@/services/todo/common/todoService.ts';
+import type { TreeID } from 'loro-crdt';
+import { ByteBuffer, decodeBase64, encodeBase64 } from '@hamsterbase/foundation/buffer';
+import { Emitter } from '@hamsterbase/foundation/event';
+import { DisposableStore } from '@hamsterbase/foundation/lifecycle';
+
+interface DateModel {
+  taskModel: TaskModel;
+  modelData: ITaskModelData;
+  dispose: () => void;
+  save: () => Promise<void>;
+}
+
+export class WorkbenchTodoService implements ITodoService {
+  readonly _serviceBrand: undefined;
+  private dataModel: DateModel | null = null;
+  private _onStateChange: Emitter<void> = new Emitter();
+  public onStateChange = this._onStateChange.event;
+
+  private _onEditingContentChange: Emitter<TreeID> = new Emitter();
+  public onEditingContentChange = this._onEditingContentChange.event;
+
+  private _editingContent: EditingContent | null = null;
+
+  private _keepAliveElementTimers = new Map<string, ReturnType<typeof setTimeout>>();
+
+  private _storageId: string | null = null;
+
+  get editingContent() {
+    return this._editingContent;
+  }
+
+  get storageId() {
+    if (!this._storageId) {
+      throw new Error('storageId is not initialized');
+    }
+    return this._storageId;
+  }
+
+  public async initStorage(storage: IDatabaseStorage, keepPeerId?: boolean): Promise<void> {
+    this._storageId = storage.id;
+    const taskModel = new TaskModel();
+    if (!keepPeerId) {
+      await resetPeerId();
+    }
+    const peerId = await getPeerId();
+    taskModel.setPeerId(peerId);
+    async function saveToStorage() {
+      const previousKeys = await storage.list();
+      if (previousKeys.length > 0) {
+        const data = (await Promise.all(previousKeys.map((p) => storage.read(p)))).filter((item) => item);
+        await taskModel.import(data.map((item) => decodeBase64(item).buffer));
+        await storage.save(encodeBase64(ByteBuffer.wrap(taskModel.export())));
+        for (const p of previousKeys) {
+          await storage.delete(p);
+        }
+      } else {
+        await storage.save(encodeBase64(ByteBuffer.wrap(taskModel.export())));
+      }
+    }
+    const disposeStore = new DisposableStore();
+    await saveToStorage();
+    taskModel.clearUndoHistory();
+    const dataModel: DateModel = {
+      taskModel,
+      save: saveToStorage,
+      modelData: taskModel.toJSON(),
+      dispose: () => {
+        disposeStore.dispose();
+      },
+    };
+    disposeStore.add(
+      taskModel.onModelChange(() => {
+        saveToStorage();
+        dataModel.modelData = taskModel.toJSON();
+        this._onStateChange.fire();
+      })
+    );
+    if (this.dataModel) {
+      this.dataModel.dispose();
+    }
+    this.dataModel = dataModel;
+    this._onStateChange.fire();
+  }
+
+  private get taskModel() {
+    if (!this.dataModel) {
+      throw new Error('dataModel is not initialized');
+    }
+    return this.dataModel.taskModel;
+  }
+
+  runInTransaction<T>(callback: () => T): T {
+    return this.taskModel.runInTransaction(callback);
+  }
+
+  get keepAliveElements() {
+    const keepAliveElements = Array.from(this._keepAliveElementTimers.keys());
+    if (this.editingContent) {
+      return [this.editingContent.id, ...keepAliveElements];
+    }
+    return keepAliveElements;
+  }
+
+  get modelState() {
+    if (!this.dataModel) {
+      throw new Error('dataModel is not initialized');
+    }
+    return this.dataModel.modelData;
+  }
+
+  public async import(data: Array<Uint8Array>, databaseId: string) {
+    if (this.storageId !== databaseId) {
+      throw new Error('storageId is not initialized');
+    }
+    if (!this.dataModel) {
+      throw new Error('dataModel is not initialized');
+    }
+    const previousVersion = this.dataModel.taskModel.version;
+    this.dataModel.taskModel.import(data);
+    this.dataModel.modelData = this.dataModel.taskModel.toJSON();
+    await this.dataModel.save();
+    if (previousVersion.compare(this.dataModel.taskModel.version) !== 0) {
+      this._onStateChange.fire();
+    }
+  }
+
+  public exportPatch(from: Record<string, number>, databaseId: string) {
+    if (this.storageId !== databaseId) {
+      throw new Error('storageId is not initialized');
+    }
+    return this.taskModel.exportPatch(from);
+  }
+
+  getModelVersion(databaseId: string): Record<string, number> {
+    if (this.storageId !== databaseId) {
+      throw new Error('storageId is not initialized');
+    }
+    return this.modelState.version;
+  }
+
+  moveDateAssignedList(item: TreeID, position: ItemMovePosition) {
+    return this.taskModel.moveDateAssignedList(item, position);
+  }
+
+  endEditingContent() {
+    if (this._editingContent) {
+      this.addKeepAliveElement(this._editingContent.id);
+      this._onEditingContentChange.fire(this._editingContent.id);
+    }
+    this._editingContent = null;
+    this._onStateChange.fire();
+  }
+
+  addArea(area: CreateAreaSchema): TreeID {
+    return this.taskModel.addArea(area);
+  }
+
+  addProject(project: CreateProjectSchema): TreeID {
+    return this.taskModel.addProject(project);
+  }
+
+  addProjectHeading(projectHeading: CreateProjectHeadingSchema): TreeID {
+    return this.taskModel.addProjectHeading(projectHeading);
+  }
+  addTask(task: CreateTaskSchema): TreeID {
+    return this.taskModel.addTask(task);
+  }
+
+  updateArea(areaId: TreeID, payload: UpdateAreaSchema) {
+    return this.taskModel.updateArea(areaId, payload);
+  }
+  updateProjectHeading(projectHeadingId: TreeID, payload: UpdateProjectHeadingSchema) {
+    return this.taskModel.updateProjectHeading(projectHeadingId, payload);
+  }
+
+  updateTask(taskId: TreeID, payload: UpdateTaskSchema) {
+    this.addKeepAliveElement(taskId);
+    return this.taskModel.updateTask(taskId, payload);
+  }
+
+  deleteItem(itemId: TreeID) {
+    return this.taskModel.deleteItem(itemId);
+  }
+
+  updateProject(projectId: TreeID, payload: UpdateProjectSchema) {
+    return this.taskModel.updateProject(projectId, payload);
+  }
+  covertToProject(itemId: TreeID) {
+    return this.taskModel.covertToProject(itemId);
+  }
+
+  transitionProjectState(options: ProjectStatusTransition) {
+    const project = getProject(this.modelState, options.projectId);
+    const affectedTaskIds = project
+      ? [
+          ...project.tasks.map((task) => task.id),
+          ...project.projectHeadings.flatMap((heading) => heading.tasks.map((task) => task.id)),
+        ]
+      : [];
+    this.addKeepAliveElements([options.projectId, ...affectedTaskIds]);
+    return this.taskModel.transitionProjectState(options);
+  }
+
+  private addKeepAliveElement(element: string) {
+    this.addKeepAliveElements([element]);
+  }
+
+  private addKeepAliveElements(elements: string[]) {
+    elements.forEach((element) => {
+      const existingTimer = this._keepAliveElementTimers.get(element);
+      if (existingTimer) {
+        clearTimeout(existingTimer);
+      }
+      const timer = setTimeout(() => {
+        this._keepAliveElementTimers.delete(element);
+        this._onStateChange.fire();
+      }, ITEM_STATUS_TIMING.keepAlive);
+      this._keepAliveElementTimers.set(element, timer);
+    });
+    this._onStateChange.fire();
+  }
+
+  editItem(itemId: TreeID) {
+    this._editingContent = {
+      id: itemId,
+    };
+    this._onEditingContentChange.fire(itemId);
+  }
+
+  addReminder(data: CreateReminderSchema): string {
+    return this.taskModel.addReminder(data);
+  }
+
+  updateReminder(reminderId: string, data: UpdateReminderSchema): void {
+    return this.taskModel.updateReminder(reminderId, data);
+  }
+
+  deleteReminder(reminderId: string): void {
+    return this.taskModel.deleteReminder(reminderId);
+  }
+
+  getReminders(): Map<TreeID, ReminderWithId[]> {
+    return this.taskModel.getReminders();
+  }
+
+  addAttachment(data: CreateAttachmentSchema): void {
+    return this.taskModel.addAttachment(data);
+  }
+
+  softDeleteAttachment(attachmentId: string): void {
+    return this.taskModel.softDeleteAttachment(attachmentId);
+  }
+
+  listAllAttachments(): AttachmentSchema[] {
+    return this.taskModel.listAllAttachments();
+  }
+
+  fireTaskCommand(command: TaskCommand): void {
+    this._onTaskCommands.fire(command);
+  }
+  private _onTaskCommands: Emitter<TaskCommand> = new Emitter();
+  public onTaskCommands = this._onTaskCommands.event;
+
+  undo(): void {
+    this.taskModel.undo();
+  }
+  redo(): void {
+    this.taskModel.redo();
+  }
+  clearUndoHistory(): void {
+    this.taskModel.clearUndoHistory();
+  }
+
+  createProjectWithChildren(params: CreateProjectWithChildrenParams): TreeID {
+    return createProjectWithChildren(this.taskModel, params);
+  }
+
+  batchEdit(params: BatchEditParams): BatchEditResult {
+    return executeBatchEdit(this.taskModel, params);
+  }
+
+  addView(payload: Omit<CreateTaskViewSchema, 'schemaVersion'>): string {
+    return this.taskModel.addView({ ...payload, schemaVersion: VIEW_SCHEMA_VERSION });
+  }
+
+  updateView(uid: string, payload: Omit<UpdateTaskViewSchema, 'schemaVersion'>): void {
+    // Re-stamp the writer's schema version whenever the rule itself changes,
+    // so the persisted version always reflects the engine that produced the
+    // current rule string.
+    const next: UpdateTaskViewSchema =
+      payload.rule !== undefined ? { ...payload, schemaVersion: VIEW_SCHEMA_VERSION } : payload;
+    this.taskModel.updateView(uid, next);
+  }
+
+  deleteView(uid: string): void {
+    this.taskModel.deleteView(uid);
+  }
+
+  moveView(uid: string, toIndex: number): void {
+    this.taskModel.moveView(uid, toIndex);
+  }
+}

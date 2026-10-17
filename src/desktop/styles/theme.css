@@ -1,0 +1,27 @@
+@theme {
+  --color-bg1: #fbfaf7;
+  --color-bg2: #f1f0e9;
+  --color-bg3: #e7e9df;
+  --color-bg4: #e1e5db;
+  --color-t1: #28372e;
+  --color-t2: #5d695f;
+  --color-t3: #788377;
+  --color-t4: #b5bdb1;
+  --color-brand: #52765a;
+  --color-brand-light: #e2ebdf;
+  --color-text-link: #446d4f;
+  --color-line-light: #e7e8df;
+  --color-line-regular: #d8ddcf;
+  --color-line-bold: #bcc7b9;
+  --color-accent-danger: #b65343;
+  --color-accent-success: #52765a;
+  --color-accent-warning: #a47b33;
+  --color-module-today: #95702e;
+  --color-module-inbox: #52765a;
+  --color-module-scheduled: #7a7694;
+  --color-module-completed: #52765a;
+  --color-text-white: #ffffff;
+  --color-toast-bg: #29392e;
+  --shadow-soft: 0 6px 28px rgb(32 48 32 / 0.06);
+  --color-bg-glass-mix: var(--color-bg1);
+}

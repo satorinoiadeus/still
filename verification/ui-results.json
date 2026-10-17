@@ -1,0 +1,57 @@
+{
+  "results": [
+    {
+      "name": "Desktop task creation through real composer",
+      "passed": true
+    },
+    {
+      "name": "IndexedDB persistence across reload",
+      "passed": true
+    },
+    {
+      "name": "Desktop task detail opens",
+      "passed": true
+    },
+    {
+      "name": "Command palette searches actual tasks",
+      "passed": true
+    },
+    {
+      "name": "Sidebar collapses and restores",
+      "passed": true
+    },
+    {
+      "name": "Appearance preferences persist safely",
+      "passed": true
+    },
+    {
+      "name": "Dark theme",
+      "passed": true
+    },
+    {
+      "name": "Task completion and completed view",
+      "passed": true
+    },
+    {
+      "name": "Mobile navigation, shared real tasks and no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "Mobile inline task creation and persistence",
+      "passed": true
+    },
+    {
+      "name": "Tablet width has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "Offline in-session task creation",
+      "passed": true
+    },
+    {
+      "name": "No uncaught browser exceptions",
+      "passed": true
+    }
+  ],
+  "errors": []
+}

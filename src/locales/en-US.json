@@ -1,0 +1,2863 @@
+{
+  "__i18n_ease__": "true",
+  "account.apple_store_purchase_fetch.error": {
+    "defaultMessage": "Failed to get product",
+    "content": "Failed to get product"
+  },
+  "account.apple_store_purchase.fetching": {
+    "defaultMessage": "Loading Purchase Info...",
+    "content": "Loading Purchase Info..."
+  },
+  "account.apple_store_purchase.purchasing": {
+    "defaultMessage": "Purchasing...",
+    "content": "Purchasing..."
+  },
+  "account.apple_store_purchase.success": {
+    "defaultMessage": "Purchase successful",
+    "content": "Purchase successful"
+  },
+  "account.apple_store_purchase.title": {
+    "defaultMessage": "Subscribe 1 Year Cloud Pro",
+    "content": "Subscribe 1 Year Cloud Pro"
+  },
+  "account.copy.success": {
+    "defaultMessage": "Account ID copied to clipboard",
+    "content": "Account ID copied to clipboard"
+  },
+  "account.copySuccess": {
+    "defaultMessage": "Copied Successfully",
+    "content": "Copied Successfully"
+  },
+  "account.delete": {
+    "defaultMessage": "Delete Account",
+    "content": "Delete Account"
+  },
+  "account.delete.button": {
+    "defaultMessage": "Delete Account",
+    "content": "Delete Account"
+  },
+  "account.delete.confirm": {
+    "defaultMessage": "Are you sure you want to delete your account? This action cannot be undone and will permanently delete all your data.",
+    "content": "Are you sure you want to delete your account? This action cannot be undone and will permanently delete all your data."
+  },
+  "account.delete.title": {
+    "defaultMessage": "Delete Account",
+    "content": "Delete Account"
+  },
+  "account.email": {
+    "defaultMessage": "Email",
+    "content": "Email"
+  },
+  "account.error.deleteFailed": {
+    "defaultMessage": "Failed to delete account. Please try again.",
+    "content": "Failed to delete account. Please try again."
+  },
+  "account.error.logoutFailed": {
+    "defaultMessage": "Failed to logout. Please try again.",
+    "content": "Failed to logout. Please try again."
+  },
+  "account.error.title": {
+    "defaultMessage": "Error",
+    "content": "Error"
+  },
+  "account.expiry": {
+    "defaultMessage": "Pro Expires",
+    "content": "Pro Expires"
+  },
+  "account.id": {
+    "defaultMessage": "ID",
+    "content": "ID"
+  },
+  "account.lifetime.link": {
+    "defaultMessage": "https://hamsterbase.com/store/?product=cloud-lifetime",
+    "content": "https://hamsterbase.com/store/?product=cloud-lifetime"
+  },
+  "account.lifetime.title": {
+    "defaultMessage": "Purchase HamsterBase Cloud Lifetime",
+    "content": "Purchase HamsterBase Cloud Lifetime"
+  },
+  "account.logout": {
+    "defaultMessage": "Log out",
+    "content": "Log out"
+  },
+  "account.logout.button": {
+    "defaultMessage": "Logout",
+    "content": "Logout"
+  },
+  "account.logout.confirm": {
+    "defaultMessage": "Are you sure you want to logout?",
+    "content": "Are you sure you want to logout?"
+  },
+  "account.logout.title": {
+    "defaultMessage": "Logout",
+    "content": "Logout"
+  },
+  "account.pro.link": {
+    "defaultMessage": "https://hamsterbase.com/store/?product=cloud",
+    "content": "https://hamsterbase.com/store/?product=cloud"
+  },
+  "account.pro.title": {
+    "defaultMessage": "Subscribe 1 Year Cloud Pro",
+    "content": "Subscribe 1 Year Cloud Pro"
+  },
+  "account.purchase.error": {
+    "defaultMessage": "Failed to complete purchase {0}",
+    "content": "Failed to complete purchase {0}"
+  },
+  "account.title": {
+    "defaultMessage": "Account",
+    "content": "Account"
+  },
+  "addTask": {
+    "defaultMessage": "Add Task",
+    "content": "Add Task"
+  },
+  "ai_chat": {
+    "defaultMessage": "AI Chat",
+    "content": "AI Chat"
+  },
+  "ai_chat.awaiting_confirm": {
+    "defaultMessage": "Awaiting",
+    "content": "Awaiting"
+  },
+  "ai_chat.cancel": {
+    "defaultMessage": "Cancel",
+    "content": "Cancel"
+  },
+  "ai_chat.canceled": {
+    "defaultMessage": "Canceled",
+    "content": "Canceled"
+  },
+  "ai_chat.clear": {
+    "defaultMessage": "Clear",
+    "content": "Clear"
+  },
+  "ai_chat.clear_chat": {
+    "defaultMessage": "Clear chat",
+    "content": "Clear chat"
+  },
+  "ai_chat.confirm": {
+    "defaultMessage": "Confirm",
+    "content": "Confirm"
+  },
+  "ai_chat.empty": {
+    "defaultMessage": "Start a conversation with AI",
+    "content": "Start a conversation with AI"
+  },
+  "ai_chat.executed_success": {
+    "defaultMessage": "Executed",
+    "content": "Executed"
+  },
+  "ai_chat.executing": {
+    "defaultMessage": "Executing...",
+    "content": "Executing..."
+  },
+  "ai_chat.failed": {
+    "defaultMessage": "Failed",
+    "content": "Failed"
+  },
+  "ai_chat.generating": {
+    "defaultMessage": "Generating...",
+    "content": "Generating..."
+  },
+  "ai_chat.go_to_settings": {
+    "defaultMessage": "Go to Settings",
+    "content": "Go to Settings"
+  },
+  "ai_chat.new_chat": {
+    "defaultMessage": "New Chat",
+    "content": "New Chat"
+  },
+  "ai_chat.not_configured": {
+    "defaultMessage": "Please configure your AI API settings first",
+    "content": "Please configure your AI API settings first"
+  },
+  "ai_chat.parameters": {
+    "defaultMessage": "Parameters",
+    "content": "Parameters"
+  },
+  "ai_chat.placeholder": {
+    "defaultMessage": "Type your message...",
+    "content": "Type your message..."
+  },
+  "ai_chat.preparing": {
+    "defaultMessage": "Preparing...",
+    "content": "Preparing..."
+  },
+  "ai_chat.reply_to_this": {
+    "defaultMessage": "Reply to this",
+    "content": "Reply to this"
+  },
+  "ai_chat.replying_to_message": {
+    "defaultMessage": "Reply #{0}",
+    "content": "Reply #{0}"
+  },
+  "ai_chat.result": {
+    "defaultMessage": "Result",
+    "content": "Result"
+  },
+  "ai_chat.status_responding": {
+    "defaultMessage": "Generating...",
+    "content": "Generating..."
+  },
+  "ai_chat.status_stopped": {
+    "defaultMessage": "Stopped",
+    "content": "Stopped"
+  },
+  "ai_chat.success": {
+    "defaultMessage": "Success",
+    "content": "Success"
+  },
+  "ai_chat.thinking": {
+    "defaultMessage": "Thinking",
+    "content": "Thinking"
+  },
+  "ai_chat.tool_batchEdit": {
+    "defaultMessage": "Batch Edit",
+    "content": "Batch Edit"
+  },
+  "ai_chat.tool_createProject": {
+    "defaultMessage": "Create Project",
+    "content": "Create Project"
+  },
+  "ai_chat.tool_getData": {
+    "defaultMessage": "Get Data",
+    "content": "Get Data"
+  },
+  "ai_chat.tool_getProjectData": {
+    "defaultMessage": "Get Project Data",
+    "content": "Get Project Data"
+  },
+  "ai_chat.tool_requestReply": {
+    "defaultMessage": "Request Reply",
+    "content": "Request Reply"
+  },
+  "ai_chat.tool_runJavaScript": {
+    "defaultMessage": "Run JavaScript",
+    "content": "Run JavaScript"
+  },
+  "area.create_project": {
+    "defaultMessage": "Add Project",
+    "content": "Add Project"
+  },
+  "area.delete": {
+    "defaultMessage": "Delete Area",
+    "content": "Delete Area"
+  },
+  "area.delete_area": {
+    "defaultMessage": "Delete Area",
+    "content": "Delete Area"
+  },
+  "area.delete_area_confirm_description": {
+    "defaultMessage": "Are you sure you want to delete this area? This action cannot be undone.",
+    "content": "Are you sure you want to delete this area? This action cannot be undone."
+  },
+  "area.delete_area_confirm_title": {
+    "defaultMessage": "Delete Area",
+    "content": "Delete Area"
+  },
+  "area.delete_confirm": {
+    "defaultMessage": "Delete",
+    "content": "Delete"
+  },
+  "area.delete_description": {
+    "defaultMessage": "Are you sure you want to delete this area? This action cannot be undone.",
+    "content": "Are you sure you want to delete this area? This action cannot be undone."
+  },
+  "area.edit_title": {
+    "defaultMessage": "Edit Title",
+    "content": "Edit Title"
+  },
+  "area.new_project": {
+    "defaultMessage": "New Project",
+    "content": "New Project"
+  },
+  "area.newProject": {
+    "defaultMessage": "New Project",
+    "content": "New Project"
+  },
+  "area.noProjects": {
+    "defaultMessage": "No projects",
+    "content": "No projects"
+  },
+  "area.noTasks": {
+    "defaultMessage": "No tasks",
+    "content": "No tasks"
+  },
+  "area.notFound": {
+    "defaultMessage": "Area not found",
+    "content": "Area not found"
+  },
+  "area.projects": {
+    "defaultMessage": "Projects",
+    "content": "Projects"
+  },
+  "area.tasks": {
+    "defaultMessage": "Tasks",
+    "content": "Tasks"
+  },
+  "area.title_placeholder": {
+    "defaultMessage": "New Area",
+    "content": "New Area"
+  },
+  "area.untitled": {
+    "defaultMessage": "New Area",
+    "content": "New Area"
+  },
+  "attachments.accessKeyId": {
+    "defaultMessage": "Access Key ID",
+    "content": "Access Key ID"
+  },
+  "attachments.accessKeyIdDesc": {
+    "defaultMessage": "Your S3 access key ID",
+    "content": "Your S3 access key ID"
+  },
+  "attachments.add": {
+    "defaultMessage": "Add attachment",
+    "content": "Add attachment"
+  },
+  "attachments.addTitle": {
+    "defaultMessage": "Configure S3 Storage",
+    "content": "Configure S3 Storage"
+  },
+  "attachments.bucket": {
+    "defaultMessage": "Bucket",
+    "content": "Bucket"
+  },
+  "attachments.bucketDesc": {
+    "defaultMessage": "Name of the storage bucket",
+    "content": "Name of the storage bucket"
+  },
+  "attachments.clear": {
+    "defaultMessage": "Clear",
+    "content": "Clear"
+  },
+  "attachments.clearConfirmDescription": {
+    "defaultMessage": "Existing attachments will become inaccessible until you reconfigure S3. The files in S3 will not be deleted.",
+    "content": "Existing attachments will become inaccessible until you reconfigure S3. The files in S3 will not be deleted."
+  },
+  "attachments.clearConfirmTitle": {
+    "defaultMessage": "Clear S3 configuration?",
+    "content": "Clear S3 configuration?"
+  },
+  "attachments.cleared": {
+    "defaultMessage": "S3 configuration cleared",
+    "content": "S3 configuration cleared"
+  },
+  "attachments.configure": {
+    "defaultMessage": "Configure",
+    "content": "Configure"
+  },
+  "attachments.configureAction": {
+    "defaultMessage": "Set up",
+    "content": "Set up"
+  },
+  "attachments.configured": {
+    "defaultMessage": "Configured",
+    "content": "Configured"
+  },
+  "attachments.currentDatabase": {
+    "defaultMessage": "Current database",
+    "content": "Current database"
+  },
+  "attachments.delete": {
+    "defaultMessage": "Delete",
+    "content": "Delete"
+  },
+  "attachments.deleteConfirmDescription": {
+    "defaultMessage": "Are you sure you want to delete \"{0}\"? This only removes it from this task. The file in S3 will not be deleted.",
+    "content": "Are you sure you want to delete \"{0}\"? This only removes it from this task. The file in S3 will not be deleted."
+  },
+  "attachments.deleteConfirmTitle": {
+    "defaultMessage": "Delete attachment?",
+    "content": "Delete attachment?"
+  },
+  "attachments.download": {
+    "defaultMessage": "Download",
+    "content": "Download"
+  },
+  "attachments.dropOrClick": {
+    "defaultMessage": "Click or drag files here to add attachments",
+    "content": "Click or drag files here to add attachments"
+  },
+  "attachments.edit": {
+    "defaultMessage": "Edit",
+    "content": "Edit"
+  },
+  "attachments.editTitle": {
+    "defaultMessage": "Edit S3 Configuration",
+    "content": "Edit S3 Configuration"
+  },
+  "attachments.endpoint": {
+    "defaultMessage": "Endpoint URL",
+    "content": "Endpoint URL"
+  },
+  "attachments.endpointDesc": {
+    "defaultMessage": "S3-compatible endpoint, e.g. https://s3.amazonaws.com",
+    "content": "S3-compatible endpoint, e.g. https://s3.amazonaws.com"
+  },
+  "attachments.failed": {
+    "defaultMessage": "Failed",
+    "content": "Failed"
+  },
+  "attachments.file": {
+    "defaultMessage": "FILE",
+    "content": "FILE"
+  },
+  "attachments.forcePathStyle": {
+    "defaultMessage": "Force Path Style (for MinIO and some self-hosted S3)",
+    "content": "Force Path Style (for MinIO and some self-hosted S3)"
+  },
+  "attachments.forcePathStyleDesc": {
+    "defaultMessage": "Required for MinIO and some self-hosted S3-compatible servers",
+    "content": "Required for MinIO and some self-hosted S3-compatible servers"
+  },
+  "attachments.forcePathStyleTitle": {
+    "defaultMessage": "Force Path Style",
+    "content": "Force Path Style"
+  },
+  "attachments.goToSettings": {
+    "defaultMessage": "Open Settings",
+    "content": "Open Settings"
+  },
+  "attachments.heading": {
+    "defaultMessage": "Attachments",
+    "content": "Attachments"
+  },
+  "attachments.hide": {
+    "defaultMessage": "Hide",
+    "content": "Hide"
+  },
+  "attachments.intro": {
+    "defaultMessage": "Configure S3-compatible storage for attachments in ",
+    "content": "Configure S3-compatible storage for attachments in "
+  },
+  "attachments.introSuffix": {
+    "defaultMessage": ". Configuration is stored locally on this device.",
+    "content": ". Configuration is stored locally on this device."
+  },
+  "attachments.keyPrefix": {
+    "defaultMessage": "Key Prefix",
+    "content": "Key Prefix"
+  },
+  "attachments.keyPrefixDesc": {
+    "defaultMessage": "Optional prefix applied to every object key",
+    "content": "Optional prefix applied to every object key"
+  },
+  "attachments.notConfigured": {
+    "defaultMessage": "S3 storage not configured",
+    "content": "S3 storage not configured"
+  },
+  "attachments.notConfiguredDesc": {
+    "defaultMessage": "Add S3-compatible storage to enable attachments for tasks and projects.",
+    "content": "Add S3-compatible storage to enable attachments for tasks and projects."
+  },
+  "attachments.notConfiguredStatus": {
+    "defaultMessage": "unavailable",
+    "content": "unavailable"
+  },
+  "attachments.notConfiguredWarning": {
+    "defaultMessage": "Storage not set up",
+    "content": "Storage not set up"
+  },
+  "attachments.pasteNotConfigured": {
+    "defaultMessage": "Set up S3 storage in Settings before pasting images.",
+    "content": "Set up S3 storage in Settings before pasting images."
+  },
+  "attachments.region": {
+    "defaultMessage": "Region",
+    "content": "Region"
+  },
+  "attachments.regionDesc": {
+    "defaultMessage": "Region code, e.g. us-east-1 or auto for Cloudflare R2",
+    "content": "Region code, e.g. us-east-1 or auto for Cloudflare R2"
+  },
+  "attachments.retry": {
+    "defaultMessage": "Retry",
+    "content": "Retry"
+  },
+  "attachments.save": {
+    "defaultMessage": "Save",
+    "content": "Save"
+  },
+  "attachments.saved": {
+    "defaultMessage": "S3 configuration saved",
+    "content": "S3 configuration saved"
+  },
+  "attachments.saving": {
+    "defaultMessage": "Saving…",
+    "content": "Saving…"
+  },
+  "attachments.secretAccessKey": {
+    "defaultMessage": "Secret Access Key",
+    "content": "Secret Access Key"
+  },
+  "attachments.secretAccessKeyDesc": {
+    "defaultMessage": "Stored locally on this device only",
+    "content": "Stored locally on this device only"
+  },
+  "attachments.show": {
+    "defaultMessage": "Show",
+    "content": "Show"
+  },
+  "attachments.summary": {
+    "defaultMessage": "{0} files · {1}",
+    "content": "{0} files · {1}"
+  },
+  "attachments.switchConfirmAction": {
+    "defaultMessage": "Cancel uploads and switch",
+    "content": "Cancel uploads and switch"
+  },
+  "attachments.switchConfirmDescription": {
+    "defaultMessage": "{0} file(s) are still uploading. Switching will cancel them.",
+    "content": "{0} file(s) are still uploading. Switching will cancel them."
+  },
+  "attachments.switchConfirmTitle": {
+    "defaultMessage": "Switch database?",
+    "content": "Switch database?"
+  },
+  "attachments.test": {
+    "defaultMessage": "Test Connection",
+    "content": "Test Connection"
+  },
+  "attachments.testFailed": {
+    "defaultMessage": "Connection failed",
+    "content": "Connection failed"
+  },
+  "attachments.testing": {
+    "defaultMessage": "Testing…",
+    "content": "Testing…"
+  },
+  "attachments.testSuccess": {
+    "defaultMessage": "✓ Connection successful",
+    "content": "✓ Connection successful"
+  },
+  "attachments.uploadFailed": {
+    "defaultMessage": "Upload failed",
+    "content": "Upload failed"
+  },
+  "attachments.uploading": {
+    "defaultMessage": "Uploading",
+    "content": "Uploading"
+  },
+  "cancel": {
+    "defaultMessage": "Cancel",
+    "content": "Cancel"
+  },
+  "cliApproval.action.createArea": {
+    "defaultMessage": "New area",
+    "content": "New area"
+  },
+  "cliApproval.action.createHeading": {
+    "defaultMessage": "New heading",
+    "content": "New heading"
+  },
+  "cliApproval.action.createProject": {
+    "defaultMessage": "New project",
+    "content": "New project"
+  },
+  "cliApproval.action.createTask": {
+    "defaultMessage": "New task",
+    "content": "New task"
+  },
+  "cliApproval.action.delete": {
+    "defaultMessage": "Delete",
+    "content": "Delete"
+  },
+  "cliApproval.action.move": {
+    "defaultMessage": "Move",
+    "content": "Move"
+  },
+  "cliApproval.action.update": {
+    "defaultMessage": "Update",
+    "content": "Update"
+  },
+  "cliApproval.anchor.after": {
+    "defaultMessage": "after {0}",
+    "content": "after {0}"
+  },
+  "cliApproval.anchor.before": {
+    "defaultMessage": "before {0}",
+    "content": "before {0}"
+  },
+  "cliApproval.anchor.first": {
+    "defaultMessage": "at the top",
+    "content": "at the top"
+  },
+  "cliApproval.approve": {
+    "defaultMessage": "Approve",
+    "content": "Approve"
+  },
+  "cliApproval.approveAll": {
+    "defaultMessage": "Approve All",
+    "content": "Approve All"
+  },
+  "cliApproval.approveAll.description": {
+    "defaultMessage": "Apply {0} pending change(s) from the CLI?",
+    "content": "Apply {0} pending change(s) from the CLI?"
+  },
+  "cliApproval.approveAll.descriptionWithConfirmation": {
+    "defaultMessage": "Apply {0} pending change(s)? {1} deletion request(s) will remain for separate confirmation.",
+    "content": "Apply {0} pending change(s)? {1} deletion request(s) will remain for separate confirmation."
+  },
+  "cliApproval.approveAll.title": {
+    "defaultMessage": "Approve all requests",
+    "content": "Approve all requests"
+  },
+  "cliApproval.approveAllCount": {
+    "defaultMessage": "Approve All ({0})",
+    "content": "Approve All ({0})"
+  },
+  "cliApproval.approveScope": {
+    "defaultMessage": "Approve \"{0}\" ({1})",
+    "content": "Approve \"{0}\" ({1})"
+  },
+  "cliApproval.approveScope.title": {
+    "defaultMessage": "Approve requests in \"{0}\"",
+    "content": "Approve requests in \"{0}\""
+  },
+  "cliApproval.banner": {
+    "defaultMessage": "{0} CLI change(s) waiting for approval",
+    "content": "{0} CLI change(s) waiting for approval"
+  },
+  "cliApproval.banner.review": {
+    "defaultMessage": "Review",
+    "content": "Review"
+  },
+  "cliApproval.confirmDelete.confirm": {
+    "defaultMessage": "Approve Delete",
+    "content": "Approve Delete"
+  },
+  "cliApproval.confirmDelete.description": {
+    "defaultMessage": "Delete \"{0}\"? This action cannot be undone.",
+    "content": "Delete \"{0}\"? This action cannot be undone."
+  },
+  "cliApproval.confirmDelete.title": {
+    "defaultMessage": "Approve deletion",
+    "content": "Approve deletion"
+  },
+  "cliApproval.empty": {
+    "defaultMessage": "No pending approvals",
+    "content": "No pending approvals"
+  },
+  "cliApproval.explanation": {
+    "defaultMessage": "Explanation",
+    "content": "Explanation"
+  },
+  "cliApproval.field.children": {
+    "defaultMessage": "Children",
+    "content": "Children"
+  },
+  "cliApproval.field.dueDate": {
+    "defaultMessage": "Due date",
+    "content": "Due date"
+  },
+  "cliApproval.field.items": {
+    "defaultMessage": "Items",
+    "content": "Items"
+  },
+  "cliApproval.field.notes": {
+    "defaultMessage": "Notes",
+    "content": "Notes"
+  },
+  "cliApproval.field.parent": {
+    "defaultMessage": "Location",
+    "content": "Location"
+  },
+  "cliApproval.field.startDate": {
+    "defaultMessage": "Start date",
+    "content": "Start date"
+  },
+  "cliApproval.field.status": {
+    "defaultMessage": "Status",
+    "content": "Status"
+  },
+  "cliApproval.field.tags": {
+    "defaultMessage": "Tags",
+    "content": "Tags"
+  },
+  "cliApproval.field.title": {
+    "defaultMessage": "Title",
+    "content": "Title"
+  },
+  "cliApproval.filter.all": {
+    "defaultMessage": "All",
+    "content": "All"
+  },
+  "cliApproval.invalid.itemMissing": {
+    "defaultMessage": "Item no longer exists",
+    "content": "Item no longer exists"
+  },
+  "cliApproval.invalid.moveIntoTask": {
+    "defaultMessage": "A task cannot be moved under another task",
+    "content": "A task cannot be moved under another task"
+  },
+  "cliApproval.invalid.nestingTooDeep": {
+    "defaultMessage": "A subtask cannot have subtasks of its own",
+    "content": "A subtask cannot have subtasks of its own"
+  },
+  "cliApproval.invalid.noChange": {
+    "defaultMessage": "Item already has these values",
+    "content": "Item already has these values"
+  },
+  "cliApproval.invalid.parentMissing": {
+    "defaultMessage": "Parent no longer exists",
+    "content": "Parent no longer exists"
+  },
+  "cliApproval.invalid.parentType": {
+    "defaultMessage": "Invalid parent type",
+    "content": "Invalid parent type"
+  },
+  "cliApproval.invalid.positionReferenceMissing": {
+    "defaultMessage": "Position reference no longer exists",
+    "content": "Position reference no longer exists"
+  },
+  "cliApproval.invalid.positionSelf": {
+    "defaultMessage": "An item cannot be positioned relative to itself",
+    "content": "An item cannot be positioned relative to itself"
+  },
+  "cliApproval.invalid.subjectHasChildren": {
+    "defaultMessage": "A task with subtasks cannot be nested under another task",
+    "content": "A task with subtasks cannot be nested under another task"
+  },
+  "cliApproval.invalid.subtaskParentLocked": {
+    "defaultMessage": "A subtask cannot be moved out of its parent task",
+    "content": "A subtask cannot be moved out of its parent task"
+  },
+  "cliApproval.invalid.taskMissing": {
+    "defaultMessage": "Task no longer exists",
+    "content": "Task no longer exists"
+  },
+  "cliApproval.move.from": {
+    "defaultMessage": "From",
+    "content": "From"
+  },
+  "cliApproval.move.to": {
+    "defaultMessage": "To",
+    "content": "To"
+  },
+  "cliApproval.op.cancelTask": {
+    "defaultMessage": "Cancel \"{0}\"",
+    "content": "Cancel \"{0}\""
+  },
+  "cliApproval.op.completeTask": {
+    "defaultMessage": "Complete \"{0}\"",
+    "content": "Complete \"{0}\""
+  },
+  "cliApproval.op.createArea": {
+    "defaultMessage": "Create area \"{0}\"",
+    "content": "Create area \"{0}\""
+  },
+  "cliApproval.op.createHeadings": {
+    "defaultMessage": "Create {0} headings",
+    "content": "Create {0} headings"
+  },
+  "cliApproval.op.createItems": {
+    "defaultMessage": "Create {0} items",
+    "content": "Create {0} items"
+  },
+  "cliApproval.op.createProject": {
+    "defaultMessage": "Create project \"{0}\"",
+    "content": "Create project \"{0}\""
+  },
+  "cliApproval.op.createProjects": {
+    "defaultMessage": "Create {0} projects",
+    "content": "Create {0} projects"
+  },
+  "cliApproval.op.createTask": {
+    "defaultMessage": "Create task \"{0}\"",
+    "content": "Create task \"{0}\""
+  },
+  "cliApproval.op.createTasks": {
+    "defaultMessage": "Create {0} tasks",
+    "content": "Create {0} tasks"
+  },
+  "cliApproval.op.deleteTask": {
+    "defaultMessage": "Delete \"{0}\"",
+    "content": "Delete \"{0}\""
+  },
+  "cliApproval.op.moveTask": {
+    "defaultMessage": "Move \"{0}\" to {1}",
+    "content": "Move \"{0}\" to {1}"
+  },
+  "cliApproval.op.reopenTask": {
+    "defaultMessage": "Reopen \"{0}\"",
+    "content": "Reopen \"{0}\""
+  },
+  "cliApproval.op.unknownTask": {
+    "defaultMessage": "Task {0}",
+    "content": "Task {0}"
+  },
+  "cliApproval.op.updateTask": {
+    "defaultMessage": "Update \"{0}\"",
+    "content": "Update \"{0}\""
+  },
+  "cliApproval.panel.title": {
+    "defaultMessage": "Pending approvals",
+    "content": "Pending approvals"
+  },
+  "cliApproval.previewEvidence": {
+    "defaultMessage": "Preview {0}",
+    "content": "Preview {0}"
+  },
+  "cliApproval.reject": {
+    "defaultMessage": "Reject",
+    "content": "Reject"
+  },
+  "cliApproval.rejectAll": {
+    "defaultMessage": "Reject All",
+    "content": "Reject All"
+  },
+  "cliApproval.rejectAll.description": {
+    "defaultMessage": "Reject {0} pending change(s) from the CLI?",
+    "content": "Reject {0} pending change(s) from the CLI?"
+  },
+  "cliApproval.rejectAll.title": {
+    "defaultMessage": "Reject all requests",
+    "content": "Reject all requests"
+  },
+  "cliApproval.setup.copy": {
+    "defaultMessage": "Copy",
+    "content": "Copy"
+  },
+  "cliApproval.setup.copySuccess": {
+    "defaultMessage": "Prompt copied to clipboard",
+    "content": "Prompt copied to clipboard"
+  },
+  "cliApproval.setup.description": {
+    "defaultMessage": "With the Still CLI installed, an AI agent can read your tasks and queue changes here for your approval. It works only while the desktop app is open — nothing changes until you approve it.",
+    "content": "With the Still CLI installed, an AI agent can read your tasks and queue changes here for your approval. It works only while the desktop app is open — nothing changes until you approve it."
+  },
+  "cliApproval.setup.promptLabel": {
+    "defaultMessage": "Send this to your AI",
+    "content": "Send this to your AI"
+  },
+  "cliApproval.setup.title": {
+    "defaultMessage": "Let an AI agent manage your tasks",
+    "content": "Let an AI agent manage your tasks"
+  },
+  "cliApproval.title": {
+    "defaultMessage": "Approvals",
+    "content": "Approvals"
+  },
+  "cliApproval.toast.applied": {
+    "defaultMessage": "{0} change(s) applied",
+    "content": "{0} change(s) applied"
+  },
+  "cliApproval.toast.failed": {
+    "defaultMessage": "{0} change(s) could not be applied",
+    "content": "{0} change(s) could not be applied"
+  },
+  "cliApproval.value.inbox": {
+    "defaultMessage": "Inbox",
+    "content": "Inbox"
+  },
+  "cliApproval.value.none": {
+    "defaultMessage": "none",
+    "content": "none"
+  },
+  "cliApproval.value.root": {
+    "defaultMessage": "Root",
+    "content": "Root"
+  },
+  "cliApproval.value.untitled": {
+    "defaultMessage": "Untitled",
+    "content": "Untitled"
+  },
+  "common.cancel": {
+    "defaultMessage": "Cancel",
+    "content": "Cancel"
+  },
+  "common.close": {
+    "defaultMessage": "Close",
+    "content": "Close"
+  },
+  "common.copy": {
+    "defaultMessage": "Copy",
+    "content": "Copy"
+  },
+  "common.exporting": {
+    "defaultMessage": "Exporting...",
+    "content": "Exporting..."
+  },
+  "common.importing": {
+    "defaultMessage": "Importing...",
+    "content": "Importing..."
+  },
+  "common.loading": {
+    "defaultMessage": "Loading...",
+    "content": "Loading..."
+  },
+  "common.more": {
+    "defaultMessage": "More",
+    "content": "More"
+  },
+  "common.ok": {
+    "defaultMessage": "OK",
+    "content": "OK"
+  },
+  "common.save": {
+    "defaultMessage": "Save",
+    "content": "Save"
+  },
+  "common.untitled": {
+    "defaultMessage": "Untitled",
+    "content": "Untitled"
+  },
+  "completed": {
+    "defaultMessage": "Completed",
+    "content": "Completed"
+  },
+  "completed_tasks.noCompletedTasks": {
+    "defaultMessage": "No completed tasks or projects yet",
+    "content": "No completed tasks or projects yet"
+  },
+  "completed_tasks.title": {
+    "defaultMessage": "Completed",
+    "content": "Completed"
+  },
+  "confirm": {
+    "defaultMessage": "Confirm",
+    "content": "Confirm"
+  },
+  "create_popup.create_area": {
+    "defaultMessage": "Create Area",
+    "content": "Create Area"
+  },
+  "create_popup.create_project": {
+    "defaultMessage": "Create Project",
+    "content": "Create Project"
+  },
+  "create_popup.create_task": {
+    "defaultMessage": "Create Task",
+    "content": "Create Task"
+  },
+  "create_popup.create_view": {
+    "defaultMessage": "Create View",
+    "content": "Create View"
+  },
+  "create_sask_action_sheet.task_notes_placeholder": {
+    "defaultMessage": "Add Notes...",
+    "content": "Add Notes..."
+  },
+  "create_sask_action_sheet.task_title_placeholder": {
+    "defaultMessage": "Task Title",
+    "content": "Task Title"
+  },
+  "create_task_page.add_due_date": {
+    "defaultMessage": "Set Due Date",
+    "content": "Set Due Date"
+  },
+  "create_task_page.add_reminder": {
+    "defaultMessage": "+ Add Reminder",
+    "content": "+ Add Reminder"
+  },
+  "create_task_page.add_start_date": {
+    "defaultMessage": "Set Start Date",
+    "content": "Set Start Date"
+  },
+  "create_task_page.add_subtask": {
+    "defaultMessage": "+ Add Subtask",
+    "content": "+ Add Subtask"
+  },
+  "create_task_page.add_tags": {
+    "defaultMessage": "Add Tags",
+    "content": "Add Tags"
+  },
+  "create_task_page.cancel": {
+    "defaultMessage": "Cancel",
+    "content": "Cancel"
+  },
+  "create_task_page.confirm": {
+    "defaultMessage": "Confirm",
+    "content": "Confirm"
+  },
+  "create_task_page.due_date": {
+    "defaultMessage": "Due Date",
+    "content": "Due Date"
+  },
+  "create_task_page.title": {
+    "defaultMessage": "New Task",
+    "content": "New Task"
+  },
+  "database_not_found": {
+    "defaultMessage": "Database not found",
+    "content": "Database not found"
+  },
+  "database.account_logged_out": {
+    "defaultMessage": "Account logged out",
+    "content": "Account logged out"
+  },
+  "database.clearData": {
+    "defaultMessage": "Clear Data",
+    "content": "Clear Data"
+  },
+  "database.clearData.confirm": {
+    "defaultMessage": "Are you sure you want to clear all data? This action cannot be undone.",
+    "content": "Are you sure you want to clear all data? This action cannot be undone."
+  },
+  "database.current": {
+    "defaultMessage": "Current Database",
+    "content": "Current Database"
+  },
+  "database.database_deleted": {
+    "defaultMessage": "Database was deleted in cloud",
+    "content": "Database was deleted in cloud"
+  },
+  "database.databaseName": {
+    "defaultMessage": "Database Name",
+    "content": "Database Name"
+  },
+  "database.databaseSize": {
+    "defaultMessage": "Database Size",
+    "content": "Database Size"
+  },
+  "database.delete": {
+    "defaultMessage": "Delete Database",
+    "content": "Delete Database"
+  },
+  "database.delete.confirm": {
+    "defaultMessage": "Please enter database password to confirm. This action cannot be undone.",
+    "content": "Please enter database password to confirm. This action cannot be undone."
+  },
+  "database.delete.error.emptyPassword": {
+    "defaultMessage": "Please enter password",
+    "content": "Please enter password"
+  },
+  "database.delete.offline.confirm": {
+    "defaultMessage": "Are you sure you want to delete this offline database? This action cannot be undone.",
+    "content": "Are you sure you want to delete this offline database? This action cannot be undone."
+  },
+  "database.isOffline": {
+    "defaultMessage": "Database is Offline",
+    "content": "Database is Offline"
+  },
+  "database.lastUpdated": {
+    "defaultMessage": "Last Updated",
+    "content": "Last Updated"
+  },
+  "database.notFound": {
+    "defaultMessage": "Database not found",
+    "content": "Database not found"
+  },
+  "database.offline.reason": {
+    "defaultMessage": "Offline Reason",
+    "content": "Offline Reason"
+  },
+  "database.other_account": {
+    "defaultMessage": "This database does not belong to this account",
+    "content": "This database does not belong to this account"
+  },
+  "database.other_reason": {
+    "defaultMessage": "Load cloud database error",
+    "content": "Load cloud database error"
+  },
+  "database.password": {
+    "defaultMessage": "Password",
+    "content": "Password"
+  },
+  "database.switch": {
+    "defaultMessage": "Switch to Database",
+    "content": "Switch to Database"
+  },
+  "database.switch.confirm": {
+    "defaultMessage": "Switch",
+    "content": "Switch"
+  },
+  "database.switch.desc": {
+    "defaultMessage": "Enter your password to switch to this database",
+    "content": "Enter your password to switch to this database"
+  },
+  "database.switch.error.emptyPassword": {
+    "defaultMessage": "Please enter password",
+    "content": "Please enter password"
+  },
+  "database.switch.to": {
+    "defaultMessage": "Switch to Database",
+    "content": "Switch to Database"
+  },
+  "database.sync": {
+    "defaultMessage": "Sync",
+    "content": "Sync"
+  },
+  "database.sync.success": {
+    "defaultMessage": "Sync successfully",
+    "content": "Sync successfully"
+  },
+  "database.token.copy.success": {
+    "defaultMessage": "Token copied to clipboard",
+    "content": "Token copied to clipboard"
+  },
+  "database.token.created": {
+    "defaultMessage": "Token created. Copy it now.",
+    "content": "Token created. Copy it now."
+  },
+  "database.token.generate": {
+    "defaultMessage": "Generate Token",
+    "content": "Generate Token"
+  },
+  "database.token.namePrompt": {
+    "defaultMessage": "Token name",
+    "content": "Token name"
+  },
+  "database.token.revoke": {
+    "defaultMessage": "Revoke",
+    "content": "Revoke"
+  },
+  "database.token.revoke.confirm": {
+    "defaultMessage": "Revoke this token? Any apps using it will stop working.",
+    "content": "Revoke this token? Any apps using it will stop working."
+  },
+  "database.token.section": {
+    "defaultMessage": "Inbox Tokens",
+    "content": "Inbox Tokens"
+  },
+  "databaseNotFound": {
+    "defaultMessage": "Database not found",
+    "content": "Database not found"
+  },
+  "date_picker.friday": {
+    "defaultMessage": "Fri",
+    "content": "Fri"
+  },
+  "date_picker.go_to_today": {
+    "defaultMessage": "Go to today",
+    "content": "Go to today"
+  },
+  "date_picker.monday": {
+    "defaultMessage": "Mon",
+    "content": "Mon"
+  },
+  "date_picker.no_date": {
+    "defaultMessage": "No date",
+    "content": "No date"
+  },
+  "date_picker.saturday": {
+    "defaultMessage": "Sat",
+    "content": "Sat"
+  },
+  "date_picker.someday": {
+    "defaultMessage": "Someday",
+    "content": "Someday"
+  },
+  "date_picker.sunday": {
+    "defaultMessage": "Sun",
+    "content": "Sun"
+  },
+  "date_picker.thursday": {
+    "defaultMessage": "Thu",
+    "content": "Thu"
+  },
+  "date_picker.today": {
+    "defaultMessage": "Today",
+    "content": "Today"
+  },
+  "date_picker.today_button": {
+    "defaultMessage": "Today",
+    "content": "Today"
+  },
+  "date_picker.tomorrow": {
+    "defaultMessage": "Tomorrow",
+    "content": "Tomorrow"
+  },
+  "date_picker.tuesday": {
+    "defaultMessage": "Tue",
+    "content": "Tue"
+  },
+  "date_picker.wednesday": {
+    "defaultMessage": "Wed",
+    "content": "Wed"
+  },
+  "date.someday": {
+    "defaultMessage": "Someday",
+    "content": "Someday"
+  },
+  "date.today": {
+    "defaultMessage": "Today",
+    "content": "Today"
+  },
+  "daysAgo": {
+    "defaultMessage": "{0} days ago",
+    "content": "{0} days ago"
+  },
+  "daysLeft": {
+    "defaultMessage": "{0} days left",
+    "content": "{0} days left"
+  },
+  "deleteDatabase.error.limit": {
+    "defaultMessage": "You can only create 3 databases",
+    "content": "You can only create 3 databases"
+  },
+  "deleteDatabase.error.wrongPassword": {
+    "defaultMessage": "Wrong password",
+    "content": "Wrong password"
+  },
+  "desktop.recurring_task.body_hint": {
+    "defaultMessage": "After completing this task, the next task will be on:",
+    "content": "After completing this task, the next task will be on:"
+  },
+  "desktop.recurring_task.invalid_rule": {
+    "defaultMessage": "Couldn't parse this rule",
+    "content": "Couldn't parse this rule"
+  },
+  "desktop.recurring_task.placeholder": {
+    "defaultMessage": "For example 1w, 2m, 1y3d, due:1d, start:2d",
+    "content": "For example 1w, 2m, 1y3d, due:1d, start:2d"
+  },
+  "desktop.recurring_task.syntax_hint": {
+    "defaultMessage": "Format: number + d / w / m / y, optionally prefixed with start: or due:",
+    "content": "Format: number + d / w / m / y, optionally prefixed with start: or due:"
+  },
+  "desktop.recurring_task.title": {
+    "defaultMessage": "Recurring Settings",
+    "content": "Recurring Settings"
+  },
+  "desktop.tag_editor.create_new_tag": {
+    "defaultMessage": "Create \"{0}\"",
+    "content": "Create \"{0}\""
+  },
+  "desktop.task_detail.add_reminder": {
+    "defaultMessage": "Add reminder",
+    "content": "Add reminder"
+  },
+  "desktop.task_detail.due_date": {
+    "defaultMessage": "Due Date",
+    "content": "Due Date"
+  },
+  "desktop.task_detail.notes_placeholder": {
+    "defaultMessage": "Add notes...",
+    "content": "Add notes..."
+  },
+  "desktop.task_detail.reminders": {
+    "defaultMessage": "Reminders",
+    "content": "Reminders"
+  },
+  "desktop.task_detail.reminders_empty": {
+    "defaultMessage": "No reminders",
+    "content": "No reminders"
+  },
+  "desktop.task_detail.start_date": {
+    "defaultMessage": "Start Date",
+    "content": "Start Date"
+  },
+  "desktop.task_detail.subtasks": {
+    "defaultMessage": "Subtasks",
+    "content": "Subtasks"
+  },
+  "desktop.task_detail.unset": {
+    "defaultMessage": "Not set",
+    "content": "Not set"
+  },
+  "display_settings.completed_tasks": {
+    "defaultMessage": "Completed Tasks",
+    "content": "Completed Tasks"
+  },
+  "display_settings.completed_tasks_range": {
+    "defaultMessage": "Completed Tasks Range",
+    "content": "Completed Tasks Range"
+  },
+  "display_settings.future_tasks": {
+    "defaultMessage": "Future Tasks",
+    "content": "Future Tasks"
+  },
+  "edit_task_item.add_subtask": {
+    "defaultMessage": "Add Subtask",
+    "content": "Add Subtask"
+  },
+  "edit_task_item.delete": {
+    "defaultMessage": "Delete Task",
+    "content": "Delete Task"
+  },
+  "edit_task_item.set_due_date": {
+    "defaultMessage": "Set Due Date",
+    "content": "Set Due Date"
+  },
+  "edit_task_item.set_reminder": {
+    "defaultMessage": "Set Reminder",
+    "content": "Set Reminder"
+  },
+  "edit_task_item.set_start_date": {
+    "defaultMessage": "Set Start Date",
+    "content": "Set Start Date"
+  },
+  "edit_task_item.set_tags": {
+    "defaultMessage": "Set Tags",
+    "content": "Set Tags"
+  },
+  "edit_task_item.task_notes_placeholder": {
+    "defaultMessage": "Add Notes",
+    "content": "Add Notes"
+  },
+  "errorCreatingDirectory": {
+    "defaultMessage": "Error creating directory:",
+    "content": "Error creating directory:"
+  },
+  "errorDeletingDatabase": {
+    "defaultMessage": "Error deleting database:",
+    "content": "Error deleting database:"
+  },
+  "errorEnsuringBaseDir": {
+    "defaultMessage": "Error ensuring base directory:",
+    "content": "Error ensuring base directory:"
+  },
+  "errorListingDatabases": {
+    "defaultMessage": "Error listing databases:",
+    "content": "Error listing databases:"
+  },
+  "errorReadingMetadata": {
+    "defaultMessage": "Error reading metadata for {0}:",
+    "content": "Error reading metadata for {0}:"
+  },
+  "form.hide": {
+    "defaultMessage": "Hide",
+    "content": "Hide"
+  },
+  "form.show": {
+    "defaultMessage": "Show",
+    "content": "Show"
+  },
+  "futureProjects": {
+    "defaultMessage": "Future Projects",
+    "content": "Future Projects"
+  },
+  "futureProjects.empty": {
+    "defaultMessage": "No future projects",
+    "content": "No future projects"
+  },
+  "heading.task_progress": {
+    "defaultMessage": "Task Progress",
+    "content": "Task Progress"
+  },
+  "heading.title_placeholder": {
+    "defaultMessage": "Add heading title...",
+    "content": "Add heading title..."
+  },
+  "home.futureProjects": {
+    "defaultMessage": "Future Projects",
+    "content": "Future Projects"
+  },
+  "home.title": {
+    "defaultMessage": "Home",
+    "content": "Home"
+  },
+  "inbox": {
+    "defaultMessage": "Inbox",
+    "content": "Inbox"
+  },
+  "inbox.display": {
+    "defaultMessage": "Display",
+    "content": "Display"
+  },
+  "inbox.hoverMessage": {
+    "defaultMessage": "Create Task",
+    "content": "Create Task"
+  },
+  "inbox.taskDisplaySettings": {
+    "defaultMessage": "Task Display Settings",
+    "content": "Task Display Settings"
+  },
+  "inbox.title": {
+    "defaultMessage": "Inbox",
+    "content": "Inbox"
+  },
+  "indexedDBStorageInvalidParams": {
+    "defaultMessage": "dbName and storeName are required",
+    "content": "dbName and storeName are required"
+  },
+  "invalid.date": {
+    "defaultMessage": "Invalid date format",
+    "content": "Invalid date format"
+  },
+  "keyNotFound": {
+    "defaultMessage": "Key not found",
+    "content": "Key not found"
+  },
+  "listItemsError": {
+    "defaultMessage": "Error listing items from IndexedDB:",
+    "content": "Error listing items from IndexedDB:"
+  },
+  "localDatabaseName": {
+    "defaultMessage": "Local Database",
+    "content": "Local Database"
+  },
+  "login.account.placeholder": {
+    "defaultMessage": "Enter your email",
+    "content": "Enter your email"
+  },
+  "login.agree": {
+    "defaultMessage": "I agree to",
+    "content": "I agree to"
+  },
+  "login.and": {
+    "defaultMessage": "and",
+    "content": "and"
+  },
+  "login.createAccount": {
+    "defaultMessage": "Create one",
+    "content": "Create one"
+  },
+  "login.error.accountExists": {
+    "defaultMessage": "Account already exists",
+    "content": "Account already exists"
+  },
+  "login.error.accountFormat": {
+    "defaultMessage": "Please enter a valid email format.",
+    "content": "Please enter a valid email format."
+  },
+  "login.error.passwordMismatch": {
+    "defaultMessage": "Confirm password should be the same as password",
+    "content": "Confirm password should be the same as password"
+  },
+  "login.error.termsRequired": {
+    "defaultMessage": "You must agree to the terms",
+    "content": "You must agree to the terms"
+  },
+  "login.eula": {
+    "defaultMessage": "EULA",
+    "content": "EULA"
+  },
+  "login.noAccount": {
+    "defaultMessage": "Don't have an account?",
+    "content": "Don't have an account?"
+  },
+  "login.password.placeholder": {
+    "defaultMessage": "Enter your password",
+    "content": "Enter your password"
+  },
+  "login.privacyPolicy": {
+    "defaultMessage": "Privacy Policy",
+    "content": "Privacy Policy"
+  },
+  "login.signIn": {
+    "defaultMessage": "Sign In",
+    "content": "Sign In"
+  },
+  "login.submit": {
+    "defaultMessage": "Sign In",
+    "content": "Sign In"
+  },
+  "login.subtitle": {
+    "defaultMessage": "Welcome back! Please sign in to your account.",
+    "content": "Welcome back! Please sign in to your account."
+  },
+  "login.tab.register": {
+    "defaultMessage": "Register",
+    "content": "Register"
+  },
+  "login.tab.signin": {
+    "defaultMessage": "Sign In",
+    "content": "Sign In"
+  },
+  "login.title": {
+    "defaultMessage": "Login & Register",
+    "content": "Login & Register"
+  },
+  "logs.thisWeek": {
+    "defaultMessage": "This Week",
+    "content": "This Week"
+  },
+  "menu.about": {
+    "defaultMessage": "About Still",
+    "content": "About Still"
+  },
+  "menu.close": {
+    "defaultMessage": "Close Window",
+    "content": "Close Window"
+  },
+  "menu.copy": {
+    "defaultMessage": "Copy",
+    "content": "Copy"
+  },
+  "menu.cut": {
+    "defaultMessage": "Cut",
+    "content": "Cut"
+  },
+  "menu.developer": {
+    "defaultMessage": "Developer",
+    "content": "Developer"
+  },
+  "menu.edit": {
+    "defaultMessage": "Edit",
+    "content": "Edit"
+  },
+  "menu.forceReload": {
+    "defaultMessage": "Force Reload",
+    "content": "Force Reload"
+  },
+  "menu.githubIssue": {
+    "defaultMessage": "Github Issue",
+    "content": "Github Issue"
+  },
+  "menu.help": {
+    "defaultMessage": "Help",
+    "content": "Help"
+  },
+  "menu.minimize": {
+    "defaultMessage": "Minimize",
+    "content": "Minimize"
+  },
+  "menu.paste": {
+    "defaultMessage": "Paste",
+    "content": "Paste"
+  },
+  "menu.quit": {
+    "defaultMessage": "Quit Still",
+    "content": "Quit Still"
+  },
+  "menu.reload": {
+    "defaultMessage": "Reload",
+    "content": "Reload"
+  },
+  "menu.restoreWindow": {
+    "defaultMessage": "Restore Window",
+    "content": "Restore Window"
+  },
+  "menu.selectAll": {
+    "defaultMessage": "Select All",
+    "content": "Select All"
+  },
+  "menu.toggleDevTools": {
+    "defaultMessage": "Developer Tools",
+    "content": "Developer Tools"
+  },
+  "menu.toggleFullscreen": {
+    "defaultMessage": "Toggle Full Screen",
+    "content": "Toggle Full Screen"
+  },
+  "menu.view": {
+    "defaultMessage": "View",
+    "content": "View"
+  },
+  "menu.window": {
+    "defaultMessage": "Window",
+    "content": "Window"
+  },
+  "menu.zoom": {
+    "defaultMessage": "Zoom",
+    "content": "Zoom"
+  },
+  "message.undo": {
+    "defaultMessage": "Undo",
+    "content": "Undo"
+  },
+  "mobile.subtask.placeholder": {
+    "defaultMessage": "Subtask",
+    "content": "Subtask"
+  },
+  "move_success": {
+    "defaultMessage": "Moved successfully",
+    "content": "Moved successfully"
+  },
+  "not_login": {
+    "defaultMessage": "Account is logged out",
+    "content": "Account is logged out"
+  },
+  "notes_placeholder": {
+    "defaultMessage": "Add notes...",
+    "content": "Add notes..."
+  },
+  "notification.permission.denied": {
+    "defaultMessage": "Notification permission denied",
+    "content": "Notification permission denied"
+  },
+  "offline.database": {
+    "defaultMessage": "Offline Database",
+    "content": "Offline Database"
+  },
+  "otherError": {
+    "defaultMessage": "An error occurred",
+    "content": "An error occurred"
+  },
+  "privacy_policy": {
+    "defaultMessage": "Privacy Policy",
+    "content": "Privacy Policy"
+  },
+  "project_area_selector.move_to_root": {
+    "defaultMessage": "Move to root",
+    "content": "Move to root"
+  },
+  "project_area_selector.search": {
+    "defaultMessage": "Search projects and areas...",
+    "content": "Search projects and areas..."
+  },
+  "project_heading.archive": {
+    "defaultMessage": "Archive Heading",
+    "content": "Archive Heading"
+  },
+  "project_heading.convert": {
+    "defaultMessage": "Convert",
+    "content": "Convert"
+  },
+  "project_heading.convert_to_project": {
+    "defaultMessage": "Convert to Project",
+    "content": "Convert to Project"
+  },
+  "project_heading.convert_to_project_description": {
+    "defaultMessage": "Are you sure you want to convert this heading to a project?",
+    "content": "Are you sure you want to convert this heading to a project?"
+  },
+  "project_heading.delete": {
+    "defaultMessage": "Delete",
+    "content": "Delete"
+  },
+  "project_heading.delete_heading": {
+    "defaultMessage": "Delete Heading",
+    "content": "Delete Heading"
+  },
+  "project_heading.delete_heading_description": {
+    "defaultMessage": "Are you sure you want to delete this heading?",
+    "content": "Are you sure you want to delete this heading?"
+  },
+  "project_heading.edit_title": {
+    "defaultMessage": "Edit Title",
+    "content": "Edit Title"
+  },
+  "project_heading.move": {
+    "defaultMessage": "Move Heading",
+    "content": "Move Heading"
+  },
+  "project_heading.placeholder": {
+    "defaultMessage": "New Heading",
+    "content": "New Heading"
+  },
+  "project_heading.unarchive": {
+    "defaultMessage": "Unarchive Heading",
+    "content": "Unarchive Heading"
+  },
+  "project.add_heading": {
+    "defaultMessage": "Add Heading",
+    "content": "Add Heading"
+  },
+  "project.area": {
+    "defaultMessage": "Area",
+    "content": "Area"
+  },
+  "project.cancel_project": {
+    "defaultMessage": "Cancel project",
+    "content": "Cancel project"
+  },
+  "project.delete": {
+    "defaultMessage": "Delete",
+    "content": "Delete"
+  },
+  "project.delete_project": {
+    "defaultMessage": "Delete Project",
+    "content": "Delete Project"
+  },
+  "project.delete_project_description": {
+    "defaultMessage": "Are you sure you want to delete this project?",
+    "content": "Are you sure you want to delete this project?"
+  },
+  "project.detail.notesPlaceholder": {
+    "defaultMessage": "Enter project notes...",
+    "content": "Enter project notes..."
+  },
+  "project.due_date": {
+    "defaultMessage": "Due Date",
+    "content": "Due Date"
+  },
+  "project.due_date_placeholder": {
+    "defaultMessage": "Select due date",
+    "content": "Select due date"
+  },
+  "project.edit_due_date": {
+    "defaultMessage": "Edit Due Date",
+    "content": "Edit Due Date"
+  },
+  "project.edit_start_date": {
+    "defaultMessage": "Edit Start Date",
+    "content": "Edit Start Date"
+  },
+  "project.edit_tags": {
+    "defaultMessage": "Edit Tags",
+    "content": "Edit Tags"
+  },
+  "project.edit_title": {
+    "defaultMessage": "Edit Title",
+    "content": "Edit Title"
+  },
+  "project.headerPlaceholder": {
+    "defaultMessage": "New Project",
+    "content": "New Project"
+  },
+  "project.mark_as_canceled": {
+    "defaultMessage": "Mark as Canceled",
+    "content": "Mark as Canceled"
+  },
+  "project.mark_as_completed": {
+    "defaultMessage": "Mark as Completed",
+    "content": "Mark as Completed"
+  },
+  "project.mark_as_created": {
+    "defaultMessage": "Mark as Created",
+    "content": "Mark as Created"
+  },
+  "project.move_project": {
+    "defaultMessage": "Move Project",
+    "content": "Move Project"
+  },
+  "project.notes": {
+    "defaultMessage": "Notes",
+    "content": "Notes"
+  },
+  "project.notFound": {
+    "defaultMessage": "Project not found",
+    "content": "Project not found"
+  },
+  "project.start_date": {
+    "defaultMessage": "Start Date",
+    "content": "Start Date"
+  },
+  "project.start_date_placeholder": {
+    "defaultMessage": "Select start date",
+    "content": "Select start date"
+  },
+  "project.status.toggle": {
+    "defaultMessage": "Toggle Project Status",
+    "content": "Toggle Project Status"
+  },
+  "project.tagFilter.all": {
+    "defaultMessage": "All",
+    "content": "All"
+  },
+  "project.tagFilter.label": {
+    "defaultMessage": "Tags:",
+    "content": "Tags:"
+  },
+  "project.tagFilter.untagged": {
+    "defaultMessage": "No Tags",
+    "content": "No Tags"
+  },
+  "project.task_progress": {
+    "defaultMessage": "Task Progress",
+    "content": "Task Progress"
+  },
+  "project.task_progress_hint": {
+    "defaultMessage": "Select a task from the middle column to view its details",
+    "content": "Select a task from the middle column to view its details"
+  },
+  "project.toggle_status_description": {
+    "defaultMessage": "There are {0} tasks left, what do you want to do?",
+    "content": "There are {0} tasks left, what do you want to do?"
+  },
+  "project.untitled": {
+    "defaultMessage": "New Project",
+    "content": "New Project"
+  },
+  "recurring_task.base_prefix": {
+    "defaultMessage": "From completion date:",
+    "content": "From completion date:"
+  },
+  "recurring_task.due_date_rule": {
+    "defaultMessage": "Due Date Rule",
+    "content": "Due Date Rule"
+  },
+  "recurring_task.due_prefix": {
+    "defaultMessage": "From due date:",
+    "content": "From due date:"
+  },
+  "recurring_task.invalid_rule": {
+    "defaultMessage": "Invalid rule",
+    "content": "Invalid rule"
+  },
+  "recurring_task.next_date": {
+    "defaultMessage": "Next date: {0}",
+    "content": "Next date: {0}"
+  },
+  "recurring_task.rule_placeholder": {
+    "defaultMessage": "e.g. 1w, 2m, 1y3d, due:1d, start:2d",
+    "content": "e.g. 1w, 2m, 1y3d, due:1d, start:2d"
+  },
+  "recurring_task.settings_title": {
+    "defaultMessage": "Set Recurring Task Rules",
+    "content": "Set Recurring Task Rules"
+  },
+  "recurring_task.start_date_rule": {
+    "defaultMessage": "Start Date Rule",
+    "content": "Start Date Rule"
+  },
+  "recurring_task.start_prefix": {
+    "defaultMessage": "From start date:",
+    "content": "From start date:"
+  },
+  "recurringDate.day": {
+    "defaultMessage": "day",
+    "content": "day"
+  },
+  "recurringDate.days": {
+    "defaultMessage": "days",
+    "content": "days"
+  },
+  "recurringDate.month": {
+    "defaultMessage": "month",
+    "content": "month"
+  },
+  "recurringDate.months": {
+    "defaultMessage": "months",
+    "content": "months"
+  },
+  "recurringDate.nextMonday": {
+    "defaultMessage": "Next Monday",
+    "content": "Next Monday"
+  },
+  "recurringDate.nextMonth1st": {
+    "defaultMessage": "Next month 1st",
+    "content": "Next month 1st"
+  },
+  "recurringDate.nextYearJan1": {
+    "defaultMessage": "Next year January 1st",
+    "content": "Next year January 1st"
+  },
+  "recurringDate.then": {
+    "defaultMessage": "→",
+    "content": "→"
+  },
+  "recurringDate.tomorrow": {
+    "defaultMessage": "Tomorrow",
+    "content": "Tomorrow"
+  },
+  "recurringDate.week": {
+    "defaultMessage": "week",
+    "content": "week"
+  },
+  "recurringDate.weeks": {
+    "defaultMessage": "weeks",
+    "content": "weeks"
+  },
+  "recurringDate.year": {
+    "defaultMessage": "year",
+    "content": "year"
+  },
+  "recurringDate.years": {
+    "defaultMessage": "years",
+    "content": "years"
+  },
+  "register.agree": {
+    "defaultMessage": "I agree to",
+    "content": "I agree to"
+  },
+  "register.and": {
+    "defaultMessage": "and",
+    "content": "and"
+  },
+  "register.confirmPassword.placeholder": {
+    "defaultMessage": "Enter your password again",
+    "content": "Enter your password again"
+  },
+  "register.eula": {
+    "defaultMessage": "EULA",
+    "content": "EULA"
+  },
+  "register.hasAccount": {
+    "defaultMessage": "Already have an account?",
+    "content": "Already have an account?"
+  },
+  "register.privacyPolicy": {
+    "defaultMessage": "Privacy Policy",
+    "content": "Privacy Policy"
+  },
+  "register.signIn": {
+    "defaultMessage": "Sign in",
+    "content": "Sign in"
+  },
+  "register.submit": {
+    "defaultMessage": "Create Account",
+    "content": "Create Account"
+  },
+  "register.submit.label": {
+    "defaultMessage": "Register",
+    "content": "Register"
+  },
+  "register.subtitle": {
+    "defaultMessage": "Sign up and enjoy 30 days of free cloud sync!",
+    "content": "Sign up and enjoy 30 days of free cloud sync!"
+  },
+  "register.title": {
+    "defaultMessage": "Create Account",
+    "content": "Create Account"
+  },
+  "reminder.expired.title": {
+    "defaultMessage": "Task Reminder",
+    "content": "Task Reminder"
+  },
+  "schedule": {
+    "defaultMessage": "Schedule",
+    "content": "Upcoming"
+  },
+  "schedule.empty": {
+    "defaultMessage": "No scheduled tasks",
+    "content": "No scheduled tasks"
+  },
+  "scheduled.title": {
+    "defaultMessage": "Scheduled",
+    "content": "Scheduled"
+  },
+  "scheduled.tomorrow": {
+    "defaultMessage": "Tomorrow",
+    "content": "Tomorrow"
+  },
+  "search.no_results": {
+    "defaultMessage": "No results found",
+    "content": "No results found"
+  },
+  "search.placeholder": {
+    "defaultMessage": "Search tasks, projects, areas...",
+    "content": "Search tasks, projects, areas..."
+  },
+  "selection.clear_selection": {
+    "defaultMessage": "Clear Selection",
+    "content": "Clear Selection"
+  },
+  "settings.about": {
+    "defaultMessage": "About",
+    "content": "About"
+  },
+  "settings.about.commit": {
+    "defaultMessage": "Commit",
+    "content": "Commit"
+  },
+  "settings.account": {
+    "defaultMessage": "Account",
+    "content": "Account"
+  },
+  "settings.account.management": {
+    "defaultMessage": "Account Management",
+    "content": "Account Management"
+  },
+  "settings.ai": {
+    "defaultMessage": "AI Assistant",
+    "content": "AI Assistant"
+  },
+  "settings.ai.api": {
+    "defaultMessage": "API",
+    "content": "API"
+  },
+  "settings.ai.api_token": {
+    "defaultMessage": "API Token",
+    "content": "API Token"
+  },
+  "settings.ai.api_token.description": {
+    "defaultMessage": "Your API authentication token",
+    "content": "Your API authentication token"
+  },
+  "settings.ai.api_token.placeholder": {
+    "defaultMessage": "Enter your API token",
+    "content": "Enter your API token"
+  },
+  "settings.ai.api_url": {
+    "defaultMessage": "API URL",
+    "content": "API URL"
+  },
+  "settings.ai.api_url.description": {
+    "defaultMessage": "OpenAI compatible API endpoint URL",
+    "content": "OpenAI compatible API endpoint URL"
+  },
+  "settings.ai.display": {
+    "defaultMessage": "Display",
+    "content": "Display"
+  },
+  "settings.ai.hide_entry": {
+    "defaultMessage": "Hide AI Chat in Sidebar",
+    "content": "Hide AI Chat in Sidebar"
+  },
+  "settings.ai.hide_entry.description": {
+    "defaultMessage": "Hide the AI Chat entry from the sidebar.",
+    "content": "Hide the AI Chat entry from the sidebar."
+  },
+  "settings.ai.model_name": {
+    "defaultMessage": "Model Name",
+    "content": "Model Name"
+  },
+  "settings.ai.model_name.description": {
+    "defaultMessage": "The AI model to use (e.g., deepseek-v4-pro, gpt-4, gpt-4o)",
+    "content": "The AI model to use (e.g., deepseek-v4-pro, gpt-4, gpt-4o)"
+  },
+  "settings.appearance": {
+    "defaultMessage": "Appearance",
+    "content": "Appearance"
+  },
+  "settings.attachments": {
+    "defaultMessage": "Attachments",
+    "content": "Attachments"
+  },
+  "settings.back_to_app": {
+    "defaultMessage": "Back to App",
+    "content": "Back to App"
+  },
+  "settings.calendar": {
+    "defaultMessage": "Calendar",
+    "content": "Calendar"
+  },
+  "settings.calendar_week_start_day": {
+    "defaultMessage": "Week starts on",
+    "content": "Week starts on"
+  },
+  "settings.calendar_week_start_day.description": {
+    "defaultMessage": "Choose the first day of the week in date pickers.",
+    "content": "Choose the first day of the week in date pickers."
+  },
+  "settings.cloud": {
+    "defaultMessage": "Cloud",
+    "content": "Cloud"
+  },
+  "settings.cloud.chinaServer": {
+    "defaultMessage": "Use China Server",
+    "content": "Use China Server"
+  },
+  "settings.cloud.chinaServer.description": {
+    "defaultMessage": "Switch to China server for better performance",
+    "content": "Switch to China server for better performance"
+  },
+  "settings.cloud.createDatabase": {
+    "defaultMessage": "Create CloudDatabase",
+    "content": "Create CloudDatabase"
+  },
+  "settings.cloud.currentDatabase": {
+    "defaultMessage": "Current Database",
+    "content": "Current Database"
+  },
+  "settings.cloud.database": {
+    "defaultMessage": "Database",
+    "content": "Database"
+  },
+  "settings.cloud.error": {
+    "defaultMessage": "Failed to load databases",
+    "content": "Failed to load databases"
+  },
+  "settings.cloud.loading": {
+    "defaultMessage": "Loading...",
+    "content": "Loading..."
+  },
+  "settings.cloud.online_database": {
+    "defaultMessage": "Online Database",
+    "content": "Online Database"
+  },
+  "settings.completedTasksRange": {
+    "defaultMessage": "Completed Tasks Range",
+    "content": "Completed Tasks Range"
+  },
+  "settings.completedTasksRange.all": {
+    "defaultMessage": "All time",
+    "content": "All time"
+  },
+  "settings.completedTasksRange.all.description": {
+    "defaultMessage": "Show all completed tasks",
+    "content": "Show all completed tasks"
+  },
+  "settings.completedTasksRange.day": {
+    "defaultMessage": "Last 24 hours",
+    "content": "Last 24 hours"
+  },
+  "settings.completedTasksRange.day.description": {
+    "defaultMessage": "Show tasks completed since start of yesterday",
+    "content": "Show tasks completed since start of yesterday"
+  },
+  "settings.completedTasksRange.description": {
+    "defaultMessage": "How long to keep completed tasks visible across all views.",
+    "content": "How long to keep completed tasks visible across all views."
+  },
+  "settings.completedTasksRange.month": {
+    "defaultMessage": "Last month",
+    "content": "Last month"
+  },
+  "settings.completedTasksRange.month.description": {
+    "defaultMessage": "Show tasks completed since start of last month",
+    "content": "Show tasks completed since start of last month"
+  },
+  "settings.completedTasksRange.today": {
+    "defaultMessage": "Today",
+    "content": "Today"
+  },
+  "settings.completedTasksRange.today.description": {
+    "defaultMessage": "Show tasks completed since start of today",
+    "content": "Show tasks completed since start of today"
+  },
+  "settings.completedTasksRange.week": {
+    "defaultMessage": "Last week",
+    "content": "Last week"
+  },
+  "settings.completedTasksRange.week.description": {
+    "defaultMessage": "Show tasks completed since start of last week",
+    "content": "Show tasks completed since start of last week"
+  },
+  "settings.createDatabase.createAndUse": {
+    "defaultMessage": "Create and Use",
+    "content": "Create and Use"
+  },
+  "settings.createDatabase.databaseName": {
+    "defaultMessage": "Database",
+    "content": "Database"
+  },
+  "settings.createDatabase.password": {
+    "defaultMessage": "Password",
+    "content": "Password"
+  },
+  "settings.createDatabase.passwordReadOnly": {
+    "defaultMessage": "Password cannot be modified. Data will be permanently lost if forgotten.",
+    "content": "Password cannot be modified. Data will be permanently lost if forgotten."
+  },
+  "settings.createDatabase.passwordRepeat": {
+    "defaultMessage": "Password Repeat",
+    "content": "Password Repeat"
+  },
+  "settings.createDatabase.title": {
+    "defaultMessage": "Create Cloud Database",
+    "content": "Create Cloud Database"
+  },
+  "settings.database.detail": {
+    "defaultMessage": "Database Details",
+    "content": "Database Details"
+  },
+  "settings.displaySettings": {
+    "defaultMessage": "Task Display",
+    "content": "Task Display"
+  },
+  "settings.displaySettings.description": {
+    "defaultMessage": "Control which tasks are visible across all views (Today, Projects, Areas). These settings apply everywhere unless overridden in specific views.",
+    "content": "Control which tasks are visible across all views (Today, Projects, Areas). These settings apply everywhere unless overridden in specific views."
+  },
+  "settings.dock_badge": {
+    "defaultMessage": "Dock Badge",
+    "content": "Dock Badge"
+  },
+  "settings.dock_badge.count_type": {
+    "defaultMessage": "Badge Count Type",
+    "content": "Badge Count Type"
+  },
+  "settings.dock_badge.count_type.none": {
+    "defaultMessage": "None",
+    "content": "None"
+  },
+  "settings.dock_badge.count_type.overdue": {
+    "defaultMessage": "Overdue",
+    "content": "Overdue"
+  },
+  "settings.dock_badge.count_type.overdue_and_today": {
+    "defaultMessage": "Overdue + Today",
+    "content": "Overdue + Today"
+  },
+  "settings.dock_badge.count_type.overdue_today_and_inbox": {
+    "defaultMessage": "Overdue + Today + Inbox",
+    "content": "Overdue + Today + Inbox"
+  },
+  "settings.export": {
+    "defaultMessage": "Export",
+    "content": "Export"
+  },
+  "settings.export.description": {
+    "defaultMessage": "Export your database to back up your data or transfer it to another device.",
+    "content": "Export your database to back up your data or transfer it to another device."
+  },
+  "settings.feedback": {
+    "defaultMessage": "Customer Feedback",
+    "content": "Customer Feedback"
+  },
+  "settings.feedback.description": {
+    "defaultMessage": "If you have any questions, suggestions, or issues, please feel free to contact our support team.",
+    "content": "If you have any questions, suggestions, or issues, please feel free to contact our support team."
+  },
+  "settings.import": {
+    "defaultMessage": "Import",
+    "content": "Import"
+  },
+  "settings.import_export": {
+    "defaultMessage": "Import & Export",
+    "content": "Import & Export"
+  },
+  "settings.import.description": {
+    "defaultMessage": "Import your tasks from a backup file",
+    "content": "Import your tasks from a backup file"
+  },
+  "settings.import.fileReadingFailed": {
+    "defaultMessage": "File reading failed",
+    "content": "File reading failed"
+  },
+  "settings.import.importedSuccessfully": {
+    "defaultMessage": "Imported successfully",
+    "content": "Imported successfully"
+  },
+  "settings.import.invalidFileFormat": {
+    "defaultMessage": "Invalid file format",
+    "content": "Invalid file format"
+  },
+  "settings.language": {
+    "defaultMessage": "Language",
+    "content": "Language"
+  },
+  "settings.language.description": {
+    "defaultMessage": "Select your preferred language.",
+    "content": "Select your preferred language."
+  },
+  "settings.language.english": {
+    "defaultMessage": "English",
+    "content": "English"
+  },
+  "settings.local.database": {
+    "defaultMessage": "Local Database",
+    "content": "Local Database"
+  },
+  "settings.local.database.description": {
+    "defaultMessage": "Local data stored on this device",
+    "content": "Local data stored on this device"
+  },
+  "settings.notes": {
+    "defaultMessage": "Notes",
+    "content": "Notes"
+  },
+  "settings.render_markdown": {
+    "defaultMessage": "Render Markdown",
+    "content": "Render Markdown"
+  },
+  "settings.render_markdown.description": {
+    "defaultMessage": "Render notes as markdown in task and project details.",
+    "content": "Render notes as markdown in task and project details."
+  },
+  "settings.showCompletedTasks": {
+    "defaultMessage": "Show Completed Tasks",
+    "content": "Show Completed Tasks"
+  },
+  "settings.showCompletedTasks.description": {
+    "defaultMessage": "Display finished tasks in all views.",
+    "content": "Display finished tasks in all views."
+  },
+  "settings.showFutureTasks": {
+    "defaultMessage": "Show Future Tasks",
+    "content": "Show Future Tasks"
+  },
+  "settings.showFutureTasks.description": {
+    "defaultMessage": "Display tasks with future due dates in all views.",
+    "content": "Display tasks with future due dates in all views."
+  },
+  "settings.sidebar.account": {
+    "defaultMessage": "Account",
+    "content": "Account"
+  },
+  "settings.sidebar.data": {
+    "defaultMessage": "Data",
+    "content": "Data"
+  },
+  "settings.sidebar.general": {
+    "defaultMessage": "General",
+    "content": "General"
+  },
+  "settings.sync": {
+    "defaultMessage": "Sync",
+    "content": "Sync"
+  },
+  "settings.sync.noDatabases": {
+    "defaultMessage": "No databases available",
+    "content": "No databases available"
+  },
+  "settings.theme": {
+    "defaultMessage": "Theme",
+    "content": "Theme"
+  },
+  "settings.theme.auto": {
+    "defaultMessage": "Auto (System)",
+    "content": "Auto (System)"
+  },
+  "settings.theme.dark": {
+    "defaultMessage": "Dark",
+    "content": "Dark"
+  },
+  "settings.theme.description": {
+    "defaultMessage": "Select your preferred theme.",
+    "content": "Select your preferred theme."
+  },
+  "settings.theme.eink": {
+    "defaultMessage": "E-Ink",
+    "content": "E-Ink"
+  },
+  "settings.theme.light": {
+    "defaultMessage": "Light",
+    "content": "Light"
+  },
+  "settings.title": {
+    "defaultMessage": "Settings",
+    "content": "Settings"
+  },
+  "settings.today": {
+    "defaultMessage": "Today",
+    "content": "Today"
+  },
+  "settings.today.group_by_area_project": {
+    "defaultMessage": "Group by Area / Project",
+    "content": "Group by Area / Project"
+  },
+  "settings.today.group_by_area_project.description": {
+    "defaultMessage": "Group projects by area and tasks by project on the Today page.",
+    "content": "Group projects by area and tasks by project on the Today page."
+  },
+  "settings.weekday.friday": {
+    "defaultMessage": "Friday",
+    "content": "Friday"
+  },
+  "settings.weekday.monday": {
+    "defaultMessage": "Monday",
+    "content": "Monday"
+  },
+  "settings.weekday.saturday": {
+    "defaultMessage": "Saturday",
+    "content": "Saturday"
+  },
+  "settings.weekday.sunday": {
+    "defaultMessage": "Sunday",
+    "content": "Sunday"
+  },
+  "settings.weekday.thursday": {
+    "defaultMessage": "Thursday",
+    "content": "Thursday"
+  },
+  "settings.weekday.tuesday": {
+    "defaultMessage": "Tuesday",
+    "content": "Tuesday"
+  },
+  "settings.weekday.wednesday": {
+    "defaultMessage": "Wednesday",
+    "content": "Wednesday"
+  },
+  "sidebar.create_menu": {
+    "defaultMessage": "Create New",
+    "content": "Create New"
+  },
+  "sidebar.projects.title": {
+    "defaultMessage": "Projects",
+    "content": "Projects"
+  },
+  "subtask.placeholder": {
+    "defaultMessage": "Add subtask...",
+    "content": "Add subtask..."
+  },
+  "sync.addServer": {
+    "defaultMessage": "Add Server",
+    "content": "Add Server"
+  },
+  "sync.addServerSuccess": {
+    "defaultMessage": "Server added successfully",
+    "content": "Server added successfully"
+  },
+  "sync.authToken": {
+    "defaultMessage": "Auth Token",
+    "content": "Auth Token"
+  },
+  "sync.authTokenPlaceholder": {
+    "defaultMessage": "Enter your authentication token",
+    "content": "Enter your authentication token"
+  },
+  "sync.autoSync": {
+    "defaultMessage": "Auto Sync",
+    "content": "Auto Sync"
+  },
+  "sync.autoSync.description": {
+    "defaultMessage": "Sync automatically whenever the app regains focus.",
+    "content": "Sync automatically whenever the app regains focus."
+  },
+  "sync.deleteConfigSuccess": {
+    "defaultMessage": "Configuration deleted successfully",
+    "content": "Configuration deleted successfully"
+  },
+  "sync.deleteServer": {
+    "defaultMessage": "Delete Server",
+    "content": "Delete Server"
+  },
+  "sync.deleteServer.description": {
+    "defaultMessage": "This action cannot be undone and will remove the server configuration from this device.",
+    "content": "This action cannot be undone and will remove the server configuration from this device."
+  },
+  "sync.endpoint": {
+    "defaultMessage": "Endpoint",
+    "content": "Endpoint"
+  },
+  "sync.error.invalidEndpoint": {
+    "defaultMessage": "Please enter a valid URL",
+    "content": "Please enter a valid URL"
+  },
+  "sync.folderName": {
+    "defaultMessage": "Folder Name",
+    "content": "Folder Name"
+  },
+  "sync.folderNamePlaceholder": {
+    "defaultMessage": "tasks",
+    "content": "tasks"
+  },
+  "sync.selfHosted.add": {
+    "defaultMessage": "Add Selfhosted Server",
+    "content": "Add Selfhosted Server"
+  },
+  "sync.selfHosted.documentationLink": {
+    "defaultMessage": "View documentation",
+    "content": "View documentation"
+  },
+  "sync.selfHosted.documentationURL": {
+    "defaultMessage": "https://tasks.hamsterbase.com/guide/download/selfhosted.html",
+    "content": "https://tasks.hamsterbase.com/guide/download/selfhosted.html"
+  },
+  "sync.selfHostedNoConfigDescription": {
+    "defaultMessage": "No server configured yet. Add one to sync tasks across devices.",
+    "content": "No server configured yet. Add one to sync tasks across devices."
+  },
+  "sync.selfHostedOnlyLocalDatabase": {
+    "defaultMessage": "Selfhosted sync is only available for local database.",
+    "content": "Selfhosted sync is only available for local database."
+  },
+  "sync.selfHostedServer": {
+    "defaultMessage": "Selfhosted Server",
+    "content": "Selfhosted Server"
+  },
+  "sync.selfHostedSync": {
+    "defaultMessage": "Selfhosted Sync",
+    "content": "Selfhosted Sync"
+  },
+  "sync.serverType": {
+    "defaultMessage": "Server Type",
+    "content": "Server Type"
+  },
+  "sync.success": {
+    "defaultMessage": "Sync successful",
+    "content": "Sync successful"
+  },
+  "sync.sync_success": {
+    "defaultMessage": "Sync completed successfully.",
+    "content": "Sync completed successfully."
+  },
+  "sync.syncing": {
+    "defaultMessage": "Syncing...",
+    "content": "Syncing..."
+  },
+  "sync.syncNow": {
+    "defaultMessage": "Sync Now",
+    "content": "Sync Now"
+  },
+  "sync.syncSuccess": {
+    "defaultMessage": "Sync Successful",
+    "content": "Sync Successful"
+  },
+  "tag_editor.create_new_tag": {
+    "defaultMessage": "Create tag \"#{0}\"",
+    "content": "Create tag \"#{0}\""
+  },
+  "tag_editor.empty_hint": {
+    "defaultMessage": "No matching tags",
+    "content": "No matching tags"
+  },
+  "tag_editor.input_placeholder": {
+    "defaultMessage": "Search or create a tag",
+    "content": "Search or create a tag"
+  },
+  "task_attr.move_to_inbox": {
+    "defaultMessage": "Move to Inbox",
+    "content": "Move to Inbox"
+  },
+  "task_attr.no_areas": {
+    "defaultMessage": "No areas",
+    "content": "No areas"
+  },
+  "task_attr.no_location": {
+    "defaultMessage": "No locations",
+    "content": "No locations"
+  },
+  "task_attr.no_matching_location": {
+    "defaultMessage": "No matching locations",
+    "content": "No matching locations"
+  },
+  "task_attr.search_project": {
+    "defaultMessage": "Search projects",
+    "content": "Search projects"
+  },
+  "task.convert": {
+    "defaultMessage": "Convert",
+    "content": "Convert"
+  },
+  "task.convert_to_project": {
+    "defaultMessage": "Convert to Project",
+    "content": "Convert to Project"
+  },
+  "task.convert_to_project_description": {
+    "defaultMessage": "Are you sure you want to convert this task to a project?",
+    "content": "Are you sure you want to convert this task to a project?"
+  },
+  "task.delete": {
+    "defaultMessage": "Delete",
+    "content": "Delete"
+  },
+  "task.delete_project": {
+    "defaultMessage": "Delete project",
+    "content": "Delete project"
+  },
+  "task.delete_project_confirm_description": {
+    "defaultMessage": "Are you sure you want to delete this project? This action cannot be undone.",
+    "content": "Are you sure you want to delete this project? This action cannot be undone."
+  },
+  "task.delete_project_confirm_title": {
+    "defaultMessage": "Delete Project",
+    "content": "Delete Project"
+  },
+  "task.delete_task": {
+    "defaultMessage": "Delete Task",
+    "content": "Delete Task"
+  },
+  "task.delete_task_description": {
+    "defaultMessage": "Are you sure you want to delete this task?",
+    "content": "Are you sure you want to delete this task?"
+  },
+  "task.move": {
+    "defaultMessage": "Move Task",
+    "content": "Move Task"
+  },
+  "task.recurring_settings": {
+    "defaultMessage": "Recurring Settings",
+    "content": "Recurring Settings"
+  },
+  "task.set_recurring": {
+    "defaultMessage": "Recurring Config",
+    "content": "Recurring Config"
+  },
+  "task.untitled": {
+    "defaultMessage": "New Task",
+    "content": "New Task"
+  },
+  "tasks.add_subtask": {
+    "defaultMessage": "Add subtask",
+    "content": "Add subtask"
+  },
+  "tasks.add.tags": {
+    "defaultMessage": "Not set",
+    "content": "Not set"
+  },
+  "tasks.click_to_create_subtask": {
+    "defaultMessage": "Click to create subtask",
+    "content": "Click to create subtask"
+  },
+  "tasks.daysAgo": {
+    "defaultMessage": "{0} days ago",
+    "content": "{0} days ago"
+  },
+  "tasks.daysLeft": {
+    "defaultMessage": "{0} days left",
+    "content": "{0} days left"
+  },
+  "tasks.due_date": {
+    "defaultMessage": "Due Date",
+    "content": "Due Date"
+  },
+  "tasks.due_date_label": {
+    "defaultMessage": "Due Date",
+    "content": "Due Date"
+  },
+  "tasks.due_date_placeholder": {
+    "defaultMessage": "Select due date",
+    "content": "Select due date"
+  },
+  "tasks.filterByTag": {
+    "defaultMessage": "Filter by Tag",
+    "content": "Filter by Tag"
+  },
+  "tasks.id.copy": {
+    "defaultMessage": "Copy ID",
+    "content": "Copy ID"
+  },
+  "tasks.id.copySuccess": {
+    "defaultMessage": "ID copied to clipboard",
+    "content": "ID copied to clipboard"
+  },
+  "tasks.location": {
+    "defaultMessage": "Location",
+    "content": "Location"
+  },
+  "tasks.location.empty": {
+    "defaultMessage": "Not set",
+    "content": "Not set"
+  },
+  "tasks.location.move": {
+    "defaultMessage": "Move to",
+    "content": "Move to"
+  },
+  "tasks.mark_as_canceled": {
+    "defaultMessage": "Mark as Canceled",
+    "content": "Mark as Canceled"
+  },
+  "tasks.mark_as_completed": {
+    "defaultMessage": "Mark as Completed",
+    "content": "Mark as Completed"
+  },
+  "tasks.mark_as_created": {
+    "defaultMessage": "Mark as Created",
+    "content": "Mark as Created"
+  },
+  "tasks.notes_placeholder": {
+    "defaultMessage": "Add notes...",
+    "content": "Add notes..."
+  },
+  "tasks.oneDayAgo": {
+    "defaultMessage": "1 day ago",
+    "content": "1 day ago"
+  },
+  "tasks.recurring": {
+    "defaultMessage": "Repeat",
+    "content": "Repeat"
+  },
+  "tasks.recurring_due_date": {
+    "defaultMessage": "DueDate: {0}",
+    "content": "DueDate: {0}"
+  },
+  "tasks.recurring_next_label": {
+    "defaultMessage": "Next task",
+    "content": "Next task"
+  },
+  "tasks.recurring_placeholder": {
+    "defaultMessage": "Not set",
+    "content": "Not set"
+  },
+  "tasks.recurring_start_date": {
+    "defaultMessage": "StartDate: {0}",
+    "content": "StartDate: {0}"
+  },
+  "tasks.reminders": {
+    "defaultMessage": "Reminders",
+    "content": "Reminders"
+  },
+  "tasks.reminders_placeholder": {
+    "defaultMessage": "Add reminders",
+    "content": "Add reminders"
+  },
+  "tasks.select_task": {
+    "defaultMessage": "Select a task to view details",
+    "content": "Select a task to view details"
+  },
+  "tasks.selected_count": {
+    "defaultMessage": "Selected {0} items",
+    "content": "Selected {0} items"
+  },
+  "tasks.start_date": {
+    "defaultMessage": "Start Date",
+    "content": "Start Date"
+  },
+  "tasks.start_date_label": {
+    "defaultMessage": "Start Date",
+    "content": "Start Date"
+  },
+  "tasks.start_date_placeholder": {
+    "defaultMessage": "Select start date",
+    "content": "Select start date"
+  },
+  "tasks.subtasks": {
+    "defaultMessage": "Subtasks",
+    "content": "Subtasks"
+  },
+  "tasks.tags": {
+    "defaultMessage": "Tags",
+    "content": "Tags"
+  },
+  "tasks.title_placeholder": {
+    "defaultMessage": "Add title...",
+    "content": "Add title..."
+  },
+  "tasks.today": {
+    "defaultMessage": "Today",
+    "content": "Today"
+  },
+  "tasks.untitled": {
+    "defaultMessage": "New Task",
+    "content": "New Task"
+  },
+  "time_picker.cancel": {
+    "defaultMessage": "Cancel",
+    "content": "Cancel"
+  },
+  "time_picker.confirm": {
+    "defaultMessage": "Confirm",
+    "content": "Confirm"
+  },
+  "time_picker.remove": {
+    "defaultMessage": "Remove",
+    "content": "Remove"
+  },
+  "time-picker.done": {
+    "defaultMessage": "Done",
+    "content": "Done"
+  },
+  "time-picker.presets": {
+    "defaultMessage": "Presets",
+    "content": "Presets"
+  },
+  "time.today": {
+    "defaultMessage": "Today",
+    "content": "Today"
+  },
+  "time.tomorrow": {
+    "defaultMessage": "Tomorrow",
+    "content": "Tomorrow"
+  },
+  "today": {
+    "defaultMessage": "Today",
+    "content": "Today"
+  },
+  "today.group.noArea": {
+    "defaultMessage": "No Area",
+    "content": "No Area"
+  },
+  "today.group.noProject": {
+    "defaultMessage": "No Project",
+    "content": "No Project"
+  },
+  "today.noProjects": {
+    "defaultMessage": "No projects for today",
+    "content": "No projects for today"
+  },
+  "today.projects": {
+    "defaultMessage": "Projects",
+    "content": "Projects"
+  },
+  "today.tasks": {
+    "defaultMessage": "Tasks",
+    "content": "Tasks"
+  },
+  "view.create.placeholder": {
+    "defaultMessage": "New view",
+    "content": "New view"
+  },
+  "view.delete.description": {
+    "defaultMessage": "Are you sure you want to delete this view? This cannot be undone.",
+    "content": "Are you sure you want to delete this view? This cannot be undone."
+  },
+  "view.delete.title": {
+    "defaultMessage": "Delete view",
+    "content": "Delete view"
+  },
+  "view.detail.empty": {
+    "defaultMessage": "No tasks match this view.",
+    "content": "No tasks match this view."
+  },
+  "view.detail.untitled": {
+    "defaultMessage": "Untitled view",
+    "content": "Untitled view"
+  },
+  "view.docs.ai.copied": {
+    "defaultMessage": "Copied",
+    "content": "Copied"
+  },
+  "view.docs.ai.copyButton": {
+    "defaultMessage": "Copy AI prompt",
+    "content": "Copy AI prompt"
+  },
+  "view.docs.ai.copyFailed": {
+    "defaultMessage": "Failed to fetch AI prompt",
+    "content": "Failed to fetch AI prompt"
+  },
+  "view.docs.ai.copySuccess": {
+    "defaultMessage": "AI prompt copied to clipboard",
+    "content": "AI prompt copied to clipboard"
+  },
+  "view.docs.ai.desc": {
+    "defaultMessage": "Copy the prompt below and send it to ChatGPT, Claude, or another AI along with your request (e.g. \"show my work tasks for this week\"). Paste the rule it returns into the Rule box on the right.",
+    "content": "Copy the prompt below and send it to ChatGPT, Claude, or another AI along with your request (e.g. \"show my work tasks for this week\"). Paste the rule it returns into the Rule box on the right."
+  },
+  "view.docs.ai.descMobile": {
+    "defaultMessage": "Copy the prompt below and send it to ChatGPT, Claude, or another AI along with your request (e.g. \"show my work tasks for this week\"). Paste the rule it returns into the Rule box above.",
+    "content": "Copy the prompt below and send it to ChatGPT, Claude, or another AI along with your request (e.g. \"show my work tasks for this week\"). Paste the rule it returns into the Rule box above."
+  },
+  "view.docs.ai.title": {
+    "defaultMessage": "AI assist",
+    "content": "AI assist"
+  },
+  "view.docs.ai.viewSource": {
+    "defaultMessage": "View source",
+    "content": "View source"
+  },
+  "view.docs.constants": {
+    "defaultMessage": "Constants",
+    "content": "Constants"
+  },
+  "view.docs.fields": {
+    "defaultMessage": "Fields",
+    "content": "Fields"
+  },
+  "view.docs.introBody": {
+    "defaultMessage": "Pick a starter below, or write your own expression in the Rule editor on the right.",
+    "content": "Pick a starter below, or write your own expression in the Rule editor on the right."
+  },
+  "view.docs.introTitle": {
+    "defaultMessage": "Set a filter rule for this view",
+    "content": "Set a filter rule for this view"
+  },
+  "view.docs.operators": {
+    "defaultMessage": "Operators",
+    "content": "Operators"
+  },
+  "view.docs.referenceToggle": {
+    "defaultMessage": "Reference (fields / constants / operators)",
+    "content": "Reference (fields / constants / operators)"
+  },
+  "view.docs.starter.anytime": {
+    "defaultMessage": "Anytime",
+    "content": "Anytime"
+  },
+  "view.docs.starter.dueIn7Days": {
+    "defaultMessage": "Due in next 7 days",
+    "content": "Due in next 7 days"
+  },
+  "view.docs.starter.notCompleted": {
+    "defaultMessage": "Not completed",
+    "content": "Not completed"
+  },
+  "view.docs.starter.overdue": {
+    "defaultMessage": "Overdue",
+    "content": "Overdue"
+  },
+  "view.docs.starter.someday": {
+    "defaultMessage": "Someday",
+    "content": "Someday"
+  },
+  "view.docs.starter.taggedWork": {
+    "defaultMessage": "Tagged 'work'",
+    "content": "Tagged 'work'"
+  },
+  "view.docs.starters": {
+    "defaultMessage": "Starters",
+    "content": "Starters"
+  },
+  "view.field.descPlaceholder": {
+    "defaultMessage": "Add description...",
+    "content": "Add description..."
+  },
+  "view.field.rule": {
+    "defaultMessage": "Rule",
+    "content": "Rule"
+  },
+  "view.field.rulePlaceholder": {
+    "defaultMessage": "Write an expression, or pick a starter on the left",
+    "content": "Write an expression, or pick a starter on the left"
+  },
+  "view.field.rulePlaceholderMobile": {
+    "defaultMessage": "Write an expression, or pick a starter below",
+    "content": "Write an expression, or pick a starter below"
+  },
+  "view.menu.delete": {
+    "defaultMessage": "Delete view",
+    "content": "Delete view"
+  },
+  "view.notFound": {
+    "defaultMessage": "View not found",
+    "content": "View not found"
+  },
+  "view.sidebar.add": {
+    "defaultMessage": "Add view",
+    "content": "Add view"
+  },
+  "view.sidebar.empty": {
+    "defaultMessage": "No views yet",
+    "content": "No views yet"
+  },
+  "view.sidebar.title": {
+    "defaultMessage": "Views",
+    "content": "Views"
+  },
+  "view.unsupported.body": {
+    "defaultMessage": "This view was created with a newer version of the app. Please update the app to open it.",
+    "content": "This view was created with a newer version of the app. Please update the app to open it."
+  },
+  "view.unsupported.title": {
+    "defaultMessage": "Update the app to view this",
+    "content": "Update the app to view this"
+  }
+}

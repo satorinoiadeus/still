@@ -1,0 +1,97 @@
+import { getProject } from '@/core/state/getProject.ts';
+import { getProjectHeadingInfo } from '@/core/state/getProjectHeadingInfo.ts';
+import { getTaskInfo } from '@/core/state/getTaskInfo.ts';
+import { ProjectInfoState } from '@/core/state/type.ts';
+import { useService } from '@/hooks/use-service.ts';
+import { useWatchEvent } from '@/hooks/use-watch-event.ts';
+import { CreateIcon } from '@/mobile/components/dnd/CreateIcon.tsx';
+import { HomeProjectItem } from '@/mobile/components/todo/HomeProjectItem.tsx';
+import { TaskItem } from '@/mobile/components/todo/TaskItem.tsx';
+import { ITodoService } from '@/services/todo/common/todoService.ts';
+import { DragDropElements } from '@/utils/dnd/dragDropCollision.ts';
+import { DragOverlay, useDndContext } from '@dnd-kit/core';
+import type { TreeID } from 'loro-crdt';
+import React, { useMemo } from 'react';
+import { AreaHeaderOverlayItem } from '../todo/AreaHeaderOverlayItem.tsx';
+import { ProjectHeadingOverlayItem } from '../todo/ProjectHeadingOverlayItem.tsx';
+import { getArea } from '@/core/state/getAreaState.ts';
+import classNames from 'classnames';
+import { styles } from '@/mobile/theme.ts';
+import { SubtaskItem } from '../todo/SubtaskItem.tsx';
+
+export interface DragOverlayItemProps {
+  className?: string;
+  isSubtask?: boolean;
+  textProps?: {
+    hideProjectTitle?: boolean;
+  };
+  projectProps?: {
+    hideSubtitle?: boolean;
+  };
+  renderProject?: (projectInfo: ProjectInfoState) => React.ReactNode;
+}
+
+export const OverlayItem: React.FC<DragOverlayItemProps> = ({
+  textProps,
+  projectProps,
+  isSubtask,
+  className,
+  renderProject,
+}) => {
+  const { active } = useDndContext();
+  const activeId = active?.id;
+  const todoService = useService(ITodoService);
+  useWatchEvent(todoService.onStateChange);
+  const modelState = todoService.modelState;
+  const overLay = useMemo(() => {
+    if (!activeId) return null;
+    if (activeId === DragDropElements.create) {
+      return <CreateIcon onClick={() => {}} />;
+    }
+    const task = modelState.taskObjectMap.get(activeId as TreeID);
+    if (!task) return null;
+    switch (task.type) {
+      case 'task': {
+        if (isSubtask) {
+          return (
+            <SubtaskItem
+              key={task.id}
+              id={task.id}
+              title={task.title}
+              status={task.status}
+              onStatusChange={() => {}}
+              onTitleChange={() => {}}
+              onCreate={() => {}}
+              onDelete={() => {}}
+            />
+          );
+        }
+        return <TaskItem taskInfo={getTaskInfo(modelState, activeId as TreeID)} overlay {...(textProps ?? {})} />;
+      }
+      case 'projectHeading':
+        return <ProjectHeadingOverlayItem projectHeadingInfo={getProjectHeadingInfo(modelState, activeId as TreeID)} />;
+      case 'area':
+        return <AreaHeaderOverlayItem areaInfo={getArea(modelState, activeId as TreeID)!} />;
+      case 'project': {
+        const projectInfo = getProject(modelState, activeId as TreeID);
+        if (renderProject) {
+          return <>{renderProject(projectInfo)}</>;
+        }
+        return <HomeProjectItem projectInfo={projectInfo} {...(projectProps ?? {})} />;
+      }
+    }
+  }, [activeId, modelState, textProps, projectProps, isSubtask, renderProject]);
+
+  return (
+    <DragOverlay>
+      <div
+        className={classNames(styles.taskItemOverlayBackground, styles.taskItemOverlayShadow, className, {
+          'rounded-full': activeId === DragDropElements.create,
+          [styles.taskItemOverlayRound]: activeId !== DragDropElements.create,
+        })}
+      >
+        {overLay}
+      </div>
+    </DragOverlay>
+  );
+};

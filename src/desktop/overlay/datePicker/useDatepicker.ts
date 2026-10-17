@@ -1,0 +1,19 @@
+import { useService } from '@/hooks/use-service';
+import { IInstantiationService } from '@hamsterbase/foundation/instantiation';
+import { DatePickerOverlayController } from './DatePickerOverlayController';
+
+export interface DatePickerOptions {
+  includeTime?: boolean;
+}
+
+export const useDatepicker = () => {
+  const instantiationService = useService(IInstantiationService);
+
+  return (
+    initialDate: number | undefined,
+    onDateSelected: (date: number | null) => void,
+    position?: { x: number; y: number }
+  ) => {
+    DatePickerOverlayController.create(initialDate, onDateSelected, instantiationService, position);
+  };
+};

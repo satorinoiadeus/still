@@ -1,0 +1,150 @@
+import { getLoginErrorMessage } from '@/base/common/error';
+import { UserIcon } from '@/components/icons';
+import { useService } from '@/hooks/use-service';
+import { useSessionStorageState } from '@/hooks/use-session-storage-state';
+import { useWatchEvent } from '@/hooks/use-watch-event';
+import useNavigate from '@/hooks/useNavigate';
+import { MobileTestIds } from '@/mobile/testids';
+import { localize } from '@/nls';
+import { ICloudService } from '@/services/cloud/common/cloudService';
+import React, { useState } from 'react';
+import { PageLayout } from '../components/PageLayout';
+import { Tabbar } from '../components/tabbar';
+import { useToast } from '../overlay/toast/useToast';
+import { styles } from '../theme';
+
+enum LoginMode {
+  Login = 'login',
+  Register = 'register',
+}
+
+export const LoginPage: React.FC = () => {
+  const navigate = useNavigate();
+  const [mode, setMode] = useSessionStorageState<LoginMode>('loginMode', LoginMode.Login);
+  const [account, setAccount] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const toast = useToast();
+
+  const cloudService = useService(ICloudService);
+  useWatchEvent(cloudService.onSessionChange);
+
+  const handleSubmit = async () => {
+    if (mode === LoginMode.Register && password !== confirmPassword) {
+      toast({
+        message: localize('login.error.passwordMismatch', 'Confirm password should be the same as password'),
+      });
+      return;
+    }
+
+    if (mode === LoginMode.Register && !agreedToTerms) {
+      toast({
+        message: localize('login.error.termsRequired', 'You must agree to the terms'),
+      });
+      return;
+    }
+
+    try {
+      if (mode === LoginMode.Login) {
+        await cloudService.login(account, password);
+      } else {
+        await cloudService.register(account, password);
+      }
+      navigate({
+        path: '/settings/cloud',
+      });
+    } catch (error) {
+      toast({
+        message: getLoginErrorMessage(error as Error),
+      });
+    }
+  };
+
+  return (
+    <PageLayout
+      header={{
+        showBack: true,
+        renderIcon: (className) => <UserIcon className={className} />,
+        id: 'login',
+        title: localize('login.title', 'Login & Register'),
+      }}
+    >
+      <div className={styles.formSectionStack}>
+        <Tabbar
+          options={[
+            {
+              testid: 'login-tab-signin',
+              label: localize('login.tab.signin', 'Sign In'),
+              value: LoginMode.Login,
+            },
+            {
+              testid: 'login-tab-register',
+              label: localize('login.tab.register', 'Register'),
+              value: LoginMode.Register,
+            },
+          ]}
+          value={mode}
+          onChange={(value) => setMode(value as LoginMode)}
+        />
+        <input
+          data-testid={MobileTestIds.Login.AccountInput}
+          type="text"
+          className={styles.inputItemStyle}
+          placeholder={localize('login.account.placeholder', 'Enter your email')}
+          value={account}
+          onChange={(e) => setAccount(e.target.value)}
+        />
+        <input
+          data-testid={MobileTestIds.Login.PasswordInput}
+          type="password"
+          className={styles.inputItemStyle}
+          placeholder={localize('login.password.placeholder', 'Enter your password')}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        {mode === LoginMode.Register && (
+          <input
+            data-testid={MobileTestIds.Login.ConfirmPasswordInput}
+            type="password"
+            className={styles.inputItemStyle}
+            placeholder={localize('register.confirmPassword.placeholder', 'Enter your password again')}
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+        )}
+
+        {mode === LoginMode.Register && (
+          <div className={styles.formCheckboxRow}>
+            <input
+              type="checkbox"
+              className={styles.formCheckbox}
+              checked={agreedToTerms}
+              onChange={(e) => setAgreedToTerms(e.target.checked)}
+            />
+            <div className={styles.formHintText}>
+              {localize('register.agree', 'I agree to')}
+              <a className={styles.formLinkText} onClick={() => navigate({ path: '/settings/eula' })}>
+                {localize('register.eula', 'EULA')}
+              </a>
+              {localize('register.and', 'and')}
+              <a className={styles.formLinkText} onClick={() => navigate({ path: '/settings/privacy' })}>
+                {localize('register.privacyPolicy', 'Privacy Policy')}
+              </a>
+            </div>
+          </div>
+        )}
+        <button
+          data-testid={MobileTestIds.Login.SubmitButton}
+          className={styles.formPrimaryButton}
+          onClick={handleSubmit}
+          disabled={!account || !password || (mode === LoginMode.Register && (!confirmPassword || !agreedToTerms))}
+        >
+          {mode === LoginMode.Register
+            ? localize('register.submit.label', 'Register')
+            : localize('login.submit', 'Sign In')}
+        </button>
+      </div>
+    </PageLayout>
+  );
+};

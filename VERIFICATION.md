@@ -1,9 +1,15 @@
-# Mobile update — Still 0.2.1
+# Verification
 
-- Added visible mobile New area and New project actions. New areas and projects open immediately after successful saves. Projects inherit the current Area; tasks inherit the current Project.
-- Restored the earlier desktop shell’s press, pop and rise motion in a restrained mobile treatment. Drawer uses a 180ms transform transition. Entry animation is limited to the first twelve task rows; reduced motion disables all animation. No animation dependency or timers were added.
-- Navigation counts are memoized across navigation/dialog/search renders. Mobile backdrop blur is disabled to avoid unnecessary rendering work. These are implementation changes, not measured phone performance claims.
-- Production build and all 20 domain/persistence/import tests passed. Simulated DOM workflow passed, including mobile drawer closure, new area → project → task, inherited relationships and persisted data. Real-device layout/performance is not verified.
-- Still 0.2.1 Android ARM64 debug APK compiled successfully with Rust 1.90, Android SDK 36, NDK 29 and Gradle 9.6.1. Package metadata verified: app.still.tasks, versionName 0.2.1, versionCode 2001, label Still, minimum Android API 24. APK v2 signature verified; certificate SHA-256 81fcc46d6bfd1cf8d0dfc6c49a1a7cc0b700a2a3c9a517a604b33649b046d6b8 matches the prior build. This is a fresh build containing the mobile update. Physical device testing remains unverified.
-- Windows x64 release executable and NSIS EXE installer compiled successfully using cargo-xwin and the MSVC sysroot. PE signatures verified (x64 application, x86 NSIS installer wrapper). Installer is unsigned. Windows installation and runtime have not been tested. GitHub writes remain blocked by integration permission 403.
-- Versioned backup and SQLite schemas are unchanged. Native identifiers and signing requirements are unchanged; no signing secrets are included.
+Local environment: Linux, Node 24.19.0. pnpm 11 installed frozen upstream lockfile with lifecycle scripts disabled; CI pins upstream pnpm 10.15.0 and enables the upstream approved Electron/esbuild lifecycle scripts.
+
+Passed locally:
+- TypeScript project check and ESLint (zero errors/warnings after fixing one inherited hook dependency).
+- Production Vite build with relative asset URLs.
+- Electron main/preload bundle compilation.
+- Eight engine tests: create/edit/complete/delete/undo; hierarchy and ordering; snapshot round trip/idempotent import; damaged/legacy input rejection; two-replica CRDT merge; recurrence parser and generation; AES round trip/wrong-key rejection.
+
+Browser checks and screenshots are recorded by `tests/ui.mjs` in `verification/ui-results.json`. Do not treat source inspection or compilation as proof of native runtime behavior.
+
+Not certified yet: installing/running Android and Windows binaries, notifications, paid cloud accounts, live self-hosted sync, attachment upload and AI endpoints. Local Android sync succeeds; Gradle compilation stops at `services.gradle.org` with `java.net.SocketException: Network is unreachable`, and no Android SDK is installed. Local Windows packaging downloads Electron successfully, then stops because Wine is required for Windows executable resource editing on Linux. GitHub Actions is responsible for platform compilation. CI artifacts must be checked against the exact run/commit before distribution. Windows code signing and stable Android release signing are not configured.
+
+Known upstream build warnings: large main web chunk and a Zod circular dependency during Electron compilation. These are retained rather than stripping upstream capabilities to make the bundle look smaller. The old Still JSON/SQLite format has no safe converter; see DATA-MIGRATION.md.

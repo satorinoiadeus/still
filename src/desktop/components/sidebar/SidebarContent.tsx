@@ -1,0 +1,245 @@
+import { getTodayTimestampInUtc } from '@/base/common/getTodayTimestampInUtc.ts';
+import { areaPageTitleInputId, projectPageTitleInputId } from '@/components/edit/inputId';
+import { PlusIcon, SearchIcon, SettingsIcon, SyncIcon } from '@/components/icons';
+import { FlattenedResult } from '@/core/state/home/flattenedItemsToResult';
+import { flattenRootCollections } from '@/core/state/home/getFlattenRootCollections';
+import { getFutureProjects } from '@/core/state/home/getFutureProjects';
+import { AreaInfoState, ProjectInfoState } from '@/core/state/type';
+import { DesktopMenuController } from '@/desktop/overlay/desktopMenu/DesktopMenuController';
+import { useDesktopMessage } from '@/desktop/overlay/desktopMessage/useDesktopMessage.ts';
+import { useService } from '@/hooks/use-service';
+import { useWatchEvent } from '@/hooks/use-watch-event';
+import { useConfig } from '@/hooks/useConfig';
+import { useDragSensors } from '@/hooks/useDragSensors';
+import { localize } from '@/nls';
+import { toggleAreaConfigKey } from '@/services/config/config';
+import { useSelfhostedSync } from '@/services/selfhostedSync/browser/useSelfhostedSync';
+import { ITodoService } from '@/services/todo/common/todoService';
+import { DragDropElements } from '@/utils/dnd/dragDropCollision';
+import { getFlattenedItemsCollisionDetectionStrategy } from '@/utils/dnd/flattenedItemsCollisionDetectionStrategy';
+import { getFlattenedItemsDragEndPosition } from '@/utils/dnd/flattenedItemsDragPosition';
+import { DndContext, DragEndEvent, useDndContext } from '@dnd-kit/core';
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import classNames from 'classnames';
+import React from 'react';
+import { flushSync } from 'react-dom';
+import { Link, useNavigate } from 'react-router';
+import { IInstantiationService } from '@hamsterbase/foundation/instantiation';
+import { desktopStyles } from '../../theme/main';
+import { DragOverlayItem } from '../drag/DragOverlayItem';
+import { CommandPaletteController } from '../../overlay/commandPalette/CommandPaletteController';
+import { TestIds } from '@/testIds';
+import { SidebarAreaItem } from './SidebarAreaItem/SidebarAreaItem.tsx';
+import { SidebarFutureProjectsItem } from './SidebarFutureProjectsItem/SidebarFutureProjectsItem.tsx';
+import { SidebarMenu } from './SidebarMenu/SidebarMenu.tsx';
+import { SidebarViewsSection } from './SidebarViewsSection/SidebarViewsSection.tsx';
+import { SidebarProjectItem as SidebarProjectItemComponent } from './SidebarProjectItem/SidebarProjectItem.tsx';
+import { MacTopBar } from '../MacTopBar.tsx';
+
+interface SidebarProjectAndAreaProps {
+  flattenedResult: FlattenedResult<AreaInfoState, ProjectInfoState>;
+  unstartedProjects: ProjectInfoState[];
+}
+
+const SidebarProjectsAndAreas: React.FC<SidebarProjectAndAreaProps> = ({ flattenedResult, unstartedProjects }) => {
+  const { active } = useDndContext();
+
+  return (
+    <div>
+      {flattenedResult.flattenedItems.map((item) => {
+        switch (item.type) {
+          case 'header':
+            return <SidebarAreaItem key={item.id} areaInfo={item.content} />;
+          case 'item': {
+            if (item.headerId === active?.id && item.headerId) {
+              return null;
+            }
+            return <SidebarProjectItemComponent key={item.id} projectInfo={item.content} />;
+          }
+          case 'special': {
+            if (item.id === DragDropElements.futureProjects) {
+              return <SidebarFutureProjectsItem key={item.id} count={unstartedProjects.length} />;
+            }
+            return null;
+          }
+          default:
+            return null;
+        }
+      })}
+    </div>
+  );
+};
+
+export const SidebarContent: React.FC = () => {
+  const todoService = useService(ITodoService);
+  const instantiationService = useService(IInstantiationService);
+  const navigate = useNavigate();
+  useWatchEvent(todoService.onStateChange);
+  const { value: config, setValue } = useConfig(toggleAreaConfigKey());
+  const sensors = useDragSensors();
+  const desktopMessage = useDesktopMessage();
+  const { selfhostedSyncService, sync: handleSync } = useSelfhostedSync({
+    onSuccess: () =>
+      desktopMessage({
+        type: 'success',
+        message: localize('sync.sync_success', 'Sync completed successfully.'),
+      }),
+    onError: (error) =>
+      desktopMessage({
+        type: 'error',
+        message: error.message,
+      }),
+  });
+
+  const rootCollections = flattenRootCollections(todoService.modelState, {
+    currentDate: getTodayTimestampInUtc(),
+    colspanAreaList: config,
+    disableCreate: true,
+  });
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (!over) return null;
+    const overId = over.id as string;
+    const activeId = active.id as string;
+    if (overId === DragDropElements.inbox) {
+      return;
+    }
+    const res = getFlattenedItemsDragEndPosition(activeId, overId, rootCollections);
+    if (res) {
+      if (res.type === 'moveItem') {
+        todoService.updateProject(res.activeId, {
+          position: res.position,
+        });
+        const position = res.position;
+        if (position.type === 'firstElement' && position.parentId) {
+          if (config.includes(position.parentId)) {
+            setValue(config.filter((id) => id !== position.parentId));
+          }
+        }
+      }
+      if (res.type === 'moveHeader') {
+        todoService.updateArea(res.activeId, {
+          position: res.position,
+        });
+      }
+    }
+  };
+
+  const handleCreateMenu = (event: React.MouseEvent) => {
+    event.preventDefault();
+    const rect = event.currentTarget.getBoundingClientRect();
+    DesktopMenuController.create(
+      {
+        menuConfig: [
+          {
+            label: localize('create_popup.create_project', 'Create Project'),
+            onSelect: () => {
+              const projectId = flushSync(() => {
+                return todoService.addProject({ title: '' });
+              });
+
+              if (projectId) {
+                const projectUid = todoService.modelState.taskObjectMap.get(projectId)?.uid;
+                if (projectUid) {
+                  navigate(`/desktop/project/${projectUid}`, {
+                    state: {
+                      focusInput: projectPageTitleInputId(projectId),
+                    },
+                  });
+                }
+              }
+            },
+          },
+          {
+            label: localize('create_popup.create_area', 'Create Area'),
+            onSelect: () => {
+              const areaId = flushSync(() => {
+                return todoService.addArea({ title: '' });
+              });
+
+              if (areaId) {
+                const areaUid = todoService.modelState.taskObjectMap.get(areaId)?.uid;
+                if (areaUid) {
+                  navigate(`/desktop/area/${areaUid}`, {
+                    state: {
+                      focusInput: areaPageTitleInputId(areaId),
+                    },
+                  });
+                }
+              }
+            },
+          },
+        ],
+        x: rect.left,
+        y: rect.bottom,
+        placement: 'bottom-start',
+      },
+      instantiationService
+    );
+  };
+
+  const futureProjects = getFutureProjects(todoService.modelState, getTodayTimestampInUtc());
+  const sidebarProjectAreaListNoTopPadding =
+    rootCollections.flattenedItems && rootCollections.flattenedItems[0]?.type === 'header';
+
+  return (
+    <div className={classNames(desktopStyles.sidebarBackground, desktopStyles.sidebarContainerStyle)}>
+      <MacTopBar />
+      <div className={desktopStyles.SidebarHeaderContainer}>
+        <div className="still-brand"><svg width="30" height="30" viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" rx="126" fill="currentColor" /><path d="M154 268l68 68 141-161" fill="none" stroke="var(--color-bg1)" strokeWidth="38" strokeLinecap="round" strokeLinejoin="round" /></svg><div>Still<div className="still-caption">A little space for what matters.</div></div></div>
+        <div className={desktopStyles.SidebarHeaderActions}>
+          <button
+            aria-label="Create project or area"
+            title="Create project or area"
+            onClick={handleCreateMenu}
+            className={desktopStyles.SidebarHeaderIconButton}
+            data-test-id={TestIds.Sidebar.CreateMenuButton}
+          >
+            <PlusIcon className={desktopStyles.SidebarHeaderIconButtonIcon} />
+          </button>
+          {selfhostedSyncService.showSyncIcon && (
+            <button onClick={handleSync} className={desktopStyles.SidebarHeaderIconButton}>
+              <SyncIcon
+                className={`${desktopStyles.SidebarHeaderIconButtonIcon} ${selfhostedSyncService.syncing ? 'animate-spin' : ''}`}
+              />
+            </button>
+          )}
+          <button
+            aria-label="Search tasks and commands" title="Search (Ctrl+K)"
+            data-test-id={TestIds.CommandPalette.SidebarTrigger}
+            onClick={() => CommandPaletteController.create(instantiationService)}
+            className={desktopStyles.SidebarHeaderIconButton}
+          >
+            <SearchIcon className={desktopStyles.SidebarHeaderIconButtonIcon} />
+          </button>
+          <Link aria-label="Settings" title="Settings" to="/desktop/settings" className={desktopStyles.SidebarHeaderIconButton}>
+            <SettingsIcon className={desktopStyles.SidebarHeaderIconButtonIcon} />
+          </Link>
+        </div>
+      </div>
+      <SidebarMenu />
+      <SidebarViewsSection />
+      <div className={desktopStyles.SidebarProjectsHeader}>{localize('sidebar.projects.title', 'Projects')}</div>
+      <div
+        className={classNames(desktopStyles.SidebarProjectAreaList, {
+          [desktopStyles.SidebarProjectAreaListNoTopPadding]: sidebarProjectAreaListNoTopPadding,
+        })}
+      >
+        <DndContext
+          sensors={sensors}
+          collisionDetection={getFlattenedItemsCollisionDetectionStrategy(rootCollections)}
+          onDragEnd={handleDragEnd}
+        >
+          <SortableContext
+            items={rootCollections.flattenedItems.map((item) => item.id)}
+            strategy={verticalListSortingStrategy}
+          >
+            <SidebarProjectsAndAreas flattenedResult={rootCollections} unstartedProjects={futureProjects} />
+          </SortableContext>
+          <DragOverlayItem />
+        </DndContext>
+      </div>
+    </div>
+  );
+};

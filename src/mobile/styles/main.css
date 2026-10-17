@@ -1,0 +1,50 @@
+@import 'tailwindcss/preflight.css';
+@import 'tailwindcss/theme.css';
+@import 'tailwindcss/utilities.css';
+
+@import './theme.css';
+@import './dark-theme.css';
+@import './eink-theme.css';
+@import './utils.css';
+@import './electron.css';
+@import '../../styles/item-status.css';
+
+@import './reset.css';
+@import '../../still/appearance.css';
+
+:root {
+  --separator-border: transparent !important;
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI Variable', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: var(--color-t1);
+  background: var(--color-bg1);
+}
+
+button, a, input, textarea { -webkit-tap-highlight-color: transparent; }
+button, a { touch-action: manipulation; }
+button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--color-brand); outline-offset: 3px;
+}
+button { cursor: pointer; }
+::selection { background: var(--color-brand-light); color: var(--color-t1); }
+.still-brand { display: flex; align-items: center; gap: 10px; font-size: 24px; font-weight: 650; letter-spacing: -1px; }
+.still-brand img { width: 30px; height: 30px; }
+.still-caption { font-size: 11px; font-weight: 450; letter-spacing: .02em; color: var(--color-t2); }
+@media (prefers-reduced-motion: no-preference) {
+  button, a { transition: background-color 140ms ease, color 140ms ease, box-shadow 140ms ease; }
+  .still-workspace { animation: still-enter 180ms ease-out; }
+  @keyframes still-enter { from { opacity: .65; transform: translateY(3px); } to { opacity: 1; transform: none; } }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
+
+#page-content { max-width: 900px; margin-inline: auto; }
+.still-mobile-nav { position: fixed; bottom: 0; left: 0; right: 0; z-index: 900; display: flex; justify-content: space-around; padding: 8px 12px max(8px, env(safe-area-inset-bottom)); border-top: 1px solid var(--color-line-regular); background: var(--color-bg1); }
+.still-mobile-nav button { display: flex; flex: 1; max-width: 112px; min-height: 48px; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: 11px; border-radius: 12px; color: var(--color-t2); }
+.still-mobile-nav button[aria-current=page] { color: var(--color-brand); background: var(--color-brand-light); font-weight: 600; }
+.still-mobile-nav svg { width: 20px; height: 20px; }
+#page-content { padding-bottom: calc(80px + env(safe-area-inset-bottom)); }

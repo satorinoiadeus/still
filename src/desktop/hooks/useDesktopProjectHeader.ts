@@ -1,0 +1,80 @@
+import { ProjectHeadingInfo } from '@/core/state/type';
+import { DesktopMenuController, IMenuConfig } from '@/desktop/overlay/desktopMenu/DesktopMenuController';
+import { useService } from '@/hooks/use-service';
+import { localize } from '@/nls';
+import { ITodoService } from '@/services/todo/common/todoService';
+import { IInstantiationService } from '@hamsterbase/foundation/instantiation';
+
+interface IUseDesktopProjectHeaderOptions {
+  projectHeadingInfo: ProjectHeadingInfo;
+}
+
+export const useDesktopProjectHeader = (options: IUseDesktopProjectHeaderOptions) => {
+  const { projectHeadingInfo } = options;
+  const instantiationService = useService(IInstantiationService);
+  const todoService = useService(ITodoService);
+
+  const handleDeleteHeading = () => {
+    todoService.deleteItem(projectHeadingInfo.id);
+  };
+
+  const handleConvertToProject = () => {
+    todoService.covertToProject(projectHeadingInfo.id);
+  };
+
+  const handleArchiveHeading = () => {
+    const isArchived = projectHeadingInfo.isArchived;
+    todoService.updateProjectHeading(projectHeadingInfo.id, {
+      archivedDate: isArchived ? null : Date.now(),
+    });
+  };
+
+  function createMenuConfig(): IMenuConfig[] {
+    return [
+      {
+        label: projectHeadingInfo.isArchived
+          ? localize('project_heading.unarchive', 'Unarchive Heading')
+          : localize('project_heading.archive', 'Archive Heading'),
+        onSelect: handleArchiveHeading,
+        icon: 'archive',
+      },
+      {
+        label: localize('project_heading.convert_to_project', 'Convert to Project'),
+        onSelect: handleConvertToProject,
+        icon: 'plus-circle',
+      },
+      {
+        label: localize('project_heading.delete_heading', 'Delete Heading'),
+        onSelect: handleDeleteHeading,
+        icon: 'trash',
+        dividerAbove: true,
+        danger: true,
+      },
+    ];
+  }
+
+  function handleMenuClick(event: React.MouseEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
+    const x = rect.right;
+    const y = rect.bottom;
+
+    const menuConfig = createMenuConfig();
+    DesktopMenuController.create(
+      {
+        menuConfig,
+        x,
+        y,
+        placement: 'bottom-end',
+      },
+      instantiationService
+    );
+  }
+
+  return {
+    projectHeadingInfo,
+    handleMenuClick,
+  };
+};

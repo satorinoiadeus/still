@@ -1,0 +1,129 @@
+apply plugin: 'com.android.application'
+
+// Read version information from file
+def versionFile = file('../version.properties')
+if (!versionFile.exists()) {
+    throw new GradleException("Version file not found at: ${versionFile.absolutePath}")
+}
+
+def versionProps = new Properties()
+versionFile.withInputStream { versionProps.load(it) }
+
+def versionCodeValue = versionProps['versionCode']?.toInteger()
+def versionNameValue = versionProps['versionName']
+def androidSourceValue = versionProps['androidSource'] ?: ''
+
+if (!versionCodeValue) {
+    throw new GradleException("versionCode not found or invalid in version file")
+}
+if (!versionNameValue) {
+    throw new GradleException("versionName not found in version file")
+}
+
+// Read release signing configuration
+def releaseProperties = new Properties()
+def releasePropertiesFile = file('../release.properties')
+if (releasePropertiesFile.exists()) {
+    releasePropertiesFile.withInputStream { releaseProperties.load(it) }
+}
+
+android {
+    namespace "app.still.next"
+    compileSdk rootProject.ext.compileSdkVersion
+    buildFeatures {
+        buildConfig true
+    }
+    defaultConfig {
+        applicationId "app.still.next"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode versionCodeValue
+        versionName versionNameValue
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "ANDROID_SOURCE", "\"${androidSourceValue}\""
+        aaptOptions {
+             // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
+             // Default: https://android.googlesource.com/platform/frameworks/base/+/282e181b58cf72b6ca770dc7ca5f91f135444502/tools/aapt/AaptAssets.cpp#61
+            ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
+        }
+    }
+
+    applicationVariants.all { variant ->
+        if (variant.buildType.name == "release") {
+            variant.outputs.all { output ->
+                def versionName = variant.versionName
+                outputFileName = "Still-${versionName}.apk"
+            }
+        }
+    }
+
+    signingConfigs {
+        release {
+            if (releasePropertiesFile.exists()) {
+                storeFile file(releaseProperties.getProperty('RELEASE_STORE_FILE'))
+                storePassword releaseProperties.getProperty('RELEASE_STORE_PASSWORD')
+                keyAlias releaseProperties.getProperty('RELEASE_KEY_ALIAS')
+                keyPassword releaseProperties.getProperty('RELEASE_KEY_PASSWORD')
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            if (releasePropertiesFile.exists()) {
+                signingConfig signingConfigs.release
+            }
+        }
+    }
+
+    flavorDimensions "store"
+    productFlavors {
+        xiaomi {
+            dimension "store"
+        }
+        standard {
+            dimension "store"
+        }
+    }
+
+    // Set default flavor based on androidSource
+    def defaultFlavor = androidSourceValue == 'xiaomi' ? 'xiaomi' : 'standard'
+    project.ext.set("defaultFlavor", defaultFlavor)
+}
+
+// Add task to build based on androidSource value
+task buildRelease {
+    dependsOn androidSourceValue == 'xiaomi' ? 'assembleXiaomiRelease' : 'assembleStandardRelease'
+}
+
+repositories {
+    flatDir{
+        dirs '../capacitor-cordova-android-plugins/src/main/libs', 'libs'
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
+    implementation "androidx.coordinatorlayout:coordinatorlayout:$androidxCoordinatorLayoutVersion"
+    implementation "androidx.core:core-splashscreen:$coreSplashScreenVersion"
+    implementation project(':capacitor-android')
+    testImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
+    implementation project(':capacitor-cordova-android-plugins')
+}
+
+apply from: 'capacitor.build.gradle'
+
+
+try {
+    def servicesJSON = file('google-services.json')
+    if (servicesJSON.text) {
+        apply plugin: 'com.google.gms.google-services'
+    }
+} catch(Exception e) {
+    logger.info("google-services.json not found, google-services plugin not applied. Push Notifications won't work")
+}

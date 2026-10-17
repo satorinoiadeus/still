@@ -1,0 +1,128 @@
+import { checkPlatform } from '@/base/browser/checkPlatform';
+import { initializeTheme, watchThemeChange } from '@/base/browser/initializeTheme';
+import { initKeyboardListeners } from '@/base/browser/initKeyboardListeners';
+import '@/base/commands/desktop';
+import '@/desktop/overlay/commandPalette/commands';
+import { GlobalContext } from '@/components/GlobalContext/GlobalContext';
+import { CloudService, ICloudService } from '@/services/cloud/common/cloudService';
+import { StandaloneCommandService } from '@/services/command/common/standaloneCommandService';
+import { LocalStorageConfigStore } from '@/services/config/browser/localStorageConfigStore';
+import { IConfigService, WorkbenchConfig } from '@/services/config/configService';
+import { IndexdbDatabaseService } from '@/services/database/browser/indexdbDatabaseService';
+import { IDatabaseService } from '@/services/database/common/database';
+import { ElectronFsDatabaseService } from '@/services/database/native/electronFsDatabaseService';
+import { EditService, IEditService } from '@/services/edit/common/editService';
+import { IWorkbenchInstanceService, WorkbenchInstanceService } from '@/services/instance/common/instanceService';
+import { StandaloneKeybindingService } from '@/services/keybinding/browser/standaloneKeybindingService';
+import { IListService, ListService } from '@/services/list/common/listService';
+import { IMenuService } from '@/services/menu/common/menuService';
+import { ElectronMenuService } from '@/services/menu/native/electronMenuService';
+import { INavigationService, NavigationService } from '@/services/navigationService/common/navigationService';
+import { IWorkbenchOverlayService, WorkbenchOverlayService } from '@/services/overlay/common/WorkbenchOverlayService';
+import { IReminderService } from '@/services/reminders/common/reminderService';
+import { DesktopReminderService } from '@/services/reminders/electron/DesktopReminderService';
+import { IDockBadgeService } from '@/services/dockBadge/common/dockBadgeService';
+import { ElectronDockBadgeService } from '@/services/dockBadge/native/electronDockBadgeService';
+import { ISelfhostedSyncService } from '@/services/selfhostedSync/common/selfhostedSyncService';
+import { WorkbenchSelfhostedSyncService } from '@/services/selfhostedSync/common/workbenchSelfhostedSyncService';
+import { IAIService } from '@/services/ai/common/aiService';
+import { WorkbenchAIService } from '@/services/ai/browser/workbenchAIService';
+import { IAttachmentUploadService } from '@/services/attachment/common/attachmentUploadService';
+import { WorkbenchAttachmentUploadService } from '@/services/attachment/browser/workbenchAttachmentUploadService';
+import { ICliApprovalService } from '@/services/cliApproval/common/cliApprovalService';
+import { WorkbenchCliApprovalService } from '@/services/cliApproval/browser/workbenchCliApprovalService';
+import { ISwitchService, SwitchService } from '@/services/switchService/common/switchService';
+import '@/services/todo/browser/desktopCommands';
+import { WorkbenchTodoService } from '@/services/todo/browser/workbenchTodoService';
+import { ITodoService } from '@/services/todo/common/todoService';
+import { WorkbenchWebLoggerService } from '@/services/weblogger/browser/workbenchWebLoggerService';
+import { IWebLoggerService } from '@/services/weblogger/common/webloggerService';
+import React, { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { BrowserRouter, HashRouter } from 'react-router';
+import { ICommandService } from '@hamsterbase/foundation/commands';
+import { ContextKeyService } from '@hamsterbase/foundation/contextkey';
+import { IContextKeyService } from '@hamsterbase/foundation/contextkey';
+import { InstantiationService, ServiceCollection, SyncDescriptor } from '@hamsterbase/foundation/instantiation';
+import { IKeybindingService } from '@hamsterbase/foundation/keybinding';
+import { App } from './app';
+
+export async function startDesktop() {
+  await Promise.all([import('allotment/dist/style.css'), import('./styles/main.css')]);
+
+  document.documentElement.dataset.platform = 'desktop';
+  initializeTheme();
+  watchThemeChange();
+  initKeyboardListeners();
+  const { isElectron } = checkPlatform();
+
+  const serviceCollection = new ServiceCollection();
+  serviceCollection.set(IWorkbenchOverlayService, new SyncDescriptor(WorkbenchOverlayService));
+  serviceCollection.set(ITodoService, new SyncDescriptor(WorkbenchTodoService));
+  serviceCollection.set(IConfigService, new SyncDescriptor(WorkbenchConfig, [new LocalStorageConfigStore()]));
+  serviceCollection.set(INavigationService, new SyncDescriptor(NavigationService));
+  serviceCollection.set(ICloudService, new SyncDescriptor(CloudService));
+  serviceCollection.set(
+    IDatabaseService,
+    new SyncDescriptor(isElectron ? ElectronFsDatabaseService : IndexdbDatabaseService)
+  );
+  serviceCollection.set(ISwitchService, new SyncDescriptor(SwitchService));
+  serviceCollection.set(IContextKeyService, new SyncDescriptor(ContextKeyService));
+  serviceCollection.set(ICommandService, new SyncDescriptor(StandaloneCommandService));
+  serviceCollection.set(IKeybindingService, new SyncDescriptor(StandaloneKeybindingService, [document.body]));
+  serviceCollection.set(IListService, new SyncDescriptor(ListService));
+  serviceCollection.set(IEditService, new SyncDescriptor(EditService));
+  serviceCollection.set(IWorkbenchInstanceService, new SyncDescriptor(WorkbenchInstanceService));
+  serviceCollection.set(IWebLoggerService, new SyncDescriptor(WorkbenchWebLoggerService));
+  serviceCollection.set(IReminderService, new SyncDescriptor(DesktopReminderService));
+  serviceCollection.set(ISelfhostedSyncService, new SyncDescriptor(WorkbenchSelfhostedSyncService));
+  serviceCollection.set(IMenuService, new SyncDescriptor(ElectronMenuService));
+  serviceCollection.set(IDockBadgeService, new SyncDescriptor(ElectronDockBadgeService));
+  serviceCollection.set(IAIService, new SyncDescriptor(WorkbenchAIService));
+  serviceCollection.set(IAttachmentUploadService, new SyncDescriptor(WorkbenchAttachmentUploadService));
+  serviceCollection.set(ICliApprovalService, new SyncDescriptor(WorkbenchCliApprovalService));
+  const instantiationService = new InstantiationService(serviceCollection, true);
+
+  await instantiationService.invokeFunction(async (dss) => {
+    await dss.get(ISwitchService).init();
+  });
+  await instantiationService.invokeFunction(async (dss) => {
+    await dss.get(IConfigService).init();
+  });
+  await instantiationService.invokeFunction(async (dss) => {
+    await dss.get(ICloudService).init();
+  });
+  await instantiationService.invokeFunction(async (dss) => {
+    await dss.get(ISelfhostedSyncService).init();
+  });
+  await instantiationService.invokeFunction(async (dss) => {
+    await dss.get(IReminderService).start();
+  });
+  await instantiationService.invokeFunction(async (dss) => {
+    await dss.get(IDockBadgeService).start();
+  });
+  await instantiationService.invokeFunction(async (dss) => {
+    await dss.get(ICliApprovalService).init();
+  });
+
+  instantiationService.invokeFunction(async (dss) => {
+    const keybindings = dss.get(IKeybindingService).getKeybindings();
+    console.log(`Found ${keybindings.length} keybindings`);
+  });
+
+  const globalContext = {
+    instantiationService,
+  };
+
+  const Router = isElectron ? HashRouter : BrowserRouter;
+
+  createRoot(document.getElementById('root')!).render(
+    <StrictMode>
+      <GlobalContext.Provider value={globalContext}>
+        <Router>
+          <App></App>
+        </Router>
+      </GlobalContext.Provider>
+    </StrictMode>
+  );
+}
