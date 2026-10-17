@@ -115,7 +115,7 @@ export async function electronPackCommand(options: ElectronPackOptions) {
       codeSign: !!options.release,
     });
 
-    const buildResult = await build(configResult);
+    const buildResult = await build({ ...configResult, publish: 'never' });
     console.log('[electron] Build completed:', buildResult);
 
     // Copy build artifacts to release directory

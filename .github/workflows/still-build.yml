@@ -117,11 +117,6 @@ jobs:
           "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose "$APK"
           "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging "$APK" | tee apk-manifest.txt
           grep "package: name='app.still.next'" apk-manifest.txt
-      - uses: actions/upload-artifact@v4
-        with:
-          name: Still-Android-testing-APK
-          path: android/app/build/outputs/apk/standard/debug/*.apk
-          if-no-files-found: error
       - name: Enable Android emulator acceleration
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
@@ -139,3 +134,8 @@ jobs:
         with:
           name: Still-Android-runtime-verification
           path: verification/android-*
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Still-Android-testing-APK
+          path: android/app/build/outputs/apk/standard/debug/*.apk
+          if-no-files-found: error

@@ -28,14 +28,16 @@ export const MobileSearch = () => {
     if (item.status === 'completed' || item.status === 'canceled') { navigate('/completed'); return; }
     let parent = item.parentId ? state.taskObjectMap.get(item.parentId) : undefined;
     const visited = new Set<string>();
+    let editorTaskId = item.id;
     while (parent && (parent.type === 'task' || parent.type === 'projectHeading')) {
       if (visited.has(parent.id)) return;
       visited.add(parent.id);
+      if (parent.type === 'task') editorTaskId = parent.id;
       parent = parent.parentId ? state.taskObjectMap.get(parent.parentId) : undefined;
     }
     const route = parent?.type === 'project' ? `/project/${parent.uid}` : parent?.type === 'area' ? `/area/${parent.uid}` : '/inbox';
     // Reuse the upstream task editor after navigating to the task's own workspace.
-    todo.editItem(item.id);
+    todo.editItem(editorTaskId);
     navigate(route);
   };
   return <PageLayout header={{ title: 'Search', showBack: true }}>

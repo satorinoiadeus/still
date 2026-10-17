@@ -14,3 +14,5 @@
 .still-task-row { min-height: 48px; }
 [data-density=compact][data-platform=desktop] .still-task-row { min-height: 34px; padding-block: 6px; }
 [data-density=compact][data-platform=mobile] .still-task-row { min-height: 44px; padding-block: 10px; }
+
+[data-theme='dark'] .bg-brand { color: var(--color-bg2); }
