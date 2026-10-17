@@ -24,6 +24,7 @@ export const getWin32X64Config = (options: ElectronPackConfigOption) => {
         target: 'nsis',
       },
       nsis: {
+        include: resolveRoot('scripts/nsis/still-installer.nsh'),
         oneClick: false,
         allowToChangeInstallationDirectory: true,
         createDesktopShortcut: true,
