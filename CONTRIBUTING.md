@@ -1,36 +1,9 @@
-# Contributing to HamsterBase Tasks
+# Contributing to Still
 
-Thank you for your interest in contributing to HamsterBase Tasks! We welcome contributions from the community and appreciate your help in making this project better.
+Still is an independent AGPL-3.0 derivative of HamsterBase Tasks. See UPSTREAM.md for the imported revision and retained notices.
 
-## Getting Started
+Use Node 22+ and pnpm 10.15.0. Clone https://github.com/satorinoiadeus/still and switch to feat/hamsterbase-still-rebuild. Install with `pnpm install --frozen-lockfile`, start with `npm run dev`, and run `npm run check`, `npm test`, `npm run web:build` and `npm run test:ui` before a pull request. Playwright requires `npx playwright install --with-deps chromium`.
 
-### Prerequisites
+Keep changes modular. Preserve the upstream task model, CRDT formats, encryption algorithm, storage adapters and service behavior unless a separately tested fix is needed. Keep platform presentation separate from task logic. Retain all license and source notices.
 
-- Node.js (version 18 or higher)
-- pnpm package manager
-
-### Setup Development Environment
-
-1. **Fork and Clone the Repository**
-
-   ```bash
-   git clone https://github.com/hamsterbase/tasks.git
-   cd tasks
-   ```
-
-2. **Install Dependencies**
-
-   ```bash
-   pnpm i
-   npx simple-git-hooks
-   ```
-
-### Local Development
-
-1. **Start the Development Server**
-
-   ```bash
-   npm run dev
-   ```
-
-2. **Access the Application** Open your browser and visit: http://localhost:5173/
+Do not migrate or overwrite old Still JSON/SQLite data without explicit, tested conversion. Read DATA-MIGRATION.md and README.md for native build requirements. Changes stay on the development branch until verification and data compatibility are resolved.

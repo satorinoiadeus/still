@@ -1,4 +1,3 @@
-import { spawn } from 'child_process';
 import { promises as fs } from 'fs';
 import * as os from 'os';
 import * as path from 'path';
@@ -33,19 +32,9 @@ export async function createTempBuildDir(version?: string | null): Promise<strin
 
   await fs.writeFile(path.join(tempDir, 'package.json'), JSON.stringify(minimalPackage, null, 2));
 
-  await new Promise((resolve, reject) => {
-    const pnpmProcess = spawn('npm', ['install', '--production'], {
-      cwd: tempDir,
-      stdio: 'inherit',
-    });
-
-    pnpmProcess.on('close', (code) => {
-      if (code === 0) {
-        resolve(void 0);
-      } else {
-        reject(new Error(`pnpm install failed with code ${code}`));
-      }
-    });
-  });
+  // The Electron bundle has no external runtime npm dependencies: only Electron
+  // and Node built-ins are externalized by buildElectron. electron-builder owns
+  // runtime packaging; a second npm install here is redundant and breaks npm.cmd
+  // spawning on Windows.
   return tempDir;
 }

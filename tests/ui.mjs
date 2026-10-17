@@ -22,6 +22,8 @@ try {
   const page = await context.newPage(); page.on('pageerror', e => errors.push(e.message));
   await page.goto(base); await page.getByPlaceholder('Add Task').waitFor();
   assert.equal(await page.title(), 'Still');
+  assert.match(await (await fetch(base + '/LICENSE.md')).text(), /GNU AFFERO GENERAL PUBLIC LICENSE/);
+  passed('AGPL license ships in the built application');
   const add = async title => { await page.getByPlaceholder('Add Task').fill(title); await page.getByPlaceholder('Add Task').press('Enter'); await page.getByTestId('task-list-item').filter({ hasText: title }).waitFor(); await page.waitForTimeout(150); };
   for (const title of ['Choose one thing that matters', 'Give the workspace a little room', 'Plan a quieter week']) await add(title);
   passed('Desktop task creation through real composer');
@@ -59,7 +61,7 @@ try {
   await page.getByTestId('task-list-item').filter({ hasText: 'Give the workspace' }).getByTestId('task-item-status-box').click();
   await page.getByRole('link', { name: 'Completed', exact: true }).click();
   await page.getByText('Give the workspace a little room', { exact: true }).waitFor(); passed('Task completion and completed view');
-  const mobile = await context.newPage(); await mobile.setViewportSize({ width: 390, height: 844 });
+  const mobile = await context.newPage(); mobile.on('pageerror', e => errors.push(e.message)); await mobile.setViewportSize({ width: 390, height: 844 });
   await mobile.goto(base + '/home'); await mobile.getByRole('navigation', { name: 'Main navigation' }).waitFor();
   const nav = mobile.getByRole('navigation', { name: 'Main navigation' });
   await nav.getByRole('button', { name: 'Inbox', exact: true }).click();

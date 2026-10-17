@@ -1,6 +1,10 @@
 {
   "results": [
     {
+      "name": "AGPL license ships in the built application",
+      "passed": true
+    },
+    {
       "name": "Desktop task creation through real composer",
       "passed": true
     },
