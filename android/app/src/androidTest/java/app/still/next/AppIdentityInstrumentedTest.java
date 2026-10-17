@@ -1,4 +1,4 @@
-package com.getcapacitor.myapp;
+package app.still.next;
 
 import static org.junit.Assert.*;
 
@@ -14,13 +14,13 @@ import org.junit.runner.RunWith;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @RunWith(AndroidJUnit4.class)
-public class ExampleInstrumentedTest {
+public class AppIdentityInstrumentedTest {
 
     @Test
     public void useAppContext() throws Exception {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.getcapacitor.app", appContext.getPackageName());
+        assertEquals("app.still.next", appContext.getPackageName());
     }
 }
